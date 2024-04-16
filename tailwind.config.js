@@ -17,5 +17,11 @@ export default {
         },
     },
 
-    plugins: [forms, require('tailwind-scrollbar-hide')],
+    daisyui: {
+
+        themes: ['light'],
+
+    },
+
+    plugins: [forms, require("daisyui"), require('tailwind-scrollbar-hide')],
 };
