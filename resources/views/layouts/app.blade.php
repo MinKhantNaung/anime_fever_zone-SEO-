@@ -33,10 +33,10 @@
     <!-- Text Header -->
     <header class="w-full container mx-auto">
         <div class="flex flex-col items-center py-12">
-            <a class="font-bold text-gray-800 uppercase hover:text-gray-700 text-3xl sm:text-5xl" href="#">
+            <a wire:navigate.hover href="{{ route('home') }}" class="font-bold text-gray-800 uppercase hover:text-gray-700 text-3xl sm:text-5xl">
                 Anime Fever Zone
             </a>
-            <p class="text-lg text-gray-600">
+            <p class="text-lg text-gray-600 px-2">
                 Embark on a Journey through the Anime Universe and Beyond! Dive into a World of Anime and More.
             </p>
         </div>
@@ -45,7 +45,7 @@
     <!-- Topic Nav -->
     <livewire:components.topic-nav />
 
-    <div>
+    <div class="min-h-screen">
 
         {{ $slot }}
 

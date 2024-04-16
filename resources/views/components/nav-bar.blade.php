@@ -37,7 +37,8 @@
                 <form action="{{ route('logout') }}" method="POST">
 
                     @csrf
-                    <button class="px-2 hover:text-gray-200 hover:underline">
+                    <button onclick="return confirm('Are you sure you want to logout?')"
+                        class="px-2 hover:text-gray-200 hover:underline">
                         Log out
                     </button>
                 </form>

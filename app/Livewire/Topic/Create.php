@@ -10,19 +10,56 @@ class Create extends Component
     public $name;
     public $topics;
 
+    public ?Topic $topic;
+    public $editMode = false;
+
+    public function updateEditMode(Topic $topic)
+    {
+        $this->topic = $topic;
+        $this->name = $topic->name;
+        $this->editMode = true;
+    }
+
     public function createNew()
     {
-        $this->validate([
-            'name' => 'required|string|max:255'
-        ]);
+        if ($this->editMode) {
+            $this->validate([
+                'name' => 'required|string|max:255|unique:topics,name,' . $this->topic->id
+            ]);
 
-        $topic = Topic::create([
-            'name' => $this->name
-        ]);
+            $this->topic->update([
+                'name' => $this->name
+            ]);
 
-        $this->reset();
+            $this->reset();
 
-        // $this->topics = $this->topics->prepend($topic);
+            // unset for update
+            unset($this->topics);
+
+            return $this->redirect('/topics', navigate: true);
+        } else {
+            $this->validate([
+                'name' => 'required|string|max:255|unique:topics,name'
+            ]);
+
+            Topic::create([
+                'name' => $this->name
+            ]);
+
+            $this->reset();
+
+            // unset for update
+            unset($this->topics);
+
+            return $this->redirect('/topics', navigate: true);
+        }
+    }
+
+    public function deleteTopic(Topic $topic)
+    {
+        $topic->delete();
+
+        return $this->redirect('/topics', navigate: true);
     }
 
     public function mount()
