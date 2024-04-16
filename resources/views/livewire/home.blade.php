@@ -55,4 +55,15 @@
     <!-- other posts Section -->
     <x-other-posts />
 
+    @section('scripts')
+        <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Anime Fever Zone",
+      "description": "Anime"
+    }
+    </script>
+    @endsection
+
 </div>
