@@ -1,3 +1,6 @@
+@section('title', 'Anime Fever Zone')
+@section('description', 'Anime')
+
 <div class="container mx-auto flex flex-wrap py-6">
 
     <!-- Posts Section -->
