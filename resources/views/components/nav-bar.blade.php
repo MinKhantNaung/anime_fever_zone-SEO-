@@ -1,14 +1,18 @@
 <nav class="w-full py-4 shadow bg-gradient-to-r from-[#9926f0] to-[#d122e3]">
-    <div class="w-full container mx-auto flex flex-wrap items-center justify-between">
+    <div class="w-full container mx-auto flex flex-nowrap items-center justify-between">
 
         <nav>
             <ul class="flex items-center justify-between font-bold text-sm text-white uppercase no-underline">
-                <li><a class="hover:text-gray-200 hover:underline px-4" href="#">Home</a></li>
-                <li><a class="hover:text-gray-200 hover:underline px-4" href="#">About</a></li>
+                <li>
+                    <a wire:navigate.hover href="{{ route('home') }}" class="hover:text-gray-200 hover:underline px-4">
+                        <img src="{{ asset('favicon.ico') }}" alt="" class="w-9">
+                    </a>
+                </li>
+                <li><a wire:navigate.hover href="{{ route('home') }}" class="hover:text-gray-200 hover:underline px-4">Home</a></li>
             </ul>
         </nav>
 
-        <div class="flex items-center text-lg no-underline text-white pr-6 pl-5 sm:pl-0">
+        <div class="flex items-center text-lg no-underline text-white pr-0 sm:pr-6 pl-5 sm:pl-0">
             <!-- Search -->
             <button>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

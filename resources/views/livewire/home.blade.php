@@ -61,6 +61,7 @@
       "@context": "https://schema.org",
       "@type": "BlogPosting",
       "headline": "Anime Fever Zone",
+      "image": "{{ asset('favicon.ico') }}",
       "description": "Anime"
     }
     </script>
