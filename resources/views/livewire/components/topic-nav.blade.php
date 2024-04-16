@@ -17,7 +17,7 @@
 
             <a href="#"
                 class="hover:bg-gradient-to-r hover:from-[#9926f0] hover:to-[#d122e3] rounded py-2 px-4 mx-2">Tags</a>
-            <a href="#"
+            <a wire:navigate.hover href="{{ route('topics.create') }}"
                 class="hover:bg-gradient-to-r hover:from-[#9926f0] hover:to-[#d122e3] rounded py-2 px-4 mx-2">Topics(Blogger)</a>
             <a href="#"
                 class="hover:bg-gradient-to-r hover:from-[#9926f0] hover:to-[#d122e3] rounded py-2 px-4 mx-2">Tags(Blogger)</a>
