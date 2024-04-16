@@ -8,7 +8,6 @@ use Livewire\Component;
 class Create extends Component
 {
     public $name;
-    public $topics;
 
     public ?Topic $topic;
     public $editMode = false;
@@ -33,9 +32,6 @@ class Create extends Component
 
             $this->reset();
 
-            // unset for update
-            unset($this->topics);
-
             return $this->redirect('/topics', navigate: true);
         } else {
             $this->validate([
@@ -48,9 +44,6 @@ class Create extends Component
 
             $this->reset();
 
-            // unset for update
-            unset($this->topics);
-
             return $this->redirect('/topics', navigate: true);
         }
     }
@@ -62,14 +55,13 @@ class Create extends Component
         return $this->redirect('/topics', navigate: true);
     }
 
-    public function mount()
-    {
-        $this->topics = Topic::select('id', 'name', 'slug')
-            ->get();
-    }
-
     public function render()
     {
-        return view('livewire.topic.create');
+        $topics = Topic::select('id', 'name', 'slug')
+            ->get();
+
+        return view('livewire.topic.create', [
+            'topics' => $topics
+        ]);
     }
 }
