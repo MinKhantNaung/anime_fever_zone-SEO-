@@ -13,9 +13,11 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/topics', Create::class)->name('topics.create');
+    Route::middleware('isBlogger')->group(function () {
+        Route::get('/topics', Create::class)->name('topics.create');
 
-    Route::get('/tags', Index::class)->name('tags.index');
+        Route::get('/blogger/tags', Index::class)->name('tags.index');
+    });
 });
 
 require __DIR__.'/auth.php';

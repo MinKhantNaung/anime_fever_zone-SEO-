@@ -27,9 +27,9 @@
                 <a wire:navigate.hover href="{{ route('login') }}" class="px-2 hover:text-gray-200 hover:underline">
                     Log in
                 </a>
-                <button class="px-2 hover:text-gray-200 hover:underline">
+                <a wire:navigate.hover href="{{ route('register') }}" class="px-2 hover:text-gray-200 hover:underline">
                     Register
-                </button>
+                </a>
             @endguest
 
             <!-- Profile -->
