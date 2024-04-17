@@ -53,6 +53,8 @@
 
     <x-footer />
 
+    @livewire('wire-elements-modal')
+
     @yield('scripts')
 
 </body>

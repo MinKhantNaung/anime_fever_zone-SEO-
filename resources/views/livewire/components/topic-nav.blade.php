@@ -22,8 +22,8 @@
                 @if (auth()->user()->role === 'blogger')
                     <a wire:navigate.hover href="{{ route('topics.create') }}"
                         class="hover:bg-gradient-to-r hover:from-[#9926f0] hover:to-[#d122e3] rounded py-2 px-4 mx-2 {{ request()->routeIs('topics.create') ? 'bg-[#9926f0]' : '' }}">Topics(Blogger)</a>
-                    <a href="#"
-                        class="hover:bg-gradient-to-r hover:from-[#9926f0] hover:to-[#d122e3] rounded py-2 px-4 mx-2">Tags(Blogger)</a>
+                    <a wire:navigate.hover href="{{ route('tags.index') }}"
+                        class="hover:bg-gradient-to-r hover:from-[#9926f0] hover:to-[#d122e3] rounded py-2 px-4 mx-2 {{ request()->routeIs('tags.index') ? 'bg-[#9926f0]' : '' }}">Tags(Blogger)</a>
                     <a href="#"
                         class="hover:bg-gradient-to-r hover:from-[#9926f0] hover:to-[#d122e3] rounded py-2 px-4 mx-2">Posts(Blogger)</a>
                 @endif

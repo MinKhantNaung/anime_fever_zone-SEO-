@@ -3,6 +3,7 @@
 use App\Livewire\Home;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Livewire\Tag\Index;
 use App\Livewire\Topic\Create;
 
 Route::get('/', Home::class)->name('home');
@@ -13,6 +14,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/topics', Create::class)->name('topics.create');
+
+    Route::get('/tags', Index::class)->name('tags.index');
 });
 
 require __DIR__.'/auth.php';
