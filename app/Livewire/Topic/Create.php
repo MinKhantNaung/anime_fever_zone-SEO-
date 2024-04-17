@@ -3,6 +3,7 @@
 namespace App\Livewire\Topic;
 
 use App\Models\Topic;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class Create extends Component
@@ -32,7 +33,7 @@ class Create extends Component
 
             $this->reset();
 
-            return $this->redirect('/topics', navigate: true);
+            $this->dispatch('topic-created');
         } else {
             $this->validate([
                 'name' => 'required|string|max:255|unique:topics,name'
@@ -44,7 +45,7 @@ class Create extends Component
 
             $this->reset();
 
-            return $this->redirect('/topics', navigate: true);
+            $this->dispatch('topic-created');
         }
     }
 
@@ -52,9 +53,10 @@ class Create extends Component
     {
         $topic->delete();
 
-        return $this->redirect('/topics', navigate: true);
+        $this->dispatch('topic-created');
     }
 
+    #[On('topic-created')]
     public function render()
     {
         $topics = Topic::select('id', 'name', 'slug')
