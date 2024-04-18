@@ -46,7 +46,7 @@ class Index extends Component
     public function render()
     {
         $tags = Tag::with('media')
-            ->select('id', 'name', 'slug')
+            ->select('id', 'name', 'slug', 'body')
             ->orderBy('id', 'desc')
             ->paginate(2);
 

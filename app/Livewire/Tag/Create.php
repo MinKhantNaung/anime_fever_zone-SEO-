@@ -15,6 +15,7 @@ class Create extends ModalComponent
 
     public $media;
     public $name;
+    public $body;
 
     public static function modalMaxWidth(): string
     {
@@ -27,6 +28,7 @@ class Create extends ModalComponent
         $this->validate([
             'media' => 'required|file|mimes:png,jpg,jpeg,svg,webp|max:5120',
             'name' => 'required|string|max:225|unique:tags,name',
+            'body' => 'required|string'
         ]);
 
         DB::beginTransaction();
@@ -34,6 +36,7 @@ class Create extends ModalComponent
         try {
             $tag = Tag::create([
                 'name' => $this->name,
+                'body' => $this->body
             ]);
 
             // add media

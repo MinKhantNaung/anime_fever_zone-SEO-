@@ -15,9 +15,6 @@
                     class="hover:bg-gradient-to-r hover:from-[#9926f0] hover:to-[#d122e3] rounded py-2 px-4 mx-2">{{ $topic->name }}</a>
             @endforeach
 
-            <a href="#"
-                class="hover:bg-gradient-to-r hover:from-[#9926f0] hover:to-[#d122e3] rounded py-2 px-4 mx-2">Tags</a>
-
             @auth
                 @if (auth()->user()->role === 'blogger')
                     <a wire:navigate.hover href="{{ route('topics.create') }}"
