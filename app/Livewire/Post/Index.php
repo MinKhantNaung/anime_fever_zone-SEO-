@@ -17,7 +17,7 @@ class Index extends Component
         $posts = Post::with('media', 'topic', 'tags', 'sections', 'comments')
             ->select('id', 'topic_id', 'heading', 'slug', 'body', 'is_publish', 'created_at')
             ->orderBy('id', 'desc')
-            ->paginate(10);
+            ->paginate(5);
 
         return view('livewire.post.index', [
             'posts' => $posts
