@@ -40,8 +40,8 @@
                                 <div class="badge badge-primary my-1 text-nowrap">{{ $tag->name }}</div>
                             @endforeach
                         </td>
-                        <td class="text-nowrap">{{ $post->heading }}</td>
-                        <td class="text-nowrap">{{ $post->slug }}</td>
+                        <td class="text-wrap">{{ $post->heading }}</td>
+                        <td class="text-wrap">{{ $post->slug }}</td>
                         <td>{{ $post->body }}</td>
                         {{-- Go to sections --}}
                         <td>
