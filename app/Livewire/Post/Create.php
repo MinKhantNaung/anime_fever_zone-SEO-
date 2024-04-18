@@ -70,6 +70,7 @@ class Create extends ModalComponent
             DB::commit();
 
             $this->reset();
+            $this->dispatch('close');
             $this->dispatch('post-event');
         } catch (\Exception $e) {
             DB::rollBack();
