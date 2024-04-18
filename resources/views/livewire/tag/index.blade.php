@@ -14,12 +14,12 @@
                     <img src="{{ $tag->media->url }}" alt="" class="w-[100%]">
                 </div>
 
-                <h1 class="col-span-12 text-center font-bold text-xl my-3">
+                <h1 class="col-span-12 text-center font-bold text-2xl my-3">
                     {{ $tag->name }}
                 </h1>
 
-                <p class="col-span-12 text-lg font-bold">
-                    {{ $tag->body }}
+                <p class="col-span-12 text-lg font-medium">
+                    {!! $tag->body !!}
                 </p>
 
                 <div class="col-span-12 text-center">

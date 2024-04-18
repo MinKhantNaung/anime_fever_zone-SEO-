@@ -29,7 +29,7 @@ class Edit extends ModalComponent
         // validate
         $this->validate([
             'media' => 'nullable|file|mimes:png,jpg,jpeg,svg,webp|max:5120',
-            'name' => 'required|string|max:225|unique:tags,name',
+            'name' => 'required|string|max:225|unique:tags,name,' . $this->tag->id,
             'body' => 'required|string'
         ]);
 

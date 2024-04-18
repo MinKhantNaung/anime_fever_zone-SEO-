@@ -3,6 +3,7 @@
 use App\Livewire\Home;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Livewire\Post\Index as PostIndex;
 use App\Livewire\Tag\Index;
 use App\Livewire\Topic\Create;
 
@@ -17,6 +18,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/topics', Create::class)->name('topics.create');
 
         Route::get('/blogger/tags', Index::class)->name('tags.index');
+
+        Route::get('/blogger/posts', PostIndex::class)->name('posts.index');
     });
 });
 
