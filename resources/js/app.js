@@ -12,7 +12,11 @@ import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
+import Swal from 'sweetalert2'
+
 window.Swiper = Swiper;
 window.Navigation = Navigation;
 window.Pagination = Pagination;
+
+window.Swal = Swal;
 

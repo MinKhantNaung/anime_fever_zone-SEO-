@@ -55,7 +55,23 @@
 
     @livewire('wire-elements-modal')
 
-    @yield('scripts')
+    <script>
+        document.addEventListener('livewire:init', () => {
+            Livewire.on('swal', (event) => {
+                console.log(event)
+                Swal.fire({
+                    title: event[0].title,
+                    icon: event[0].icon,
+                    iconColor: event[0].iconColor,
+                    timer: 3000,
+                    toast: true,
+                    position: 'top-right',
+                    timerProgressBar: true,
+                    showConfirmButton: false
+                });
+            });
+        })
+    </script>
 
 </body>
 
