@@ -27,6 +27,9 @@ class Index extends Component
             // Remove the '/storage' prefix from the path
             $pathWithoutStorage = str_replace('/storage', '', $path);
 
+            // Remove relationships between tag and associated post
+            $tag->posts()->detach();
+
             $media->delete();
 
             $tag->delete();
