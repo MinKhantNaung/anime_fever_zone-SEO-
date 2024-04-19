@@ -39,9 +39,21 @@ class Index extends Component
             // Delete the file after the transaction is successfully committed
             Storage::delete('public/' . $pathWithoutStorage);
 
+            $this->dispatch('swal', [
+                'title' => 'Tag deleted successfully !',
+                'icon' => 'success',
+                'iconColor' => 'green'
+            ]);
+
             $this->dispatch('tag-reload');
         } catch (\Exception $e) {
             DB::rollBack();
+
+            $this->dispatch('swal', [
+                'title' => 'An unexpected error occurred. Please try again later.',
+                'icon' => 'error',
+                'iconColor' => 'red'
+            ]);
         }
     }
 

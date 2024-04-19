@@ -56,11 +56,24 @@ class Create extends ModalComponent
 
             DB::commit();
 
+            // success toast
+            $this->dispatch('swal', [
+                'title' => 'Tag created successfully !',
+                'icon' => 'success',
+                'iconColor' => 'green'
+            ]);
+
             $this->reset();
             $this->dispatch('close');
             $this->dispatch('tag-reload');
         } catch (\Exception $e) {
             DB::rollback();
+
+            $this->dispatch('swal', [
+                'title' => $e,
+                'icon' => 'error',
+                'iconColor' => 'green'
+            ]);
         }
     }
 

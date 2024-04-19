@@ -72,8 +72,20 @@ class Create extends ModalComponent
             $this->reset();
             $this->dispatch('close');
             $this->dispatch('post-event');
+
+            $this->dispatch('swal', [
+                'title' => 'Post created successfull !',
+                'icon' => 'success',
+                'iconColor' => 'green'
+            ]);
         } catch (\Exception $e) {
             DB::rollBack();
+
+            $this->dispatch('swal', [
+                'title' => 'An unexpected error occurred. Please try again later.',
+                'icon' => 'error',
+                'iconColor' => 'red'
+            ]);
         }
     }
 

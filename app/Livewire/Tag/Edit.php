@@ -76,8 +76,20 @@ class Edit extends ModalComponent
             $this->reset();
             $this->dispatch('close');
             $this->dispatch('tag-reload');
+
+            $this->dispatch('swal', [
+                'title' => 'Tag updated successfully !',
+                'icon' => 'success',
+                'iconColor' => 'green'
+            ]);
         } catch (\Exception $e) {
             DB::rollback();
+
+            $this->dispatch('swal', [
+                'title' => 'An unexpected error occurred. Please try again later.',
+                'icon' => 'error',
+                'iconColor' => 'red'
+            ]);
         }
     }
 
