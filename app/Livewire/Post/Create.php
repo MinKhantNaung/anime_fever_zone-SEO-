@@ -74,7 +74,7 @@ class Create extends ModalComponent
             $this->dispatch('post-event');
 
             $this->dispatch('swal', [
-                'title' => 'Post created successfull !',
+                'title' => 'Post created successfully !',
                 'icon' => 'success',
                 'iconColor' => 'green'
             ]);
