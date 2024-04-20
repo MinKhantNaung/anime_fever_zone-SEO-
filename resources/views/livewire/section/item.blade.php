@@ -1,6 +1,6 @@
-{{-- main --}}
-<main>
-    <div class="my-2">
+
+<div class="w-full">
+    <div class="my-2 max-w-lg mx-auto">
         {{-- Swiper JS --}}
         <div x-init="new Swiper($el, {
             modules: [Navigation, Pagination],
@@ -14,7 +14,7 @@
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',
             },
-        })" class="swiper h-[500px] border bg-white">
+        })" class="swiper border bg-white">
             <!-- Additional required wrapper -->
             <ul x-cloak class="swiper-wrapper">
                 <!-- Slides -->
@@ -27,7 +27,7 @@
 
                             @case('image')
                                 <img src="{{ $file->url }}" alt=""
-                                    class="h-[500px] w-full block object-scale-down">
+                                    class="w-full block object-scale-down">
                             @break
 
                             @default
@@ -64,6 +64,10 @@
 
             <!-- If we need scrollbar -->
             <div class="swiper-scrollbar"></div>
+
         </div>
     </div>
-</main>
+
+    <h1 class="font-bold text-2xl my-3">{{ $section->heading }}</h1>
+    <p class="text-lg font-medium">{!! $section->body !!}</p>
+</div>

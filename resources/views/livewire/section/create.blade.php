@@ -28,6 +28,7 @@
 
             @if (count($media) == 0)
                 {{-- Trigger Button --}}
+                <h1 class="text-center">16:9 aspect ratio, recommended like TV screen)</h1>
                 <label for="custom-file-input" class="m-auto max-w-fit flex-col flex gap-3 cursor-pointer">
                     <input wire:model.live='media' type="file" multiple accept=".jpg,.jpeg,.png,svg,webp"
                         id="custom-file-input" class="sr-only">
