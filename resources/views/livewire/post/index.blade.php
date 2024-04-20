@@ -46,7 +46,10 @@
                         {{-- Go to sections --}}
                         <td>
                             <a wire:navigate.hover href=""
-                                class="rounded-full bg-violet-500 text-white p-2">Sections</a>
+                                class="rounded-full bg-violet-500 text-white p-2 indicator">
+                                <span class="indicator-item badge badge-secondary">{{ $post->sections->count() }}+</span>
+                                Sections
+                            </a>
                         </td>
                         <td>
                             <input type="checkbox" {{ $post->is_publish == 1 ? 'checked' : '' }}
@@ -65,7 +68,9 @@
                                             clip-rule="evenodd" />
                                     </svg>
                                 </a>
-                                <span onclick="Livewire.dispatch('openModal', { component: 'post.edit', arguments: { post: {{ $post->id }} } })" class="inline-block cursor-pointer">
+                                <span
+                                    onclick="Livewire.dispatch('openModal', { component: 'post.edit', arguments: { post: {{ $post->id }} } })"
+                                    class="inline-block cursor-pointer">
                                     {{-- Edit button --}}
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
