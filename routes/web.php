@@ -4,6 +4,7 @@ use App\Livewire\Home;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Livewire\Post\Index as PostIndex;
+use App\Livewire\Section\Index as SectionIndex;
 use App\Livewire\Tag\Index;
 use App\Livewire\Topic\Create;
 
@@ -20,6 +21,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/blogger/tags', Index::class)->name('tags.index');
 
         Route::get('/blogger/posts', PostIndex::class)->name('posts.index');
+        Route::get('/blogger/posts/{post}/sections', SectionIndex::class)->name('sections.index');
     });
 });
 

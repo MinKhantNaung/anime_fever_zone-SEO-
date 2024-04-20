@@ -58,7 +58,7 @@
                         </td>
                         {{-- Go to sections --}}
                         <td>
-                            <a wire:navigate.hover href=""
+                            <a wire:navigate.hover href="{{ route('sections.index', $post->id) }}"
                                 class="rounded-full bg-violet-500 text-white p-2 indicator">
                                 <span
                                     class="indicator-item badge badge-secondary">{{ $post->sections->count() }}+</span>
