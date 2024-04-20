@@ -22,8 +22,8 @@
                     <th>Heading</th>
                     <th>Slug</th>
                     <th>Body</th>
-                    <th>Sections</th>
                     <th>Publish</th>
+                    <th>Sections</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -43,17 +43,27 @@
                         <td class="text-wrap">{{ $post->heading }}</td>
                         <td class="text-wrap">{{ $post->slug }}</td>
                         <td>{{ $post->body }}</td>
+                        <td>
+                            @if ($post->is_publish == 1)
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                                </svg>
+                            @else
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                </svg>
+                            @endif
+                        </td>
                         {{-- Go to sections --}}
                         <td>
                             <a wire:navigate.hover href=""
                                 class="rounded-full bg-violet-500 text-white p-2 indicator">
-                                <span class="indicator-item badge badge-secondary">{{ $post->sections->count() }}+</span>
+                                <span
+                                    class="indicator-item badge badge-secondary">{{ $post->sections->count() }}+</span>
                                 Sections
                             </a>
-                        </td>
-                        <td>
-                            <input type="checkbox" {{ $post->is_publish == 1 ? 'checked' : '' }}
-                                class="checkbox checkbox-secondary" />
                         </td>
                         <td class="text-nowrap">
                             <form wire:submit.prevent="deletePost({{ $post->id }})">
