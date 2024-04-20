@@ -34,6 +34,12 @@ class Create extends Component
             $this->reset();
 
             $this->dispatch('topic-created');
+
+            $this->dispatch('swal', [
+                'title' => 'Topic updated successfully !',
+                'icon' => 'success',
+                'iconColor' => 'green'
+            ]);
         } else {
             $this->validate([
                 'name' => 'required|string|max:255|unique:topics,name'
@@ -46,6 +52,12 @@ class Create extends Component
             $this->reset();
 
             $this->dispatch('topic-created');
+
+            $this->dispatch('swal', [
+                'title' => 'Topic created successfully !',
+                'icon' => 'success',
+                'iconColor' => 'green'
+            ]);
         }
     }
 
@@ -54,6 +66,12 @@ class Create extends Component
         $topic->delete();
 
         $this->dispatch('topic-created');
+
+        $this->dispatch('swal', [
+            'title' => 'Topic deleted successfully !',
+            'icon' => 'success',
+            'iconColor' => 'green'
+        ]);
     }
 
     #[On('topic-created')]

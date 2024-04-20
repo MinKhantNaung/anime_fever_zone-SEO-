@@ -70,9 +70,9 @@ class Create extends ModalComponent
             DB::rollback();
 
             $this->dispatch('swal', [
-                'title' => $e,
+                'title' => 'An unexpected error occurred. Please try again later.',
                 'icon' => 'error',
-                'iconColor' => 'green'
+                'iconColor' => 'red'
             ]);
         }
     }

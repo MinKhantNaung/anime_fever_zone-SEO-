@@ -2,7 +2,7 @@
 
 <div class="container mx-auto flex flex-wrap py-6 overflow-x-auto">
 
-    <button onclick="Livewire.dispatch('openModal', { component: 'section.create' })" class="btn btn-secondary ml-auto">+
+    <button onclick="Livewire.dispatch('openModal', { component: 'section.create', arguments: { post: {{ $post->id }} } })" class="btn btn-secondary ml-auto">+
         Create
         New</button>
 

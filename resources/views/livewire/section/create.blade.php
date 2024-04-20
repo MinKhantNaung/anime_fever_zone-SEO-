@@ -64,6 +64,14 @@
 
         <aside class="col-span-12 lg:col-span-5 mx-auto items-center w-full">
             <div>
+                <input wire:model="heading" type="text" placeholder="Type heading (optional)"
+                    class="input input-bordered input-secondary w-full mt-3" />
+                @error('heading')
+                    <x-input-error messages="{{ $message }}" />
+                @enderror
+            </div>
+
+            <div>
                 <textarea wire:model="body" class="textarea textarea-secondary w-full mt-3" placeholder="Enter description"></textarea>
                 @error('body')
                     <x-input-error messages="{{ $message }}" />

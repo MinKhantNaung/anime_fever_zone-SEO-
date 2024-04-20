@@ -3,12 +3,14 @@
 namespace App\Livewire\Section;
 
 use App\Models\Post;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class Index extends Component
 {
     public Post $post;
 
+    #[On('section-reload')]
     public function mount()
     {
         $this->post->load('sections');

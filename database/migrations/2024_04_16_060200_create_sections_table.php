@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('sections', function (Blueprint $table) {
             $table->id();
             $table->foreignId('post_id')->constrained()->cascadeOnDelete();
-            $table->text('body'); // ckeditor
+            $table->string('heading')->nullable();
+            $table->text('body');
             $table->timestamps();
         });
     }
