@@ -6,6 +6,7 @@ use App\Models\Media;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\Topic;
+use App\Services\FileService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
@@ -62,23 +63,12 @@ class Edit extends ModalComponent
                 // delete previous media
                 $media = $this->post->media;
 
-                $prev_url = $media->url;
-
-                $path = parse_url($prev_url, PHP_URL_PATH); // // Extracts the path part of the URL
-
-                // remove the '/storage' prefix from the path
-                $pathWithoutStorage = str_replace('/storage', '', $path);
-
-                Storage::delete('public/' . $pathWithoutStorage);
+                $media = (new FileService)->deleteFile($media);
 
                 $media->delete();
 
                 // add updated media
-                $file_name = uniqid() . '_' . $this->media->getClientOriginalName();
-
-                $path = $this->media->storeAs('media', $file_name, 'public');
-
-                $url = url(Storage::url($path));
+                $url = (new FileService)->storeFile($this->media);
 
                 Media::create([
                     'mediable_id' => $this->post->id,

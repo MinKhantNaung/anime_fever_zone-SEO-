@@ -4,6 +4,7 @@ namespace App\Livewire\Tag;
 
 use App\Models\Tag;
 use App\Models\Media;
+use App\Services\FileService;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
 use LivewireUI\Modal\ModalComponent;
@@ -40,11 +41,7 @@ class Create extends ModalComponent
             ]);
 
             // add media
-            $file_name = uniqid() . '_' . $this->media->getClientOriginalName();
-
-            $path = $this->media->storeAs('media', $file_name, 'public');
-
-            $url = url(Storage::url($path));
+            $url = (new FileService)->storeFile($this->media);
 
             // create media
             Media::create([

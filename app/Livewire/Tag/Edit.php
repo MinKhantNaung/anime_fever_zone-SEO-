@@ -4,6 +4,7 @@ namespace App\Livewire\Tag;
 
 use App\Models\Tag;
 use App\Models\Media;
+use App\Services\FileService;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
 use LivewireUI\Modal\ModalComponent;
@@ -45,23 +46,12 @@ class Edit extends ModalComponent
                 // delete previous media
                 $media = $this->tag->media;
 
-                $prev_url = $media->url;
-
-                $path = parse_url($prev_url, PHP_URL_PATH); // Extracts the path part of the URL
-
-                // Remove the '/storage' prefix from the path
-                $pathWithoutStorage = str_replace('/storage', '', $path);
-
-                Storage::delete('public/' . $pathWithoutStorage);
+                $media = (new FileService)->deleteFile($media);
 
                 $media->delete();
 
                 // add updated media
-                $file_name = uniqid() . '_' . $this->media->getClientOriginalName();
-
-                $path = $this->media->storeAs('media', $file_name, 'public');
-
-                $url = url(Storage::url($path));
+                $url = (new FileService)->storeFile($this->media);
 
                 Media::create([
                     'mediable_id' => $this->tag->id,

@@ -6,6 +6,7 @@ use App\Models\Tag;
 use Livewire\Component;
 use Livewire\Attributes\On;
 use Livewire\WithPagination;
+use App\Services\FileService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -20,24 +21,16 @@ class Index extends Component
         try {
             $media = $tag->media;
 
-            $url = $media->url;
+            $media = (new FileService)->deleteFile($media);
 
-            $path = parse_url($url, PHP_URL_PATH); // Extracts the path part of the URL
-
-            // Remove the '/storage' prefix from the path
-            $pathWithoutStorage = str_replace('/storage', '', $path);
+            $media->delete();
 
             // Remove relationships between tag and associated post
             $tag->posts()->detach();
 
-            $media->delete();
-
             $tag->delete();
 
             DB::commit();
-
-            // Delete the file after the transaction is successfully committed
-            Storage::delete('public/' . $pathWithoutStorage);
 
             $this->dispatch('swal', [
                 'title' => 'Tag deleted successfully !',

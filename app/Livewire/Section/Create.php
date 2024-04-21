@@ -5,6 +5,7 @@ namespace App\Livewire\Section;
 use App\Models\Media;
 use App\Models\Post;
 use App\Models\Section;
+use App\Services\FileService;
 use Illuminate\Support\Facades\DB;
 use Livewire\WithFileUploads;
 use LivewireUI\Modal\ModalComponent;
@@ -46,11 +47,7 @@ class Create extends ModalComponent
                 // get mime type
                 $mime = $this->getMime($media);
 
-                $file_name = uniqid() . '_' . $media->getClientOriginalName();
-
-                $path = $media->storeAs('media', $file_name, 'public');
-
-                $url = url(Storage::url($path));
+                $url = (new FileService)->storeFile($media);
 
                 // create media
                 Media::create([

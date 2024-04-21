@@ -4,6 +4,7 @@ namespace App\Livewire\Section;
 
 use App\Models\Media;
 use App\Models\Section;
+use App\Services\FileService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
@@ -45,14 +46,7 @@ class Edit extends ModalComponent
 
                 // delete previous media
                 foreach ($prev_media as $media) {
-                    $prev_url = $media->url;
-
-                    $path = parse_url($prev_url, PHP_URL_PATH); // Extracts the path part of the URL
-
-                    // Remove the '/storage' prefix from the path
-                    $pathWithoutStorage = str_replace('/storage', '', $path);
-
-                    Storage::delete('public/' . $pathWithoutStorage);
+                    $media = (new FileService)->deleteFile($media);
 
                     $media->delete();
                 }
@@ -61,11 +55,7 @@ class Edit extends ModalComponent
                     // get mime type
                     $mime = $this->getMime($media);
 
-                    $file_name = uniqid() . '_' . $media->getClientOriginalName();
-
-                    $path = $media->storeAs('media', $file_name, 'public');
-
-                    $url = url(Storage::url($path));
+                    $url = (new FileService)->storeFile($media);
 
                     // create media
                     Media::create([
