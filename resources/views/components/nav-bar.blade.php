@@ -42,7 +42,8 @@
                         Log out
                     </button>
                 </form>
-                <a class="px-2 hover:text-gray-200 hover:underline">
+                {{-- Profile --}}
+                <a wire:navigate.hover href="{{ route('profile.edit') }}" class="px-2 hover:text-gray-200 hover:underline">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-9 h-9">
                         <path stroke-linecap="round" stroke-linejoin="round"
