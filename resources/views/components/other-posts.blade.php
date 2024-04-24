@@ -8,36 +8,21 @@
     @else
         <div class="w-full">
             <span class="bg-rose-500">.</span>
-            <span class="text-2xl">Latest</span>
+            <span class="text-2xl">Popular</span>
         </div>
     @endif
 
-    <div class="grid grid-cols-12 bg-white shadow my-4 p-6">
-        <div class="col-span-12 lg:col-span-4">
-            <img src="https://source.unsplash.com/collection/1346951/1000x500?sig=3" class="w-full object-cover">
+    @foreach ($popularPosts as $post)
+        <div class="grid grid-cols-12 bg-white shadow my-4 p-6">
+            <div class="col-span-12 xl:col-span-4">
+                <img src="{{ $post->media->url }}" class="w-full object-cover">
+            </div>
+            <div class="col-span-12 xl:col-span-8">
+                <p class="px-2 font-extrabold hover:underline">
+                    {{ $post->heading }}
+                </p>
+            </div>
         </div>
-        <div class="col-span-12 lg:col-span-8">
-            <p class="px-2 font-bold hover:underline">Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                Amet illo est dolores nulla </p>
-        </div>
-    </div>
-    <div class="grid grid-cols-12 bg-white shadow my-4 p-6">
-        <div class="col-span-12 lg:col-span-4">
-            <img src="https://source.unsplash.com/collection/1346951/1000x500?sig=3" class="w-full object-cover">
-        </div>
-        <div class="col-span-12 lg:col-span-8">
-            <p class="px-2 font-bold hover:underline">Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                Amet illo est dolores nulla </p>
-        </div>
-    </div>
-    <div class="grid grid-cols-12 bg-white shadow my-4 p-6">
-        <div class="col-span-12 lg:col-span-4">
-            <img src="https://source.unsplash.com/collection/1346951/1000x500?sig=3" class="w-full object-cover">
-        </div>
-        <div class="col-span-12 lg:col-span-8">
-            <p class="px-2 font-bold hover:underline">Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                Amet illo est dolores nulla </p>
-        </div>
-    </div>
+    @endforeach
 
 </aside>
