@@ -7,11 +7,13 @@ use App\Livewire\Post\Index as PostIndex;
 use App\Livewire\Profile\Edit;
 use App\Livewire\Section\Index as SectionIndex;
 use App\Livewire\Tag\Index;
+use App\Livewire\TagShow;
 use App\Livewire\Topic;
 use App\Livewire\Topic\Create;
 
 Route::get('/', Home::class)->name('home');
 Route::get('/topic/{slug}', Topic::class)->name('topic');
+Route::get('/tag/{slug}', TagShow::class)->name('tag');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', Edit::class)->name('profile.edit');

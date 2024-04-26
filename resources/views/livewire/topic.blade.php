@@ -42,9 +42,11 @@
 
                 <div class="col-span-12 lg:col-span-7">
                     <p class="font-extrabold text-sm text-[#9926f0] uppercase">
-                        {{ $post->topic->name }}
+                        <a wire:navigate.hover href="{{ route('topic', $post->topic->slug) }}" class="cursor-pointer">
+                            {{ $post->topic->name }}
+                        </a>
                         @foreach ($post->tags as $tag)
-                            <span>| {{ $tag->name }}</span>
+                            <a wire:navigate.hover href="{{ route('tag', $tag->slug) }}">| {{ $tag->name }}</a>
                         @endforeach
                     </p>
 
@@ -69,18 +71,6 @@
 
     <!-- other posts Section -->
     <x-other-posts :popularPosts="$popularPosts" />
-
-    @section('scripts')
-        <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "BlogPosting",
-      "headline": "Anime Fever Zone",
-      "image": "{{ asset('favicon.ico') }}",
-      "description": "Anime"
-    }
-    </script>
-    @endsection
 
 </div>
 
