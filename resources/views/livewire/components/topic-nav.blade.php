@@ -11,8 +11,8 @@
 
 
             @foreach ($topics as $topic)
-                <a href="#"
-                    class="hover:bg-gradient-to-r hover:from-[#9926f0] hover:to-[#d122e3] rounded py-2 px-4 mx-2">{{ $topic->name }}</a>
+                <a wire:navigate.hover href="{{ route('topic', $topic->slug) }}"
+                    class="hover:bg-gradient-to-r hover:from-[#9926f0] hover:to-[#d122e3] rounded py-2 px-4 mx-2 {{ request()->is('topic/' . $topic->slug) ? 'bg-[#9926f0]' : '' }}">{{ $topic->name }}</a>
             @endforeach
 
             @auth

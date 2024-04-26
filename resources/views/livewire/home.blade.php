@@ -28,7 +28,7 @@
                         {{ Str::limit($post->body, 100) }}
                     </p>
 
-                    <p class="text-xs mt-2">By {{ auth()->user()->name }} | {{ $post->created_at->diffForHumans() }}</p>
+                    <p class="text-xs mt-2">By Anime Fever Zone | {{ $post->created_at->diffForHumans() }}</p>
                 </div>
             </div>
         @endforeach
@@ -44,14 +44,19 @@
 
     @section('scripts')
         <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "BlogPosting",
-      "headline": "Anime Fever Zone",
-      "image": "{{ asset('favicon.ico') }}",
-      "description": "Anime"
-    }
-    </script>
+        {
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          "headline": "Anime Fever Zone",
+          "image": "{{ asset('favicon.ico') }}",
+          "description": "Explore the latest news, reviews, and discussions on anime and other popular series at Anime Fever Zone. Stay up-to-date
+          with the hottest trends and join our vibrant community of anime enthusiasts.",
+          "author": {
+            "@type": "Person",
+            "name": "Anime Fever Zone"
+          }
+        }
+        </script>
     @endsection
 
 </div>
