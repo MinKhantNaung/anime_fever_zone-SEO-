@@ -4,6 +4,7 @@ use App\Livewire\Home;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Livewire\Post\Index as PostIndex;
+use App\Livewire\PostShow;
 use App\Livewire\Profile\Edit;
 use App\Livewire\Section\Index as SectionIndex;
 use App\Livewire\Tag\Index;
@@ -14,6 +15,7 @@ use App\Livewire\Topic\Create;
 Route::get('/', Home::class)->name('home');
 Route::get('/topic/{slug}', Topic::class)->name('topic');
 Route::get('/tag/{slug}', TagShow::class)->name('tag');
+Route::get('/{slug}/post', PostShow::class)->name('post');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', Edit::class)->name('profile.edit');

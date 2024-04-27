@@ -1,6 +1,6 @@
 <aside class="w-full md:w-1/3 flex flex-col items-center px-3">
 
-    @if (request()->routeIs('post.home'))
+    @if (request()->routeIs('post'))
         <div class="w-full">
             <span class="bg-rose-500">.</span>
             <span class="text-2xl">You may also like</span>

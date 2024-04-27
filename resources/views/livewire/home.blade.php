@@ -10,7 +10,9 @@ the latest trends and discussions across a wide range of topics.')
         @foreach ($posts as $post)
             <div class="grid grid-cols-12 gap-1 bg-white shadow my-4">
                 <div class="col-span-12 lg:col-span-5">
-                    <img src="{{ $post->media->url }}" class="w-full object-cover">
+                    <a wire:navigate.hover href="{{ route('post', $post->slug) }}">
+                        <img src="{{ $post->media->url }}" class="w-full object-cover">
+                    </a>
                 </div>
 
                 <div class="col-span-12 lg:col-span-7">
@@ -23,15 +25,17 @@ the latest trends and discussions across a wide range of topics.')
                         @endforeach
                     </p>
 
-                    <h1 class="font-black text-2xl capitalize my-2">
-                        {{ $post->heading }}
-                    </h1>
+                    <a wire:navigate.hover href="{{ route('post', $post->slug) }}">
+                        <h1 class="font-black text-2xl capitalize my-2">
+                            {{ $post->heading }}
+                        </h1>
 
-                    <p class="font-bold hover:underline text-base">
-                        {{ Str::limit($post->body, 100) }}
-                    </p>
+                        <p class="font-bold hover:underline text-base">
+                            {{ Str::limit($post->body, 100) }}
+                        </p>
 
-                    <p class="text-xs mt-2">By Anime Fever Zone | {{ $post->created_at->diffForHumans() }}</p>
+                        <p class="text-xs mt-2">By Anime Fever Zone | {{ $post->created_at->diffForHumans() }}</p>
+                    </a>
                 </div>
             </div>
         @endforeach

@@ -1,6 +1,6 @@
 @section('title', ucfirst($slug) . ' | Anime Fever Zone')
 @section('description')
-    Explore exciting content on {{ $slug }} and more at Anime Fever Zone. Join our community and stay informed about
+    Explore exciting content on {{ ucfirst(str_replace('-', ' ', $slug)) }} and more at Anime Fever Zone. Join our community and stay informed about
     the latest trends and discussions across a wide range of topics.
 @endsection
 
