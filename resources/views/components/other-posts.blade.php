@@ -13,16 +13,18 @@
     @endif
 
     @foreach ($popularPosts as $post)
-        <div class="grid grid-cols-12 bg-white shadow my-4 p-6">
-            <div class="col-span-12 xl:col-span-4">
-                <img src="{{ $post->media->url }}" class="w-full object-cover">
+        <a wire:navigate.hover href="{{ route('post', $post->slug) }}">
+            <div class="grid grid-cols-12 bg-white shadow my-4 p-6">
+                <div class="col-span-12 xl:col-span-4">
+                    <img src="{{ $post->media->url }}" class="w-full object-cover">
+                </div>
+                <div class="col-span-12 xl:col-span-8">
+                    <p class="px-2 font-extrabold hover:underline">
+                        {{ $post->heading }}
+                    </p>
+                </div>
             </div>
-            <div class="col-span-12 xl:col-span-8">
-                <p class="px-2 font-extrabold hover:underline">
-                    {{ $post->heading }}
-                </p>
-            </div>
-        </div>
+        </a>
     @endforeach
 
 </aside>

@@ -15,7 +15,7 @@ the latest trends and discussions across a wide range of topics.')
                     </a>
                 </div>
 
-                <div class="col-span-12 lg:col-span-7">
+                <div class="col-span-12 lg:col-span-7 ps-1">
                     <p class="font-extrabold text-sm text-[#9926f0] uppercase">
                         <a wire:navigate.hover href="{{ route('topic', $post->topic->slug) }}" class="cursor-pointer">
                             {{ $post->topic->name }}

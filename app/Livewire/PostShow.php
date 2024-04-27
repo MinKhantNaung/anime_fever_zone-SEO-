@@ -13,15 +13,16 @@ class PostShow extends Component
 
     public function mount()
     {
-        $this->popularPosts = Post::select('id', 'heading', 'slug')
-            ->inRandomOrder()
-            ->take(3)
-            ->get();
-
         $this->post = Post::with('media', 'topic', 'tags', 'sections', 'comments')
             ->select('id', 'topic_id', 'heading', 'body', 'view', 'created_at')
             ->where('slug', $this->slug)
             ->first();
+
+        $this->popularPosts = Post::select('id', 'heading', 'slug')
+            ->inRandomOrder()
+            ->where('id', '!=', $this->post->id)
+            ->take(3)
+            ->get();
 
         if ($this->post) {
             // Increment view count
