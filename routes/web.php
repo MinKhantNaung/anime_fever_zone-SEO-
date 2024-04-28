@@ -19,8 +19,6 @@ Route::get('/{slug}/post', PostShow::class)->name('post');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', Edit::class)->name('profile.edit');
-    Route::get('/profile/1', [ProfileController::class, 'edit'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::middleware('isBlogger')->group(function () {
         Route::get('/topics', Create::class)->name('topics.create');
