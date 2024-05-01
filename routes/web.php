@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Livewire\Info\About;
 use App\Livewire\Post\Index as PostIndex;
 use App\Livewire\PostShow;
+use App\Livewire\Privacy;
 use App\Livewire\Profile\Edit;
 use App\Livewire\Section\Index as SectionIndex;
 use App\Livewire\Tag\Index;
@@ -20,6 +21,7 @@ Route::get('/{slug}/post', PostShow::class)->name('post');
 
 // info
 Route::get('/about', About::class)->name('about');
+Route::get('/privacy-policy', Privacy::class)->name('privacy');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', Edit::class)->name('profile.edit');

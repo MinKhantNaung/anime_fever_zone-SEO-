@@ -5,7 +5,6 @@
 
     <div class="container mx-auto flex flex-wrap py-6">
 
-        <!-- Posts Section -->
         <section class="w-full md:w-2/3 flex flex-col px-3 overflow-hidden">
 
             <div class="my-3">
@@ -35,7 +34,8 @@
             <div class="my-3">
                 <h3 class="text-3xl font-extrabold">What I Offer:</h3>
                 <p class="text-lg font-medium mt-5">
-                    <span class="font-extrabold text-xl">Personal Reviews:</span> Dive into my personal take on the latest anime releases and timeless classics. From
+                    <span class="font-extrabold text-xl">Personal Reviews:</span> Dive into my personal take on the latest
+                    anime releases and timeless classics. From
                     dissecting plot twists to gushing over favorite characters, I'll take you on a journey through the shows
                     that have captured my heart.
                 </p>
@@ -63,7 +63,8 @@
             <div class="my-3">
                 <h3 class="text-3xl font-extrabold">Connect With Me:</h3>
                 <p class="text-lg font-medium mt-5">
-                    Shoot me an email at (minkhantnaung839@gmail.com) if you have any questions, suggestions, or just want to
+                    Shoot me an email at (minkhantnaung839@gmail.com) if you have any questions, suggestions, or just want
+                    to
                     chat
                     one-on-one.
                 </p>
@@ -80,8 +81,10 @@
 
         </section>
 
-    @section('scripts')
-        <script type="application/ld+json">
+    </div>
+
+@section('scripts')
+    <script type="application/ld+json">
         {
           "@context": "https://schema.org",
           "@type": "BlogPosting",
@@ -95,6 +98,4 @@
           }
         }
         </script>
-    @endsection
-
-</div>
+@endsection
