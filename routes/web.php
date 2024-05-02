@@ -11,6 +11,7 @@ use App\Livewire\Profile\Edit;
 use App\Livewire\Section\Index as SectionIndex;
 use App\Livewire\Tag\Index;
 use App\Livewire\TagShow;
+use App\Livewire\Term;
 use App\Livewire\Topic;
 use App\Livewire\Topic\Create;
 
@@ -22,6 +23,7 @@ Route::get('/{slug}/post', PostShow::class)->name('post');
 // info
 Route::get('/about', About::class)->name('about');
 Route::get('/privacy-policy', Privacy::class)->name('privacy');
+Route::get('/terms', Term::class)->name('term');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', Edit::class)->name('profile.edit');
