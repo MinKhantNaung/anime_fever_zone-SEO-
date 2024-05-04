@@ -46,7 +46,7 @@
                 Unless otherwise stated, Anime Fever Zone and/or its licensors own the intellectual property rights for
                 all material on Anime Fever Zone. All intellectual property rights are reserved. You may view and/or
                 print pages from <a target="blank" href="{{ route('home') }}"
-                    class="underline">https://www.animefeverzone.com</a> for
+                    class="underline">https://www.anime-fever-zone.com</a> for
                 your own personal use subject to restrictions set in
                 these terms and conditions.
                 <br><br>
@@ -55,15 +55,15 @@
             <ul>
                 <li>
                     Republish material from <a href="{{ route('home') }}" target="blank"
-                        class="underline">https://www.animefeverzone.com</a>
+                        class="underline">https://www.anime-fever-zone.com</a>
                 </li>
                 <li>
                     Sell, rent or sub-license material from <a href="{{ route('home') }}" target="blank"
-                        class="underline">https://www.animefeverzone.com</a>
+                        class="underline">https://www.anime-fever-zone.com</a>
                 </li>
                 <li>
                     Reproduce, duplicate or copy material from <a href="{{ route('home') }}" target="blank"
-                        class="underline">https://www.animefeverzone.com</a>
+                        class="underline">https://www.anime-fever-zone.com</a>
                 </li>
             </ul>
             <br>
@@ -186,7 +186,7 @@
                 linking party's site.
                 <br><br>
                 If you are among the organizations listed in paragraph 2 above and are interested in linking to our
-                website, you must notify us by sending an e-mail to contact@animefeverzone.com. Please include your
+                website, you must notify us by sending an e-mail to dowhatyoulikeknm@gmail.com. Please include your
                 name, your organization name, contact information (such as a phone number and/or e-mail address) as well
                 as the URL of your site, a list of any URLs from which you intend to link to our Web site, and a list of
                 the URL(s) on our site to which you would like to link. Allow 2-3 weeks for a response.
