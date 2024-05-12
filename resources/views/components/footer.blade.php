@@ -4,7 +4,7 @@
             <a wire:navigate.hover href="{{ route('about') }}" class="uppercase px-3 hover:text-gray-200 hover:underline {{ request()->routeIs('about') ? 'underline' : '' }}">About</a>
             <a wire:navigate.hover href="{{ route('privacy') }}" class="uppercase px-3 hover:text-gray-200 hover:underline {{ request()->routeIs('privacy') ? 'underline' : '' }}">Privacy Policy</a>
             <a wire:navigate.hover href="{{ route('term') }}" class="uppercase px-3 hover:text-gray-200 hover:underline {{ request()->routeIs('term') ? 'underline' : '' }}">Terms & Conditions</a>
-            <a href="#" class="uppercase px-3 hover:text-gray-200 hover:underline">Contact Us</a>
+            <a wire:navigate.hover href="{{ route('contact') }}" class="uppercase px-3 hover:text-gray-200 hover:underline {{ request()->routeIs('contact') ? 'underline' : '' }}">Contact Us</a>
         </div>
         <div class="uppercase pb-6">&copy; anime-fever-zone.com</div>
     </div>
