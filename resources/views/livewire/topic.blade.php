@@ -34,6 +34,11 @@
     <!-- Posts Section -->
     <section class="w-full md:w-2/3 flex flex-col items-center px-3 overflow-hidden">
 
+        <div class="w-full">
+            <span class="bg-rose-500">.</span>
+            <span class="text-2xl">Latest</span>
+        </div>
+
         @foreach ($posts as $post)
             <div class="grid grid-cols-12 gap-1 bg-white shadow my-4">
                 <div class="col-span-12 lg:col-span-5">
