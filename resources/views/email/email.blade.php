@@ -9,6 +9,7 @@
 </head>
 
 <body>
+    <img src="{{ asset('favicon.ico') }}" alt="anime_fever_zone_logo" style="width: 200px; height: 200px;">
     <p>{!! $body !!}</p>
 </body>
 
