@@ -1,24 +1,27 @@
 <?php
 
 use App\Livewire\Home;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProfileController;
-use App\Livewire\Info\About;
-use App\Livewire\Post\Index as PostIndex;
-use App\Livewire\PostShow;
-use App\Livewire\Privacy;
-use App\Livewire\Profile\Edit;
-use App\Livewire\Section\Index as SectionIndex;
-use App\Livewire\Tag\Index;
-use App\Livewire\TagShow;
 use App\Livewire\Term;
 use App\Livewire\Topic;
+use App\Livewire\Privacy;
+use App\Livewire\TagShow;
+use App\Livewire\PostShow;
+use App\Livewire\Tag\Index;
+use App\Livewire\Info\About;
+use App\Livewire\Profile\Edit;
 use App\Livewire\Topic\Create;
+use Illuminate\Support\Facades\Route;
+use App\Livewire\Post\Index as PostIndex;
+use App\Http\Controllers\SubscriberController;
+use App\Livewire\Section\Index as SectionIndex;
 
 Route::get('/', Home::class)->name('home');
 Route::get('/topic/{slug}', Topic::class)->name('topic');
 Route::get('/tag/{slug}', TagShow::class)->name('tag');
 Route::get('/{slug}/post', PostShow::class)->name('post');
+
+// Email Subscribe
+Route::get('/subscriber/verify/{token}/{email}', SubscriberController::class)->name('subscriber_verify');
 
 // info
 Route::get('/about', About::class)->name('about');

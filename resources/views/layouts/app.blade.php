@@ -58,7 +58,7 @@
     <script>
         document.addEventListener('livewire:init', () => {
             Livewire.on('swal', (event) => {
-                console.log(event)
+                // console.log(event)
                 Swal.fire({
                     title: event[0].title,
                     icon: event[0].icon,
@@ -66,6 +66,20 @@
                     timer: 3000,
                     toast: true,
                     position: 'top-right',
+                    timerProgressBar: true,
+                    showConfirmButton: false
+                });
+            });
+
+            Livewire.on('subscribed', (event) => {
+                // console.log(event)
+                Swal.fire({
+                    title: event[0].title,
+                    icon: event[0].icon,
+                    iconColor: event[0].iconColor,
+                    timer: 20000,
+                    toast: true,
+                    position: 'top',
                     timerProgressBar: true,
                     showConfirmButton: false
                 });
