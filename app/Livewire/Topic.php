@@ -36,6 +36,6 @@ class Topic extends Component
 
         return view('livewire.topic', [
             'posts' => $posts
-        ]);
+        ])->title('Anime Fever Zone-' . ucfirst($this->slug));
     }
 }

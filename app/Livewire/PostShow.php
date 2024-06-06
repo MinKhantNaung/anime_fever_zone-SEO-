@@ -71,6 +71,7 @@ class PostShow extends Component
 
     public function render()
     {
-        return view('livewire.post-show');
+        return view('livewire.post-show')
+            ->title(ucwords(str_replace('-', ' ', $this->slug)));
     }
 }

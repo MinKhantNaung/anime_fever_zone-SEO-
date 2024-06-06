@@ -1,4 +1,3 @@
-@section('title', 'Privacy Policy | Anime Fever Zone')
 @section('description', 'Privacy Policy')
 
 <div class="container mx-auto flex flex-wrap py-6">

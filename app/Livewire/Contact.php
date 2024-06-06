@@ -8,6 +8,7 @@ class Contact extends Component
 {
     public function render()
     {
-        return view('livewire.contact');
+        return view('livewire.contact')
+            ->title('Contact | Anime Fever Zone');
     }
 }

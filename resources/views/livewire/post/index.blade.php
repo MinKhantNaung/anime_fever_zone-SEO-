@@ -1,5 +1,3 @@
-@section('title', 'Admin')
-
 <div class="container mx-auto flex flex-wrap py-6 overflow-x-auto">
 
     <button onclick="Livewire.dispatch('openModal', { component: 'post.create' })" class="btn btn-secondary ml-auto">+

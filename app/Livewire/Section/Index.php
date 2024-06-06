@@ -6,7 +6,6 @@ use App\Models\Post;
 use App\Models\Section;
 use App\Services\FileService;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -57,6 +56,7 @@ class Index extends Component
 
     public function render()
     {
-        return view('livewire.section.index');
+        return view('livewire.section.index')
+            ->title('Admin');
     }
 }

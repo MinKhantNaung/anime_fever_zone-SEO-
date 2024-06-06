@@ -1,5 +1,3 @@
-@section('title', 'Admin')
-
 <div class="container mx-auto flex flex-wrap py-6 overflow-x-auto">
 
     <div class="w-[320px] mx-auto text-center">

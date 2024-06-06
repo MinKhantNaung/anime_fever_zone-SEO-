@@ -50,6 +50,7 @@ class Edit extends Component
 
     public function render()
     {
-        return view('livewire.profile.edit');
+        return view('livewire.profile.edit')
+            ->title('Profile');
     }
 }

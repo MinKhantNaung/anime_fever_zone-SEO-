@@ -109,6 +109,6 @@ class Index extends Component
 
         return view('livewire.post.index', [
             'posts' => $posts
-        ]);
+        ])->title('Admin');
     }
 }

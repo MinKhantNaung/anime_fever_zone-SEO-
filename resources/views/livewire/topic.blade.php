@@ -1,4 +1,3 @@
-@section('title', 'Anime Fever Zone-' . ucfirst($slug))
 @section('description')
     @switch($slug)
         @case('anime')

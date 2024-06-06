@@ -1,4 +1,3 @@
-@section('title', 'Contact | Anime Fever Zone')
 @section('description',
     'Discover the ultimate destination for anime enthusiasts! Dive into insightful reviews, engaging
     discussions, and a vibrant community at Anime Fever Zone. Join us and unleash your passion for anime today!')

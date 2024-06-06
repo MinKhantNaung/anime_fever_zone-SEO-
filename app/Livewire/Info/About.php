@@ -8,6 +8,7 @@ class About extends Component
 {
     public function render()
     {
-        return view('livewire.info.about');
+        return view('livewire.info.about')
+            ->title('About | Anime Fever Zone');
     }
 }

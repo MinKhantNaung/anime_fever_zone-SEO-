@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Post;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\Attributes\Title;
 
 class Home extends Component
 {
@@ -21,6 +22,7 @@ class Home extends Component
             ->get();
     }
 
+    #[Title('Anime Fever Zone')]
     public function render()
     {
         $posts = Post::with('media', 'topic', 'tags')

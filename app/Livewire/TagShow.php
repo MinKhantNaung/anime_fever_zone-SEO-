@@ -45,6 +45,6 @@ class TagShow extends Component
 
         return view('livewire.tag-show', [
             'posts' => $posts
-        ]);
+        ])->title(ucfirst($this->slug) . ' | Anime Fever Zone');
     }
 }

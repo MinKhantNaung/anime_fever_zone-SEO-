@@ -1,4 +1,3 @@
-@section('title', ucwords(str_replace('-', ' ', $slug)))
 @section('description')
     {{ substr($post->body, 0, 150) }}...
 @endsection

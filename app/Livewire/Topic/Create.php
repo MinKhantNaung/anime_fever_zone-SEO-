@@ -82,6 +82,7 @@ class Create extends Component
 
         return view('livewire.topic.create', [
             'topics' => $topics
-        ]);
+        ])
+        ->title('Admin');
     }
 }

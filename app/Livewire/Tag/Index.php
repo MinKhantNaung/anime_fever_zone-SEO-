@@ -60,6 +60,7 @@ class Index extends Component
 
         return view('livewire.tag.index', [
             'tags' => $tags
-        ]);
+        ])
+        ->title('Admin');
     }
 }
