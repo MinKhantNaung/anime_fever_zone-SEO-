@@ -12,7 +12,7 @@
         <div class="grid grid-cols-12 w-full my-3">
             <div class="hidden lg:block lg:col-span-4"></div>
             <div class="col-span-12 lg:col-span-4">
-                <img src="{{ $tag->media->url }}" alt="" class="w-[100%]">
+                <img src="{{ $tag->media->url }}" alt="{{ $tag->name }}" class="w-[100%]">
             </div>
 
             <h1 class="col-span-12 text-center font-bold text-2xl my-3">

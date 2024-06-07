@@ -30,7 +30,7 @@
                     <tr>
                         <td>{{ $index + $posts->firstItem() }}</td>
                         <td class="w-[200px]">
-                            <img src="{{ $post->media->url }}" alt="post image" class="w-full">
+                            <img src="{{ $post->media->url }}" alt="{{ $post->heading }}" class="w-full">
                         </td>
                         <td>{{ $post->topic->name }}</td>
                         <td>

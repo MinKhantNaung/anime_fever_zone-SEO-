@@ -5,7 +5,7 @@
             <ul class="flex items-center justify-between font-bold text-sm text-white uppercase no-underline">
                 <li>
                     <a wire:navigate.hover href="{{ route('home') }}" class="hover:text-gray-200 hover:underline px-4">
-                        <img src="{{ asset('favicon.ico') }}" alt="" class="w-9">
+                        <img src="{{ asset('favicon.ico') }}" alt="anime fever zone logo" class="w-9">
                     </a>
                 </li>
                 <li><a wire:navigate.hover href="{{ route('home') }}"
