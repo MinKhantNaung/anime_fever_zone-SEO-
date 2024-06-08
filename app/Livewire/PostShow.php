@@ -2,9 +2,10 @@
 
 namespace App\Livewire;
 
-use App\Mail\WebsiteMail;
+use Carbon\Carbon;
 use App\Models\Post;
 use Livewire\Component;
+use App\Mail\WebsiteMail;
 use App\Models\Subscriber;
 use Illuminate\Support\Facades\Mail;
 
@@ -59,6 +60,7 @@ class PostShow extends Component
         $this->popularPosts = Post::select('id', 'heading', 'slug')
             ->inRandomOrder()
             ->where('id', '!=', $this->post->id)
+            ->where('created_at', '>=', Carbon::now()->subMonth())
             ->take(3)
             ->get();
 

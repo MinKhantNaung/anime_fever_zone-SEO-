@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use Carbon\Carbon;
 use App\Models\Post;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -17,6 +18,7 @@ class Home extends Component
     {
         $this->popularPosts = Post::select('id', 'heading', 'slug')
             ->orderByDesc('view')
+            ->where('created_at', '>=', Carbon::now()->subMonth())
             ->where('is_publish', true)
             ->take(3)
             ->get();

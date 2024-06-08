@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use Carbon\Carbon;
 use App\Models\Tag;
 use App\Models\Post;
 use Livewire\Component;
@@ -23,11 +24,12 @@ class TagShow extends Component
             ->first();
 
         $this->popularPosts = Post::select('id', 'heading', 'slug')
-            ->orderByDesc('view')
             ->whereHas('tags', function ($query) {
                 $query->where('slug', $this->slug);
             })
             ->where('is_publish', true)
+            ->where('created_at', '>=', Carbon::now()->subMonth())
+            ->orderByDesc('view')
             ->take(3)
             ->get();
     }
