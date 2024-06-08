@@ -38,7 +38,7 @@
                     dissecting plot twists to gushing over favorite characters, I'll take you on a journey through the shows
                     that have captured my heart.
                 </p>
-                {{-- <p class="text-lg font-medium mt-5">
+                <p class="text-lg font-medium mt-5">
                     <span class="font-extrabold text-xl">Thoughts and Musings:</span> Join me as I delve into the latest trends, controversies, and discussions within
                     the anime community. From thought-provoking editorials to lighthearted reflections, there's always
                     something new to explore.
@@ -47,17 +47,17 @@
                     <span class="font-extrabold text-xl">Community Connection:</span> While it's just me behind the scenes, I still want to hear from you! Share your
                     thoughts and opinions in the comments section, or connect with me on social media to join the
                     conversation.
-                </p> --}}
+                </p>
             </div>
 
-            {{-- <div class="my-3">
+            <div class="my-3">
                 <h3 class="text-3xl font-extrabold">Join Me:</h3>
                 <p class="text-lg font-medium mt-5">
                     Are you ready to dive deep into the world of anime with a fellow fan? Subscribe to Anime Fever Zone to
                     stay updated on my latest posts and musings. Whether you're looking for recommendations, analysis, or
                     just a friendly chat about your favorite shows, you'll find it here.
                 </p>
-            </div> --}}
+            </div>
 
             <div class="my-3">
                 <h3 class="text-3xl font-extrabold">Connect With Me:</h3>

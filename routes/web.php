@@ -20,7 +20,6 @@ Route::get('/', Home::class)->name('home');
 Route::get('/topic/{slug}', Topic::class)->name('topic');
 Route::get('/tag/{slug}', TagShow::class)->name('tag');
 Route::get('/{slug}/post', PostShow::class)->name('post');
-Route::get('/contact/us', Contact::class)->name('contact');
 
 // Email Subscribe
 Route::get('/subscriber/verify/{token}/{email}', SubscriberController::class)->name('subscriber_verify');
@@ -29,6 +28,7 @@ Route::get('/subscriber/verify/{token}/{email}', SubscriberController::class)->n
 Route::get('/about', About::class)->name('about');
 Route::get('/privacy-policy', Privacy::class)->name('privacy');
 Route::get('/terms', Term::class)->name('term');
+Route::get('/contact/us', Contact::class)->name('contact');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', Edit::class)->name('profile.edit');

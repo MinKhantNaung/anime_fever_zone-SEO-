@@ -20,11 +20,11 @@
             <p class="text-lg font-medium mt-5">
                 When you visit our website, we may collect certain information about you, including:
                 <br>
-            <ul class="list-none">
-                {{-- <li>
+            <ul class="list-disc list-inside">
+                <li>
                     Personal information provided voluntarily, such as your name and email address when subscribing to
                     our newsletter or commenting on posts.
-                </li> --}}
+                </li>
                 <li>
                     Automatically collected information, such as your IP address, browser type, and device
                     characteristics, through cookies and similar tracking technologies.
@@ -38,7 +38,7 @@
             <p class="text-lg font-medium mt-5">
                 We use the information we collect for the following purposes:
                 <br>
-            <ul class="list-none">
+            <ul class="list-disc list-inside">
                 <li>
                     To personalize your experience and improve our website's functionality.
                 </li>

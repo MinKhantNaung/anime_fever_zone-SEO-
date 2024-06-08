@@ -51,7 +51,7 @@
                 <br><br>
                 You must not:
                 <br><br>
-            <ul>
+            <ul class="list-disc list-inside">
                 <li>
                     Republish material from <a href="{{ route('home') }}" target="blank"
                         class="underline">https://www.anime-fever-zone.com</a>
@@ -70,7 +70,7 @@
             </p>
         </div>
 
-        {{-- <div class="my-3">
+        <div class="my-3">
             <h3 class="text-3xl font-extrabold">User Comments</h3>
             <p class="text-lg font-medium mt-5">
                 Certain parts of this website offer the opportunity for users to post and exchange opinions,
@@ -88,7 +88,7 @@
                 <br><br>
                 You warrant and represent that:
                 <br><br>
-            <ul>
+            <ul class="list-disc list-inside">
                 <li>
                     You are entitled to post the Comments on our website and have all necessary licenses and consents to
                     do so;
@@ -110,14 +110,14 @@
             You hereby grant to Anime Fever Zone a non-exclusive royalty-free license to use, reproduce, edit and
             authorize others to use, reproduce and edit any of your Comments in any and all forms, formats or media.
             </p>
-        </div> --}}
+        </div>
 
         <div class="my-3">
             <h3 class="text-3xl font-extrabold">Hyperlinking to our Content</h3>
             <p class="text-lg font-medium mt-5">
                 The following organizations may link to our Web site without prior written approval:
                 <br><br>
-            <ul>
+            <ul class="list-disc list-inside">
                 <li>
                     Government agencies;
                 </li>
@@ -145,7 +145,7 @@
             We may consider and approve in our sole discretion other link requests from the following types of
             organizations:
             <br><br>
-            <ul>
+            <ul class="list-disc list-inside">
                 <li>
                     commonly-known consumer and/or business information sources such as Chambers of Commerce, American
                     Automobile Association, AARP and Consumers Union;
@@ -252,7 +252,7 @@
                 warranties implied by law in respect of satisfactory quality, fitness for purpose and/or the use of
                 reasonable care and skill). Nothing in this disclaimer will:
                 <br><br>
-            <ul>
+            <ul class="list-disc list-inside">
                 <li>
                     limit or exclude our or your liability for death or personal injury resulting from negligence;
                 </li>
