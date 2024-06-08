@@ -1,7 +1,5 @@
-@section('description')
-    Explore exciting content on {{ ucfirst(str_replace('-', ' ', $slug)) }} and more at Anime Fever Zone. Join our community and stay informed about
-    the latest trends and discussions across a wide range of topics.
-@endsection
+@section('description', "Explore exciting content on " . ucfirst(str_replace('-', ' ', $slug)) . " and more at Anime Fever Zone. Join our community and stay informed about
+    the latest trends and discussions across a wide range of topics.")
 
 <div class="container mx-auto flex flex-wrap py-6">
 
@@ -73,7 +71,7 @@
 
 </div>
 
-@section('script')
+@push('scripts')
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -88,4 +86,4 @@
       }
     }
     </script>
-@endsection
+@endpush

@@ -86,7 +86,7 @@
 
     </div>
 
-@section('scripts')
+@push('scripts')
     <script type="application/ld+json">
         {
           "@context": "https://schema.org",
@@ -101,4 +101,4 @@
           }
         }
         </script>
-@endsection
+@endpush

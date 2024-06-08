@@ -1,32 +1,30 @@
-@section('description')
-    @switch($slug)
-        @case('anime')
-            Explore the latest news, reviews, and discussions on anime and other popular series at Anime Fever Zone. Stay up-to-date
-            with the hottest trends and join our vibrant community of anime enthusiasts.
-        @break
+@switch($slug)
+    @case('anime')
+        @section('description', "Explore the latest news, reviews, and discussions on anime and other popular series at Anime Fever Zone. Stay up-to-date
+        with the hottest trends and join our vibrant community of anime enthusiasts.")
+    @break
 
-        @case('sport')
-            Discover the latest updates, analyses, and highlights from the world of sports at Anime Fever Zone. Whether you're a fan
-            of soccer, basketball, or any other sport, we've got you covered with in-depth coverage and insightful commentary.
-        @break
+    @case('sport')
+        @section('description', "Discover the latest updates, analyses, and highlights from the world of sports at Anime Fever Zone. Whether you're a fan
+        of soccer, basketball, or any other sport, we've got you covered with in-depth coverage and insightful commentary.")
+    @break
 
-        @case('movie')
-            Dive into the world of cinema with Anime Fever Zone. From blockbuster hits to indie gems, explore movie reviews,
-            trailers, and exclusive interviews with filmmakers. Get your popcorn ready and join us on a cinematic journey like no
-            other.
-        @break
+    @case('movie')
+        @section('description', "Dive into the world of cinema with Anime Fever Zone. From blockbuster hits to indie gems, explore movie reviews,
+        trailers, and exclusive interviews with filmmakers. Get your popcorn ready and join us on a cinematic journey like no
+        other.")
+    @break
 
-        @case('wwe')
-            Immerse yourself in the thrilling world of WWE (World Wrestling Entertainment) at Anime Fever Zone. Catch up on the
-            latest matches, rumors, and behind-the-scenes insights from the world of professional wrestling. Join our passionate
-            community of WWE fans and experience the excitement firsthand.
-        @break
+    @case('wwe')
+        @section('description', "Immerse yourself in the thrilling world of WWE (World Wrestling Entertainment) at Anime Fever Zone. Catch up on the
+        latest matches, rumors, and behind-the-scenes insights from the world of professional wrestling. Join our passionate
+        community of WWE fans and experience the excitement firsthand.")
+    @break
 
-        @default
-            Explore exciting content on {{ $slug }} and more at Anime Fever Zone. Join our community and stay informed about
-            the latest trends and discussions across a wide range of topics.
-    @endswitch
-@endsection
+    @default
+        @section('description', "Explore exciting content on {{ $slug }} and more at Anime Fever Zone. Join our community and stay informed about
+        the latest trends and discussions across a wide range of topics.")
+@endswitch
 
 <div class="container mx-auto flex flex-wrap py-6">
 
@@ -82,7 +80,7 @@
 
 </div>
 
-@section('script')
+@push('scripts')
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -97,4 +95,4 @@
       }
     }
     </script>
-@endsection
+@endpush

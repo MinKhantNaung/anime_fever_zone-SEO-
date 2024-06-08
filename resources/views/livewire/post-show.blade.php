@@ -1,6 +1,4 @@
-@section('description')
-    {{ substr($post->body, 0, 150) }}...
-@endsection
+@section('description', substr($post->body, 0, 150) . "...")
 
 <div class="container mx-auto flex flex-wrap py-6">
 
@@ -56,7 +54,7 @@
 
 </div>
 
-@section('script')
+@push('scripts')
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -70,4 +68,4 @@
       }
     }
     </script>
-@endsection
+@endpush

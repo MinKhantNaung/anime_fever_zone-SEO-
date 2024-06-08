@@ -53,7 +53,7 @@ the latest trends and discussions across a wide range of topics.')
     <!-- other posts Section -->
     <x-other-posts :popularPosts="$popularPosts" />
 
-    @section('scripts')
+    @push('scripts')
         <script type="application/ld+json">
         {
           "@context": "https://schema.org",
@@ -68,6 +68,6 @@ the latest trends and discussions across a wide range of topics.')
           }
         }
         </script>
-    @endsection
+    @endpush
 
 </div>
