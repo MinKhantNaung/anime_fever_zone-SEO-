@@ -33,6 +33,8 @@
                 </div>
             </div>
 
+            <livewire:comments :model="$post"/>
+
             {{-- Subscriber Form --}}
             <div class="w-full bg-gray-400 mt-5 rounded-lg py-5 px-4 text-xl font-extrabold">
                 <h1>Subscribe To Our Newletter!</h1>

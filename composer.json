@@ -12,6 +12,7 @@
         "laravel/tinker": "^2.8",
         "livewire/livewire": "^3.4",
         "spatie/laravel-sitemap": "^7.0",
+        "usamamuneerchaudhary/commentify": "^1.5",
         "wire-elements/modal": "^2.0"
     },
     "require-dev": {

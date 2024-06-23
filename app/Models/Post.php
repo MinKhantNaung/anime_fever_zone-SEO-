@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Usamamuneerchaudhary\Commentify\Traits\Commentable;
 
 class Post extends Model
 {
-    use HasFactory;
+    use HasFactory, Commentable;
 
     protected $guarded = [];
 
@@ -52,10 +52,5 @@ class Post extends Model
     public function sections(): HasMany
     {
         return $this->hasMany(Section::class);
-    }
-
-    public function comments(): MorphMany
-    {
-        return $this->morphMany(Comment::class, 'commentable')->with('replies');
     }
 }

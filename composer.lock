@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ece928e4484bbb1f7b1018327dad68f0",
+    "content-hash": "c9f6fc83fae47ff45088eeb722f93531",
     "packages": [
         {
             "name": "brick/math",
@@ -6395,6 +6395,70 @@
                 "source": "https://github.com/tijsverkoyen/CssToInlineStyles/tree/v2.2.7"
             },
             "time": "2023-12-08T13:03:43+00:00"
+        },
+        {
+            "name": "usamamuneerchaudhary/commentify",
+            "version": "1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/usamamuneerchaudhary/commentify.git",
+                "reference": "c70cfe8cd4cc1cd759e61b5e83726d8e951af2c7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/usamamuneerchaudhary/commentify/zipball/c70cfe8cd4cc1cd759e61b5e83726d8e951af2c7",
+                "reference": "c70cfe8cd4cc1cd759e61b5e83726d8e951af2c7",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "*",
+                "illuminate/support": "*",
+                "livewire/livewire": "^3.0",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^v8.0.4",
+                "phpunit/phpunit": "^10.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Usamamuneerchaudhary\\Commentify\\Providers\\MarkdownServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Usamamuneerchaudhary\\Commentify\\": "src",
+                    "Usamamuneerchaudhary\\Commentify\\Database\\Factories\\": "database/factories"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Usama Muneer",
+                    "email": "hello@usamamuneer.me",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Easy Laravel Livewire Comments with TailwindCSS UI",
+            "keywords": [
+                "commentify",
+                "comments",
+                "laravel-livewire",
+                "livewire",
+                "livewire-comments",
+                "usamamuneerchaudhary"
+            ],
+            "support": {
+                "issues": "https://github.com/usamamuneerchaudhary/commentify/issues",
+                "source": "https://github.com/usamamuneerchaudhary/commentify/tree/1.5"
+            },
+            "time": "2024-02-28T07:03:34+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
