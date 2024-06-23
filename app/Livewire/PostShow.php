@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Post;
 use Livewire\Component;
 use App\Mail\WebsiteMail;
+use App\Models\SiteSetting;
 use App\Models\Subscriber;
 use Illuminate\Support\Facades\Mail;
 
@@ -16,6 +17,7 @@ class PostShow extends Component
     public $popularPosts;
 
     public $email;
+    public bool $emailVerifyStatus;
 
     public function subscribe()
     {
@@ -63,6 +65,8 @@ class PostShow extends Component
             ->where('created_at', '>=', Carbon::now()->subMonth())
             ->take(3)
             ->get();
+
+        $this->emailVerifyStatus = SiteSetting::first()->email_verify_status;
 
         if ($this->post) {
             // Increment view count

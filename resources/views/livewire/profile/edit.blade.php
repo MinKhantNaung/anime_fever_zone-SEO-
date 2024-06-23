@@ -27,6 +27,18 @@
             <div class="col-span-12 text-center">
                 <button wire:click.prevent="saveProfile" type="button" class="btn btn-primary px-5 mt-5">Save</button>
             </div>
+
+            {{-- Lock Email Verification --}}
+            @if (auth()->user()->role == 'blogger')
+                <div class="col-span-12 md:col-span-6 mt-20">
+                    <div class="form-control">
+                        <label class="cursor-pointer label">
+                        <span class="label-text">Show Email Verification Feature</span>
+                        <input type="checkbox" wire:model='checked' wire:change="isChecked" class="checkbox checkbox-secondary" />
+                        </label>
+                    </div>
+                </div>
+            @endif
         </div>
 
     </section>
