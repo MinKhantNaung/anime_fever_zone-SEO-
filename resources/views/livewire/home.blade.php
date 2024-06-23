@@ -44,6 +44,10 @@ the latest trends and discussions across a wide range of topics.')
             </div>
         @endforeach
 
+        @if ($posts->count() < 1)
+            <p class="mt-20 text-4xl">Currently, there are no posts available.</p>
+        @endif
+
         <div class="w-full">
             {{ $posts->links() }}
         </div>
