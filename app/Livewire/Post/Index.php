@@ -102,7 +102,7 @@ class Index extends Component
     #[On('post-event')]
     public function render()
     {
-        $posts = Post::with('media', 'topic', 'tags', 'sections', 'comments')
+        $posts = Post::with('media', 'topic', 'tags', 'sections')
             ->select('id', 'topic_id', 'heading', 'slug', 'body', 'is_publish', 'created_at')
             ->orderBy('id', 'desc')
             ->paginate(5);

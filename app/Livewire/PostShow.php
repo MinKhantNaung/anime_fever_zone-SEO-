@@ -54,7 +54,7 @@ class PostShow extends Component
 
     public function mount()
     {
-        $this->post = Post::with('media', 'topic', 'tags', 'sections', 'comments')
+        $this->post = Post::with('media', 'topic', 'tags', 'sections')
             ->select('id', 'topic_id', 'heading', 'body', 'view', 'created_at')
             ->where('slug', $this->slug)
             ->first();

@@ -25,7 +25,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="bg-white font-family-karla">
+<body class="bg-white">
 
     <!-- Top Bar Nav -->
     <x-nav-bar />
