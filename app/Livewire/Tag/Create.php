@@ -8,7 +8,6 @@ use App\Services\FileService;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
 use LivewireUI\Modal\ModalComponent;
-use Illuminate\Support\Facades\Storage;
 
 class Create extends ModalComponent
 {
