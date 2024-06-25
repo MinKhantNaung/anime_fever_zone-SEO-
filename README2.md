@@ -33,3 +33,6 @@ public function isLiked(): bool|int
 
         return false;
     }
+
+  #### Updating 'Log in to comment' route to wire:navigate
+  - to update wire:navigate in 'login button in comments', you can fix in vendor/usamamuneerchaudhary/
