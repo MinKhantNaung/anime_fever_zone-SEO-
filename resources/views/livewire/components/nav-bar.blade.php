@@ -45,7 +45,8 @@
                 {{-- Profile --}}
                 <a wire:navigate.hover href="{{ route('profile.edit') }}" class="px-2 hover:text-gray-200 hover:underline">
                     @if (auth()->user()->media)
-                        <img src="{{ auth()->user()->media->url }}" alt="profile-image" class="w-[36px] h-[36px] rounded-full object-cover">
+                        <img src="{{ auth()->user()->media->url }}" alt="profile-image"
+                            class="w-[36px] h-[36px] rounded-full object-cover">
                     @else
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-9 h-9">

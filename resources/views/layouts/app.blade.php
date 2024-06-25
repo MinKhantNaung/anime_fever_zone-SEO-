@@ -28,7 +28,7 @@
 <body class="bg-white">
 
     <!-- Top Bar Nav -->
-    <x-nav-bar />
+    <livewire:components.nav-bar />
 
     <!-- Text Header -->
     <header class="w-full container mx-auto">

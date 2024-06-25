@@ -82,8 +82,6 @@ class Edit extends Component
             'icon' => 'success',
             'iconColor' => 'green'
         ]);
-
-        return $this->redirect('/profile', navigate: true);
     }
 
     #[On('profile-reload')]
