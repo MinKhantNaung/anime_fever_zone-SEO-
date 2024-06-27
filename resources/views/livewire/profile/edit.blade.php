@@ -73,6 +73,8 @@
                     </div>
                 </div>
             @endif
+
+            <livewire:profile.update-password-form />
         </div>
 
     </section>
