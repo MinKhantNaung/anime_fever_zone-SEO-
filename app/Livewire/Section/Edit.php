@@ -79,7 +79,7 @@ class Edit extends ModalComponent
             return $this->redirectRoute('sections.index', ['post' => $this->section->post_id], navigate: true);
         } catch (\Exception $e) {
             DB::rollBack();
-            dd($e);
+
             $this->dispatch('swal', [
                 'title' => 'An unexpected error occurred. Please try again later.',
                 'icon' => 'error',
