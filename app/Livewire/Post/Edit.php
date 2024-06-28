@@ -63,12 +63,12 @@ class Edit extends ModalComponent
                 // delete previous media
                 $media = $this->post->media;
 
-                $media = (new FileService)->deleteFile($media);
+                $media = FileService::deleteFile($media);
 
                 $media->delete();
 
                 // add updated media
-                $url = (new FileService)->storeFile($this->media);
+                $url = FileService::storeFile($this->media);
 
                 Media::create([
                     'mediable_id' => $this->post->id,

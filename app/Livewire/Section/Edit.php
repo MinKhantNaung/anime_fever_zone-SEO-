@@ -46,7 +46,7 @@ class Edit extends ModalComponent
 
                 // delete previous media
                 foreach ($prev_media as $media) {
-                    $media = (new FileService)->deleteFile($media);
+                    $media = FileService::deleteFile($media);
 
                     $media->delete();
                 }
@@ -55,7 +55,7 @@ class Edit extends ModalComponent
                     // get mime type
                     $mime = $this->getMime($media);
 
-                    $url = (new FileService)->storeFile($media);
+                    $url = FileService::storeFile($media);
 
                     // create media
                     Media::create([

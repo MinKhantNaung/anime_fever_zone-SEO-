@@ -21,7 +21,7 @@ class Index extends Component
         try {
             $media = $tag->media;
 
-            $media = (new FileService)->deleteFile($media);
+            $media = FileService::deleteFile($media);
 
             $media->delete();
 

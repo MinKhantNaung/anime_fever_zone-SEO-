@@ -47,7 +47,7 @@ class Create extends ModalComponent
                 // get mime type
                 $mime = $this->getMime($media);
 
-                $url = (new FileService)->storeFile($media);
+                $url = FileService::storeFile($media);
 
                 // create media
                 Media::create([

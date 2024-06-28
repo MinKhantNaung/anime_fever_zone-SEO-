@@ -21,7 +21,7 @@ class Index extends Component
             $medias = $section->media;
 
             foreach ($medias as $media) {
-                $media = (new FileService)->deleteFile($media);
+                $media = FileService::deleteFile($media);
 
                 $media->delete();
             }

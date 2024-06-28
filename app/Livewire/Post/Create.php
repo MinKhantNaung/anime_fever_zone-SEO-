@@ -54,7 +54,7 @@ class Create extends ModalComponent
             }
 
             // add media
-            $url = (new FileService)->storeFile($this->media);
+            $url = FileService::storeFile($this->media);
 
             // create media
             Media::create([

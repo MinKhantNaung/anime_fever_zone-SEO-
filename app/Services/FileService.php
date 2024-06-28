@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Storage;
 
 class FileService
 {
-    public function deleteFile($fileModel)
+    public static function deleteFile($fileModel)
     {
         $prev_url = $fileModel->url;
 
@@ -20,7 +20,7 @@ class FileService
         return $fileModel;
     }
 
-    public function storeFile($fileModel)
+    public static function storeFile($fileModel)
     {
         $file_name = uniqid() . '_' . $fileModel->getClientOriginalName();
 
