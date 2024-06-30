@@ -69,7 +69,7 @@
                     <x-input-error messages="{{ $message }}" />
                 @enderror
 
-                <textarea wire:model="body" class="textarea textarea-secondary w-full mt-3" placeholder="Enter description"></textarea>
+                <textarea wire:model="body" class="textarea textarea-primary w-full mt-3" placeholder="Enter description"></textarea>
                 @error('body')
                     <x-input-error messages="{{ $message }}" />
                 @enderror
