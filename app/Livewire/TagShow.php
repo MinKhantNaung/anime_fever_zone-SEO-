@@ -23,7 +23,8 @@ class TagShow extends Component
             ->where('slug', $this->slug)
             ->first();
 
-        $this->popularPosts = Post::select('id', 'heading', 'slug')
+        $this->popularPosts = Post::with('media')
+            ->select('id', 'heading', 'slug')
             ->whereHas('tags', function ($query) {
                 $query->where('slug', $this->slug);
             })

@@ -14,7 +14,8 @@ class Topic extends Component
 
     public function mount()
     {
-        $this->popularPosts = Post::select('id', 'heading', 'slug')
+        $this->popularPosts = Post::with('media')
+            ->select('id', 'heading', 'slug')
             ->whereHas('topic', function ($query) {
                 $query->where('slug', $this->slug);
             })

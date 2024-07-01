@@ -16,7 +16,8 @@ class Home extends Component
 
     public function mount()
     {
-        $this->popularPosts = Post::select('id', 'heading', 'slug')
+        $this->popularPosts = Post::with('media')
+            ->select('id', 'heading', 'slug')
             ->where('created_at', '>=', Carbon::now()->subMonth())
             ->where('is_publish', true)
             ->take(3)
