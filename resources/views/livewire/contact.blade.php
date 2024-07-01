@@ -18,7 +18,7 @@
                             General Information, Feedback, Suggestions
                         </p>
                         <span class="text-lg mt-5 font-extrabold">
-                            (Currently)animefeverzoneinfo@gmail.com
+                            (Currently) animefeverzoneinfo@gmail.com
                         </span>
                     </div>
 
@@ -28,7 +28,7 @@
                             Topic Ideas, Feedback, Corrections or Suggestions
                         </p>
                         <span class="text-lg mt-5 font-extrabold">
-                            (Currently)animefeverzoneinfo@gmail.com
+                            (Currently) animefeverzoneinfo@gmail.com
                         </span>
                     </div>
 
@@ -50,7 +50,7 @@
                             Display Advertising
                         </p>
                         <span class="text-lg mt-5 font-extrabold">
-                            (Currently)animefeverzoneinfo@gmail.com
+                            (Currently) animefeverzoneinfo@gmail.com
                         </span>
                     </div>
 
@@ -60,7 +60,7 @@
                             Copyrights, Claims, Policy Inquiries
                         </p>
                         <span class="text-lg mt-5 font-extrabold">
-                            (Currently)animefeverzoneinfo@gmail.com
+                            (Currently) animefeverzoneinfo@gmail.com
                         </span>
                     </div>
 
