@@ -55,7 +55,7 @@ class PostShow extends Component
     public function mount()
     {
         $this->post = Post::with('media', 'topic', 'tags', 'sections')
-            ->select('id', 'topic_id', 'heading', 'body', 'view', 'created_at')
+            ->select('id', 'topic_id', 'heading', 'body', 'created_at')
             ->where('slug', $this->slug)
             ->first();
 
@@ -67,12 +67,6 @@ class PostShow extends Component
             ->get();
 
         $this->emailVerifyStatus = SiteSetting::first()->email_verify_status;
-
-        if ($this->post) {
-            // Increment view count
-            $this->post->view++;
-            $this->post->save();
-        }
     }
 
     public function render()

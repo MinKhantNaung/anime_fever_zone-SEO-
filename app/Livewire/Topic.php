@@ -20,7 +20,6 @@ class Topic extends Component
             })
             ->where('is_publish', true)
             ->where('created_at', '>=', Carbon::now()->subMonth())
-            ->orderByDesc('view')
             ->take(3)
             ->get();
     }
