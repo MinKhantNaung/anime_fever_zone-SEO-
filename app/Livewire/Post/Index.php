@@ -99,11 +99,25 @@ class Index extends Component
         ]);
     }
 
+    public function toggleFeature(Post $post)
+    {
+        $post->update([
+            'is_feature' => !$post->is_feature
+        ]);
+
+        $this->dispatch('post-event');
+        $this->dispatch('swal', [
+            'title' => "Success",
+            'icon' => 'success',
+            'iconColor' => 'green'
+        ]);
+    }
+
     #[On('post-event')]
     public function render()
     {
         $posts = Post::with('media', 'topic', 'tags', 'sections')
-            ->select('id', 'topic_id', 'heading', 'slug', 'body', 'is_publish', 'created_at')
+            ->select('id', 'topic_id', 'heading', 'slug', 'body', 'is_publish', 'is_feature', 'created_at')
             ->orderBy('id', 'desc')
             ->paginate(5);
 

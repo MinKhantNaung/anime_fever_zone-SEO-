@@ -13,6 +13,7 @@
             <!-- head -->
             <thead>
                 <tr>
+                    <th>Show As Features</th>
                     <th>No</th>
                     <th>Image</th>
                     <th>Topic</th>
@@ -28,6 +29,9 @@
             <tbody>
                 @foreach ($posts as $index => $post)
                     <tr>
+                        <td>
+                            <input wire:change="toggleFeature({{ $post->id }})" type="checkbox" class="checkbox checkbox-primary" {{ $post->is_feature ? 'checked' : '' }} />
+                        </td>
                         <td>{{ $index + $posts->firstItem() }}</td>
                         <td class="w-[200px]">
                             <img src="{{ $post->media->url }}" alt="{{ $post->heading }}" class="w-full">

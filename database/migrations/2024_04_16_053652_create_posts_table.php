@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('heading');
             $table->string('slug')->unique();
             $table->longText('body');
+            $table->boolean('is_feature')->default(false);
             $table->boolean('is_publish')->default(false);
             $table->timestamps();
         });
