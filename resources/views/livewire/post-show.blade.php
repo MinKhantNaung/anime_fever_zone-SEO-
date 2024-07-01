@@ -54,7 +54,7 @@
     </section>
 
     <!-- other posts Section -->
-    <x-other-posts :$popularPosts />
+    <x-other-posts :$featuredPosts />
 
 </div>
 

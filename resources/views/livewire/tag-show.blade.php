@@ -71,7 +71,7 @@
     </section>
 
     <!-- other posts Section -->
-    <x-other-posts :popularPosts="$popularPosts" />
+    <x-other-posts :featuredPosts="$featuredPosts" />
 
 </div>
 

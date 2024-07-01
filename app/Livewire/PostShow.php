@@ -14,7 +14,7 @@ class PostShow extends Component
 {
     public $slug;
     public $post;
-    public $popularPosts;
+    public $featuredPosts;
 
     public $email;
     public bool $emailVerifyStatus;
@@ -59,7 +59,7 @@ class PostShow extends Component
             ->where('slug', $this->slug)
             ->first();
 
-        $this->popularPosts = Post::select('id', 'heading', 'slug')
+        $this->featuredPosts = Post::select('id', 'heading', 'slug')
             ->inRandomOrder()
             ->where('id', '!=', $this->post->id)
             ->where('created_at', '>=', Carbon::now()->subMonth())

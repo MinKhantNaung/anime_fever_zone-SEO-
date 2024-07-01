@@ -55,7 +55,7 @@ the latest trends and discussions across a wide range of topics.')
     </section>
 
     <!-- other posts Section -->
-    <x-other-posts :popularPosts="$popularPosts" />
+    <x-other-posts :featuredPosts="$featuredPosts" />
 
     @push('scripts')
         <script type="application/ld+json">

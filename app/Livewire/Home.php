@@ -12,15 +12,15 @@ class Home extends Component
 {
     use WithPagination;
 
-    public $popularPosts;
+    public $featuredPosts;
 
     public function mount()
     {
-        $this->popularPosts = Post::with('media')
+        $this->featuredPosts = Post::with('media')
             ->select('id', 'heading', 'slug')
-            ->where('created_at', '>=', Carbon::now()->subMonth())
             ->where('is_publish', true)
-            ->take(3)
+            ->where('is_feature', true)
+            ->take(5)
             ->get();
     }
 

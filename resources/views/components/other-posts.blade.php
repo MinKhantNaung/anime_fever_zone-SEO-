@@ -8,11 +8,11 @@
     @else
         <div class="w-full">
             <span class="bg-rose-500">.</span>
-            <span class="text-2xl">Popular</span>
+            <span class="text-2xl">Featured Posts</span>
         </div>
     @endif
 
-    @foreach ($popularPosts as $post)
+    @foreach ($featuredPosts as $post)
         <a wire:navigate.hover href="{{ route('post', $post->slug) }}">
             <div class="grid grid-cols-12 bg-white shadow my-4 p-6">
                 <div class="col-span-12 xl:col-span-4">

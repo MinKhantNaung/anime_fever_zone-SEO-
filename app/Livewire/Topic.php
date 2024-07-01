@@ -10,18 +10,18 @@ class Topic extends Component
 {
     public $slug;
 
-    public $popularPosts;
+    public $featuredPosts;
 
     public function mount()
     {
-        $this->popularPosts = Post::with('media')
+        $this->featuredPosts = Post::with('media')
             ->select('id', 'heading', 'slug')
             ->whereHas('topic', function ($query) {
                 $query->where('slug', $this->slug);
             })
             ->where('is_publish', true)
-            ->where('created_at', '>=', Carbon::now()->subMonth())
-            ->take(3)
+            ->where('is_feature', true)
+            ->take(5)
             ->get();
     }
 
