@@ -45,7 +45,7 @@
                 Unless otherwise stated, Anime Fever Zone and/or its licensors own the intellectual property rights for
                 all material on Anime Fever Zone. All intellectual property rights are reserved. You may view and/or
                 print pages from <a target="blank" href="{{ route('home') }}"
-                    class="underline">https://www.animefeverzone.com</a> for
+                    class="underline">https://animefeverzone.com</a> for
                 your own personal use subject to restrictions set in
                 these terms and conditions.
                 <br><br>
@@ -54,15 +54,15 @@
             <ul class="list-disc list-inside">
                 <li>
                     Republish material from <a href="{{ route('home') }}" target="blank"
-                        class="underline">https://www.animefeverzone.com</a>
+                        class="underline">https://animefeverzone.com</a>
                 </li>
                 <li>
                     Sell, rent or sub-license material from <a href="{{ route('home') }}" target="blank"
-                        class="underline">https://www.animefeverzone.com</a>
+                        class="underline">https://animefeverzone.com</a>
                 </li>
                 <li>
                     Reproduce, duplicate or copy material from <a href="{{ route('home') }}" target="blank"
-                        class="underline">https://www.animefeverzone.com</a>
+                        class="underline">https://animefeverzone.com</a>
                 </li>
             </ul>
             <br>
