@@ -75,6 +75,8 @@
             @endif
 
             <livewire:profile.update-password-form />
+
+            <livewire:profile.delete-user-form />
         </div>
 
     </section>
