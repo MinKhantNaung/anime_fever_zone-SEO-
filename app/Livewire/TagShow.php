@@ -37,8 +37,8 @@ class TagShow extends Component
     public function render()
     {
         $posts = Post::with('media', 'topic', 'tags')
-            ->select('id', 'topic_id', 'heading', 'slug', 'body', 'created_at')
-            ->orderByDesc('id')
+            ->select('id', 'topic_id', 'heading', 'slug', 'body', 'updated_at')
+            ->orderBy('updated_at', 'desc')
             ->whereHas('tags', function ($query) {
                 $query->where('slug', $this->slug);
             })

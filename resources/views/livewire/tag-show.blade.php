@@ -54,7 +54,7 @@
                             {!! Str::limit($post->body, 140) !!}
                         </p>
 
-                        <p class="text-xs mt-2">By Anime Fever Zone | {{ $post->created_at->diffForHumans() }}</p>
+                        <p class="text-xs mt-2">By Anime Fever Zone | {{ $post->updated_at->diffForHumans() }}</p>
                     </a>
                 </div>
             </div>

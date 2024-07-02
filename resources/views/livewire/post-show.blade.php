@@ -9,7 +9,7 @@
             <div class="bg-white flex flex-col justify-start">
                 <p class="text-xs py-6 uppercase">
                     By <span class="font-bold mr-2">Anime Fever Zone</span>
-                    Published {{ $post->created_at->diffForHumans() }}
+                    Modified {{ $post->updated_at->diffForHumans() }}
                 </p>
             </div>
             <!-- Article Image -->
