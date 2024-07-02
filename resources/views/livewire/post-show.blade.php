@@ -7,7 +7,7 @@
         <article class="flex flex-col my-4 w-full">
             <h1 class="text-3xl sm:text-5xl font-black leading-tight text-gray-800">{{ $post->heading }}</h1>
             <div class="bg-white flex flex-col justify-start">
-                <p class="text-xs py-6 uppercase">
+                <p class="text-xs py-6">
                     By <span class="font-bold mr-2">Anime Fever Zone</span>
                     Modified {{ $post->updated_at->diffForHumans() }}
                 </p>
