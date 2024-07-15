@@ -9,17 +9,18 @@
     <title>{{ $title ?? 'Anime Fever Zone' }}</title>
 
     <meta name="description" content="@yield('description')">
+    <meta name="robots" content="index, follow">
 
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <link rel="canonical" href="{{ url()->current() }}">
 
     <style>
         [x-cloak] {
             display: none !important;
         }
     </style>
+
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])

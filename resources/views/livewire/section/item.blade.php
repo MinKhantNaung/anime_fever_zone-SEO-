@@ -1,7 +1,7 @@
 
 <div class="w-full">
 
-    <h1 class="font-bold text-2xl sm:text-3xl my-3">{{ $section->heading }}</h1>
+    <h2 class="font-bold text-2xl sm:text-3xl my-3">{{ $section->heading }}</h2>
 
     <div class="my-2 max-w-lg mx-auto">
         {{-- Swiper JS --}}
