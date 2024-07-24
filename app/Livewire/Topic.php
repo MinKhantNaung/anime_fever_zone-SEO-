@@ -16,9 +16,7 @@ class Topic extends Component
     {
         $this->featuredPosts = Post::with('media')
             ->select('id', 'heading', 'slug')
-            ->whereHas('topic', function ($query) {
-                $query->where('slug', $this->slug);
-            })
+            ->orderBy('updated_at', 'desc')
             ->where('is_publish', true)
             ->where('is_feature', true)
             ->take(5)
@@ -34,7 +32,7 @@ class Topic extends Component
                 $query->where('slug', $this->slug);
             })
             ->where('is_publish', true)
-            ->paginate(20);
+            ->paginate(12);
 
         return view('livewire.topic', [
             'posts' => $posts

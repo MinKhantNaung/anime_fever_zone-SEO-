@@ -1,5 +1,5 @@
 
-<div class="w-full">
+<div class="w-full" id="{{ str_replace(' ', '-', $section->heading) }}">
 
     <h2 class="font-bold text-2xl sm:text-3xl my-3">{{ $section->heading }}</h2>
 
@@ -71,6 +71,6 @@
         </div>
     </div>
 
-    <p class="text-lg font-medium">{!! $section->body !!}</p>
+    <p class="text-lg font-medium text-gray-700 leading-9">{!! $section->body !!}</p>
 
 </div>

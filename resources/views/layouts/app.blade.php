@@ -11,16 +11,14 @@
     <meta name="description" content="@yield('description')">
     <meta name="robots" content="index, follow">
 
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="Anime Fever Zone" />
+    <meta property="og:url" content="{{ url()->current() }}" />
+    <meta property="article:author" content="Anime Fever Zone" />
+
+    @yield('meta-og')
+
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    <link rel="canonical" href="{{ url()->current() }}">
-
-    <style>
-        [x-cloak] {
-            display: none !important;
-        }
-    </style>
-
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -34,7 +32,8 @@
     <!-- Text Header -->
     <header class="w-full container mx-auto">
         <div class="flex flex-col items-center py-12">
-            <a wire:navigate.hover href="{{ route('home') }}" class="font-bold text-gray-800 uppercase hover:text-gray-700 text-3xl sm:text-5xl">
+            <a wire:navigate href="{{ route('home') }}"
+                class="font-bold text-gray-800 uppercase hover:text-gray-700 text-3xl sm:text-5xl">
                 Anime Fever Zone
             </a>
             <p class="text-lg text-gray-600 px-2">
@@ -46,11 +45,11 @@
     <!-- Topic Nav -->
     <livewire:components.topic-nav />
 
-    <div class="min-h-screen">
+    <main class="min-h-screen">
 
         {{ $slot }}
 
-    </div>
+    </main>
 
     <x-footer />
 

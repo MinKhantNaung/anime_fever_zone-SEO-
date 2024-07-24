@@ -25,9 +25,7 @@ class TagShow extends Component
 
         $this->featuredPosts = Post::with('media')
             ->select('id', 'heading', 'slug')
-            ->whereHas('tags', function ($query) {
-                $query->where('slug', $this->slug);
-            })
+            ->orderBy('updated_at', 'desc')
             ->where('is_publish', true)
             ->where('is_feature', true)
             ->take(5)
@@ -43,7 +41,7 @@ class TagShow extends Component
                 $query->where('slug', $this->slug);
             })
             ->where('is_publish', true)
-            ->paginate(15);
+            ->paginate(12);
 
         return view('livewire.tag-show', [
             'posts' => $posts

@@ -18,6 +18,7 @@ class Home extends Component
     {
         $this->featuredPosts = Post::with('media')
             ->select('id', 'heading', 'slug')
+            ->orderBy('updated_at', 'desc')
             ->where('is_publish', true)
             ->where('is_feature', true)
             ->take(5)
@@ -31,7 +32,7 @@ class Home extends Component
             ->select('id', 'topic_id', 'heading', 'slug', 'body', 'updated_at')
             ->orderBy('updated_at', 'desc')
             ->where('is_publish', true)
-            ->paginate(20);
+            ->paginate(12);
 
         return view('livewire.home', [
             'posts' => $posts

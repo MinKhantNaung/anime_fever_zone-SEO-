@@ -26,6 +26,18 @@
         the latest trends and discussions across a wide range of topics.")
 @endswitch
 
+@section('meta-og')
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Anime Fever Zone-{{ ucfirst($slug) }}" />
+    <meta property="og:description"
+        content="Explore exciting content on {{ $slug }} and more at Anime Fever Zone. Join our community and stay informed about
+        the latest trends and discussions across a wide range of topics." />
+    <meta property="og:image" content="{{ asset('favicon.ico') }}" />
+    <meta property="og:image:secure_url" content="{{ asset('favicon.ico') }}" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+@endsection
+
 <div class="container mx-auto flex flex-wrap py-6">
 
     <!-- Posts Section -->
@@ -36,25 +48,25 @@
             <span class="text-2xl">Latest</span>
         </div>
 
-        @foreach ($posts as $post)
+        @foreach ($posts as $index => $post)
             <div class="grid grid-cols-12 gap-1 bg-white shadow my-4">
                 <div class="col-span-12 lg:col-span-5">
-                    <a wire:navigate.hover href="{{ route('post', $post->slug) }}">
+                    <a wire:navigate href="{{ route('post', $post->slug) }}">
                         <img src="{{ $post->media->url }}" alt="{{ $post->heading }}" class="w-full object-cover">
                     </a>
                 </div>
 
                 <div class="col-span-12 lg:col-span-7 ps-1">
                     <p class="font-extrabold text-sm text-[#9926f0] uppercase">
-                        <a wire:navigate.hover href="{{ route('topic', $post->topic->slug) }}" class="cursor-pointer">
+                        <a wire:navigate href="{{ route('topic', $post->topic->slug) }}" class="cursor-pointer">
                             {{ $post->topic->name }}
                         </a>
                         @foreach ($post->tags as $tag)
-                            <a wire:navigate.hover href="{{ route('tag', $tag->slug) }}">| {{ $tag->name }}</a>
+                            <a wire:navigate href="{{ route('tag', $tag->slug) }}">| {{ $tag->name }}</a>
                         @endforeach
                     </p>
 
-                    <a wire:navigate.hover href="{{ route('post', $post->slug) }}">
+                    <a wire:navigate href="{{ route('post', $post->slug) }}">
                         <h1 class="font-black text-2xl capitalize my-2">
                             {{ $post->heading }}
                         </h1>
@@ -85,6 +97,7 @@
 </div>
 
 @push('scripts')
+
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",

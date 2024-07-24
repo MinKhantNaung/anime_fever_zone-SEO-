@@ -59,12 +59,12 @@ class Edit extends Component
             $media = auth()->user()->media;
 
             if ($media) {
-                $media = FileService::deleteFile($media);
+                $media = (new FileService)->deleteFile($media);
                 $media->delete();
             }
 
             // add updated media
-            $url = FileService::storeFile($this->media);
+            $url = (new FileService)->storeFile($this->media);
 
             Media::create([
                 'mediable_id' => auth()->id(),
