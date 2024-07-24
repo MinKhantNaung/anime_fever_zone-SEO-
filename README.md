@@ -1,9 +1,9 @@
 
 # Project Title
 
-Anime Fever Zone (SEO)
+### Anime Fever Zone (SEO)
 
-You can visit here : https://animefeverzone.com
+You can visit here: `https://animefeverzone.com`
 
 ## Project Description
 
