@@ -11,6 +11,7 @@
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "livewire/livewire": "^3.4",
+        "livewire/volt": "^1.6",
         "spatie/laravel-sitemap": "^7.0",
         "usamamuneerchaudhary/commentify": "^1.5",
         "wire-elements/modal": "^2.0"

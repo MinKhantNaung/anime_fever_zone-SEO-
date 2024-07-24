@@ -19,7 +19,7 @@ use App\Livewire\Section\Index as SectionIndex;
 Route::get('/', Home::class)->name('home');
 Route::get('/topic/{slug}', Topic::class)->name('topic');
 Route::get('/tag/{slug}', TagShow::class)->name('tag');
-Route::get('/{slug}/post', PostShow::class)->name('post');
+Route::get('/blog/{slug}', PostShow::class)->name('post');
 
 // Email Subscribe
 Route::get('/subscriber/verify/{token}/{email}', SubscriberController::class)->name('subscriber_verify');

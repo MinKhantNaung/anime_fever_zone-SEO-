@@ -2,11 +2,19 @@
 
 namespace App\Livewire\Components;
 
-use Livewire\Attributes\On;
 use Livewire\Component;
+use Livewire\Attributes\On;
+use App\Livewire\Actions\Logout;
 
 class NavBar extends Component
 {
+    public function logout(Logout $logout): void
+    {
+        $logout();
+
+        $this->redirect('/', navigate: true);
+    }
+
     #[On('profile-reload')]
     public function render()
     {

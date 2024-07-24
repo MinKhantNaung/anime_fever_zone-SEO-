@@ -11,17 +11,17 @@
 
 
             @foreach ($topics as $topic)
-                <a wire:navigate.hover href="{{ route('topic', $topic->slug) }}"
+                <a wire:navigate href="{{ route('topic', $topic->slug) }}"
                     class="hover:bg-gradient-to-r hover:from-[#9926f0] hover:to-[#d122e3] rounded py-2 px-4 mx-2 {{ request()->is('topic/' . $topic->slug) ? 'bg-[#9926f0]' : '' }}">{{ $topic->name }}</a>
             @endforeach
 
             @auth
                 @if (auth()->user()->role === 'blogger')
-                    <a wire:navigate.hover href="{{ route('topics.create') }}"
+                    <a wire:navigate href="{{ route('topics.create') }}"
                         class="hover:bg-gradient-to-r hover:from-[#9926f0] hover:to-[#d122e3] rounded py-2 px-4 mx-2 {{ request()->routeIs('topics.create') ? 'bg-[#9926f0]' : '' }}">Topics(Blogger)</a>
-                    <a wire:navigate.hover href="{{ route('tags.index') }}"
+                    <a wire:navigate href="{{ route('tags.index') }}"
                         class="hover:bg-gradient-to-r hover:from-[#9926f0] hover:to-[#d122e3] rounded py-2 px-4 mx-2 {{ request()->routeIs('tags.index') ? 'bg-[#9926f0]' : '' }}">Tags(Blogger)</a>
-                    <a wire:navigate.hover href="{{ route('posts.index') }}"
+                    <a wire:navigate href="{{ route('posts.index') }}"
                         class="hover:bg-gradient-to-r hover:from-[#9926f0] hover:to-[#d122e3] rounded py-2 px-4 mx-2 {{ request()->routeIs('posts.index') ? 'bg-[#9926f0]' : '' }}">Posts(Blogger)</a>
                 @endif
             @endauth

@@ -55,15 +55,16 @@ class PostShow extends Component
     public function mount()
     {
         $this->post = Post::with('media', 'topic', 'tags', 'sections')
-            ->select('id', 'topic_id', 'heading', 'body', 'updated_at')
+            ->select('id', 'topic_id', 'heading', 'body', 'created_at', 'updated_at')
             ->where('slug', $this->slug)
             ->first();
 
         $this->featuredPosts = Post::select('id', 'heading', 'slug')
             ->inRandomOrder()
             ->where('id', '!=', $this->post->id)
-            ->where('created_at', '>=', Carbon::now()->subMonth())
-            ->take(3)
+            ->where('updated_at', '>=', Carbon::now()->subMonth())
+            ->where('is_publish', true)
+            ->take(5)
             ->get();
 
         $this->emailVerifyStatus = SiteSetting::first()->email_verify_status;
@@ -72,6 +73,6 @@ class PostShow extends Component
     public function render()
     {
         return view('livewire.post-show')
-            ->title(ucwords(str_replace('-', ' ', $this->slug)));
+            ->title(ucwords(str_replace('-', ' ', $this->slug)) . ' - Anime Fever Zone');
     }
 }
