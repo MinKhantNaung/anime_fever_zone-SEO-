@@ -6,7 +6,10 @@ use App\Models\Post;
 use App\Models\Media;
 use App\Models\Tag;
 use App\Models\Topic;
+use App\Services\AlertService;
 use App\Services\FileService;
+use App\Services\MediaService;
+use App\Services\PostService;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
 use LivewireUI\Modal\ModalComponent;
@@ -21,7 +24,6 @@ class Create extends ModalComponent
     public $heading;
     public $body;
     public $is_publish = false;
-
     public $selectedTags = null;
 
     public static function modalMaxWidth(): string
@@ -29,40 +31,22 @@ class Create extends ModalComponent
         return '5xl';
     }
 
-
     public function createPost()
     {
-        $this->validate([
-            'media' => 'required|file|mimes:png,jpg,jpeg,svg,webp|max:5120',
-            'topic_id' => 'required|integer',
-            'heading' => 'required|string|max:255|unique:posts,heading',
-            'body' => 'required|string'
-        ]);
+        $validated = $this->validateInputs();
 
         DB::beginTransaction();
         try {
-            $post = Post::create([
-                'topic_id' => $this->topic_id,
-                'heading' => $this->heading,
-                'body' => $this->body,
-                'is_publish' => $this->is_publish
-            ]);
+            $post = PostService::create($validated);
 
             // attach tags
-            if ($this->selectedTags != null) {
-                $post->tags()->attach($this->selectedTags);
-            }
+            PostService::attachTags($post, $this->selectedTags);
 
             // add media
             $url = FileService::storeFile($this->media);
 
             // create media
-            Media::create([
-                'mediable_id' => $post->id,
-                'mediable_type' => Post::class,
-                'url' => $url,
-                'mime' => 'image'
-            ]);
+            MediaService::create(Post::class, $post, $url, 'image');
 
             DB::commit();
 
@@ -70,20 +54,23 @@ class Create extends ModalComponent
             $this->dispatch('close');
             $this->dispatch('post-event');
 
-            $this->dispatch('swal', [
-                'title' => 'Post created successfully !',
-                'icon' => 'success',
-                'iconColor' => 'green'
-            ]);
+            AlertService::alert($this, config('messages.post.create'), 'success', 'green');
         } catch (\Exception $e) {
             DB::rollBack();
-
-            $this->dispatch('swal', [
-                'title' => 'An unexpected error occurred. Please try again later.',
-                'icon' => 'error',
-                'iconColor' => 'red'
-            ]);
+            AlertService::alert($this, config('messages.common.error'), 'error', 'red');
         }
+    }
+
+    protected function validateInputs()
+    {
+        $validated = $this->validate([
+            'media' => 'required|file|mimes:png,jpg,jpeg,svg,webp|max:5120',
+            'topic_id' => 'required|integer',
+            'heading' => 'required|string|max:255|unique:posts,heading',
+            'body' => 'required|string',
+            'is_publish' => 'required|boolean'
+        ]);
+        return $validated;
     }
 
     public function render()
