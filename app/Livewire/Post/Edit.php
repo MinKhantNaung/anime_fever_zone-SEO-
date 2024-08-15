@@ -6,7 +6,10 @@ use App\Models\Media;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\Topic;
+use App\Services\AlertService;
 use App\Services\FileService;
+use App\Services\MediaService;
+use App\Services\PostService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
@@ -31,33 +34,28 @@ class Edit extends ModalComponent
         return '5xl';
     }
 
+    public function mount()
+    {
+        $this->topic_id = $this->post->topic_id;
+        $this->heading = $this->post->heading;
+        $this->body = $this->post->body;
+        $this->is_publish = $this->post->is_publish;
+        $this->selectedTags = $this->post->tags()->pluck('tags.id')->toArray();
+    }
+
     public function updatePost()
     {
-        // dd($this->selectedTags);
         // validate
-        $this->validate([
-            'media' => 'nullable|file|mimes:png,jpg,jpeg,svg,webp|max:5120',
-            'topic_id' => 'required|integer',
-            'heading' => 'required|string|max:255|unique:posts,heading,' . $this->post->id,
-            'body' => 'required|string'
-        ]);
+        $validated = $this->validateInputs();
 
         DB::beginTransaction();
 
         try {
-            $this->post->update([
-                'topic_id' => $this->topic_id,
-                'heading' => $this->heading,
-                'body' => $this->body,
-                'is_publish' => $this->is_publish
-            ]);
+            PostService::update($this->post, $validated);
 
             // attach tags
             $this->post->tags()->detach();
-
-            if ($this->selectedTags != null) {
-                $this->post->tags()->attach($this->selectedTags);
-            }
+            PostService::attachTags($this->post, $this->selectedTags);
 
             if ($this->media) {
                 // delete previous media
@@ -70,12 +68,7 @@ class Edit extends ModalComponent
                 // add updated media
                 $url = FileService::storeFile($this->media);
 
-                Media::create([
-                    'mediable_id' => $this->post->id,
-                    'mediable_type' => Post::class,
-                    'url' => $url,
-                    'mime' => 'image'
-                ]);
+                MediaService::create(Post::class, $this->post, $url, 'image');
             }
 
             DB::commit();
@@ -84,29 +77,25 @@ class Edit extends ModalComponent
             $this->dispatch('close');
             $this->dispatch('post-event');
 
-            $this->dispatch('swal', [
-                'title' => 'Post updated successfully !',
-                'icon' => 'success',
-                'iconColor' => 'green'
-            ]);
+            AlertService::alert($this, config('messages.post.update'), 'success', 'green');
         } catch (\Exception $e) {
             DB::rollBack();
 
-            $this->dispatch('swal', [
-                'title' => 'An unexpected error occurred. Please try again later.',
-                'icon' => 'error',
-                'iconColor' => 'red'
-            ]);
+            AlertService::alert($this, config('messages.common.error'), 'error', 'red');
         }
     }
 
-    public function mount()
+    protected function validateInputs()
     {
-        $this->topic_id = $this->post->topic_id;
-        $this->heading = $this->post->heading;
-        $this->body = $this->post->body;
-        $this->is_publish = $this->post->is_publish;
-        $this->selectedTags = $this->post->tags()->pluck('tags.id')->toArray();
+        $validated = $this->validate([
+            'media' => 'nullable|file|mimes:png,jpg,jpeg,svg,webp|max:5120',
+            'topic_id' => 'required|integer',
+            'heading' => 'required|string|max:255|unique:posts,heading,' . $this->post->id,
+            'body' => 'required|string',
+            'is_publish' => 'required|boolean'
+        ]);
+
+        return $validated;
     }
 
     public function render()
