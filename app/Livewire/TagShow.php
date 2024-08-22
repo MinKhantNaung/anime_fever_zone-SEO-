@@ -18,30 +18,20 @@ class TagShow extends Component
 
     public function mount()
     {
-        $this->tag = Tag::with('media')
-            ->select('id', 'name', 'body')
-            ->where('slug', $this->slug)
-            ->first();
+        $this->tag = Tag::query()
+                        ->findWithSlug($this->slug)
+                        ->first();
 
-        $this->featuredPosts = Post::with('media')
-            ->select('id', 'heading', 'slug')
-            ->orderBy('updated_at', 'desc')
-            ->where('is_publish', true)
-            ->where('is_feature', true)
-            ->take(5)
-            ->get();
+        $this->featuredPosts = Post::query()
+                                    ->featuredPosts()
+                                    ->get();
     }
 
     public function render()
     {
-        $posts = Post::with('media', 'topic', 'tags')
-            ->select('id', 'topic_id', 'heading', 'slug', 'body', 'updated_at')
-            ->orderBy('updated_at', 'desc')
-            ->whereHas('tags', function ($query) {
-                $query->where('slug', $this->slug);
-            })
-            ->where('is_publish', true)
-            ->paginate(12);
+        $posts = Post::query()
+                    ->getPostsOfTag($this->slug)
+                    ->paginate(12);
 
         return view('livewire.tag-show', [
             'posts' => $posts

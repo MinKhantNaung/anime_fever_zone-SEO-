@@ -4,7 +4,9 @@ namespace App\Livewire\Section;
 
 use App\Models\Post;
 use App\Models\Section;
+use App\Services\AlertService;
 use App\Services\FileService;
+use App\Services\MediaService;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -20,11 +22,7 @@ class Index extends Component
         try {
             $medias = $section->media;
 
-            foreach ($medias as $media) {
-                $media = FileService::deleteFile($media);
-
-                $media->delete();
-            }
+            MediaService::destroyMultipleMedias($medias);
 
             $section->delete();
 
@@ -32,19 +30,10 @@ class Index extends Component
 
             $this->dispatch('section-reload');
 
-            $this->dispatch('swal', [
-                'title' => 'Section removed successfully !',
-                'icon' => 'success',
-                'iconColor' => 'green'
-            ]);
+            AlertService::alert($this, config('messages.section.destroy'), 'success');
         } catch (\Exception $e) {
             DB::rollBack();
-
-            $this->dispatch('swal', [
-                'title' => 'An unexpected error occurred. Please try again later.',
-                'icon' => 'error',
-                'iconColor' => 'red'
-            ]);
+            AlertService::alert($this, config('messages.common.error'), 'error');
         }
     }
 

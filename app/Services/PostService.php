@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Models\Post;
 
-class PostService
+final class PostService
 {
     public static function create($validated)
     {

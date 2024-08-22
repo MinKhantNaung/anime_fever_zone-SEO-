@@ -4,7 +4,11 @@ namespace App\Livewire\Tag;
 
 use App\Models\Tag;
 use App\Models\Media;
+use App\Services\AlertService;
 use App\Services\FileService;
+use App\Services\MediaService;
+use App\Services\TagService;
+use Illuminate\Cache\TagSet;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
 use LivewireUI\Modal\ModalComponent;
@@ -24,53 +28,39 @@ class Create extends ModalComponent
 
     public function createTag()
     {
-        // validate
-        $this->validate([
-            'media' => 'required|file|mimes:png,jpg,jpeg,svg,webp|max:5120',
-            'name' => 'required|string|max:225|unique:tags,name',
-            'body' => 'required|string'
-        ]);
+        $validated = $this->validateInputs();
 
         DB::beginTransaction();
 
         try {
-            $tag = Tag::create([
-                'name' => $this->name,
-                'body' => $this->body
-            ]);
+            $tag = TagService::create($validated);
 
-            // add media
             $url = FileService::storeFile($this->media);
 
-            // create media
-            Media::create([
-                'mediable_id' => $tag->id,
-                'mediable_type' => Tag::class,
-                'url' => $url,
-                'mime' => 'image'
-            ]);
+            MediaService::create(Tag::class, $tag, $url, 'image');
 
             DB::commit();
 
-            // success toast
-            $this->dispatch('swal', [
-                'title' => 'Tag created successfully !',
-                'icon' => 'success',
-                'iconColor' => 'green'
-            ]);
+            AlertService::alert($this, config('messages.tag.create'), 'success');
 
             $this->reset();
             $this->dispatch('close');
             $this->dispatch('tag-reload');
         } catch (\Exception $e) {
             DB::rollback();
-
-            $this->dispatch('swal', [
-                'title' => 'An unexpected error occurred. Please try again later.',
-                'icon' => 'error',
-                'iconColor' => 'red'
-            ]);
+            AlertService::alert($this, config('messages.common.error'), 'error');
         }
+    }
+
+    protected function validateInputs()
+    {
+        $validated = $this->validate([
+            'media' => 'required|file|mimes:png,jpg,jpeg,svg,webp|max:5120',
+            'name' => 'required|string|max:225|unique:tags,name',
+            'body' => 'required|string'
+        ]);
+
+        return $validated;
     }
 
     public function render()

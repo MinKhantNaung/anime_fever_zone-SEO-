@@ -4,7 +4,7 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Storage;
 
-class FileService
+final class FileService
 {
     public static function deleteFile($fileModel)
     {
@@ -29,5 +29,14 @@ class FileService
         $url = url(Storage::url($path));
 
         return $url;
+    }
+
+    public static function getMime($media): string
+    {
+        if (str()->contains($media->getMimeType(), 'video')) {
+            return 'video';
+        } else {
+            return 'image';
+        }
     }
 }

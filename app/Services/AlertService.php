@@ -2,14 +2,14 @@
 
 namespace App\Services;
 
-class AlertService
+final class AlertService
 {
-    public static function alert($viewModel, $title, $iconType, $color)
+    public static function alert($viewModel, $title, $iconType)
     {
         $viewModel->dispatch('swal', [
             'title' => $title,   // title
             'icon' => $iconType, // 'success' or 'error'
-            'iconColor' => $color // 'green' or 'red'
+            'iconColor' => $iconType == 'success' ? 'green' : 'red' // 'green' or 'red'
         ]);
     }
 }

@@ -54,18 +54,13 @@ class PostShow extends Component
 
     public function mount()
     {
-        $this->post = Post::with('media', 'topic', 'tags', 'sections')
-            ->select('id', 'topic_id', 'heading', 'body', 'created_at', 'updated_at')
-            ->where('slug', $this->slug)
-            ->first();
+        $this->post = Post::query()
+                        ->findPostWithSlug($this->slug)
+                        ->first();
 
-        $this->featuredPosts = Post::select('id', 'heading', 'slug')
-            ->inRandomOrder()
-            ->where('id', '!=', $this->post->id)
-            ->where('updated_at', '>=', Carbon::now()->subMonth())
-            ->where('is_publish', true)
-            ->take(5)
-            ->get();
+        $this->featuredPosts = Post::query()
+                                    ->featuredPostsForPostPage($this->post->id)
+                                    ->get();
 
         $this->emailVerifyStatus = SiteSetting::first()->email_verify_status;
     }

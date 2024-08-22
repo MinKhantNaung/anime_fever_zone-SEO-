@@ -4,7 +4,10 @@ namespace App\Livewire\Tag;
 
 use App\Models\Tag;
 use App\Models\Media;
+use App\Services\AlertService;
 use App\Services\FileService;
+use App\Services\MediaService;
+use App\Services\TagService;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
 use LivewireUI\Modal\ModalComponent;
@@ -27,38 +30,22 @@ class Edit extends ModalComponent
 
     public function updateTag()
     {
-        // validate
-        $this->validate([
-            'media' => 'nullable|file|mimes:png,jpg,jpeg,svg,webp|max:5120',
-            'name' => 'required|string|max:225|unique:tags,name,' . $this->tag->id,
-            'body' => 'required|string'
-        ]);
+        $validated = $this->validateInputs();
 
         DB::beginTransaction();
 
         try {
-            $this->tag->update([
-                'name' => $this->name,
-                'body' => $this->body
-            ]);
+            TagService::update($this->tag, $validated);
 
             if ($this->media) {
                 // delete previous media
                 $media = $this->tag->media;
-
-                $media = FileService::deleteFile($media);
-
-                $media->delete();
+                MediaService::destroy($media);
 
                 // add updated media
                 $url = FileService::storeFile($this->media);
 
-                Media::create([
-                    'mediable_id' => $this->tag->id,
-                    'mediable_type' => Tag::class,
-                    'url' => $url,
-                    'mime' => 'image'
-                ]);
+                MediaService::create(Tag::class, $this->tag, $url, 'image');
             }
 
             DB::commit();
@@ -67,20 +54,22 @@ class Edit extends ModalComponent
             $this->dispatch('close');
             $this->dispatch('tag-reload');
 
-            $this->dispatch('swal', [
-                'title' => 'Tag updated successfully !',
-                'icon' => 'success',
-                'iconColor' => 'green'
-            ]);
+            AlertService::alert($this, config('messages.tag.update'), 'success');
         } catch (\Exception $e) {
             DB::rollback();
-
-            $this->dispatch('swal', [
-                'title' => 'An unexpected error occurred. Please try again later.',
-                'icon' => 'error',
-                'iconColor' => 'red'
-            ]);
+            AlertService::alert($this, config('messages.common.error'), 'error');
         }
+    }
+
+    protected function validateInputs()
+    {
+        $validated = $this->validate([
+            'media' => 'nullable|file|mimes:png,jpg,jpeg,svg,webp|max:5120',
+            'name' => 'required|string|max:225|unique:tags,name,' . $this->tag->id,
+            'body' => 'required|string'
+        ]);
+
+        return $validated;
     }
 
     public function mount()

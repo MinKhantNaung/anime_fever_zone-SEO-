@@ -3,10 +3,13 @@
 namespace App\Livewire\Tag;
 
 use App\Models\Tag;
+use App\Services\AlertService;
 use Livewire\Component;
 use Livewire\Attributes\On;
 use Livewire\WithPagination;
 use App\Services\FileService;
+use App\Services\MediaService;
+use App\Services\TagService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -21,42 +24,28 @@ class Index extends Component
         try {
             $media = $tag->media;
 
-            $media = FileService::deleteFile($media);
+            MediaService::destroy($media);
 
-            $media->delete();
-
-            // Remove relationships between tag and associated post
-            $tag->posts()->detach();
-
-            $tag->delete();
+            TagService::destroy($tag);
 
             DB::commit();
 
-            $this->dispatch('swal', [
-                'title' => 'Tag deleted successfully !',
-                'icon' => 'success',
-                'iconColor' => 'green'
-            ]);
+            AlertService::alert($this, config('messages.tag.destroy'), 'success');
 
             $this->dispatch('tag-reload');
         } catch (\Exception $e) {
             DB::rollBack();
-
-            $this->dispatch('swal', [
-                'title' => 'An unexpected error occurred. Please try again later.',
-                'icon' => 'error',
-                'iconColor' => 'red'
-            ]);
+            dd($e);
+            AlertService::alert($this, config('messages.common.error'), 'error');
         }
     }
 
     #[On('tag-reload')]
     public function render()
     {
-        $tags = Tag::with('media')
-            ->select('id', 'name', 'slug', 'body')
-            ->orderBy('id', 'desc')
-            ->paginate(2);
+        $tags = Tag::query()
+                    ->getAll()
+                    ->paginate(2);
 
         return view('livewire.tag.index', [
             'tags' => $tags
