@@ -9,6 +9,7 @@ use App\Models\SiteSetting;
 use Livewire\Attributes\On;
 use App\Services\FileService;
 use Livewire\WithFileUploads;
+use App\Services\AlertService;
 use Illuminate\Validation\Rule;
 
 class Edit extends Component
@@ -28,11 +29,7 @@ class Edit extends Component
             'email_verify_status' => $this->checked
         ]);
 
-        $this->dispatch('swal', [
-            'title' => 'Toggled email verification showing successfully !',
-            'icon' => 'success',
-            'iconColor' => 'green'
-        ]);
+        AlertService::alert($this, config('messages.email_verify_toggle'), 'success');
     }
 
     public function saveProfile()
@@ -76,12 +73,7 @@ class Edit extends Component
 
         $this->reset();
         $this->dispatch('profile-reload');
-
-        $this->dispatch('swal', [
-            'title' => 'Profile updated successfully !',
-            'icon' => 'success',
-            'iconColor' => 'green'
-        ]);
+        AlertService::alert($this, config('messages.profile.update'), 'success');
     }
 
     #[On('profile-reload')]

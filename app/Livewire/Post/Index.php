@@ -9,6 +9,7 @@ use App\Models\Subscriber;
 use Livewire\Attributes\On;
 use Livewire\WithPagination;
 use App\Services\FileService;
+use App\Services\AlertService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
@@ -52,19 +53,10 @@ class Index extends Component
             DB::commit();
 
             $this->dispatch('post-event');
-            $this->dispatch('swal', [
-                'title' => 'Post deleted successfully !',
-                'icon' => 'success',
-                'iconColor' => 'green'
-            ]);
+            AlertService::alert($this, config('messages.post.destroy'), 'success');
         } catch (\Exception $e) {
             DB::rollBack();
-
-            $this->dispatch('swal', [
-                'title' => 'An unexpected error occurred. Please try again later.',
-                'icon' => 'error',
-                'iconColor' => 'red'
-            ]);
+            AlertService::alert($this, config('messages.common.error'), 'error');
         }
     }
 

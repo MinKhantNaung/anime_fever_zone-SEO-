@@ -3,6 +3,7 @@
 namespace App\Livewire\Profile;
 
 use Livewire\Component;
+use App\Services\AlertService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
@@ -38,11 +39,7 @@ class UpdatePasswordForm extends Component
 
         $this->dispatch('password-updated');
 
-        $this->dispatch('swal', [
-            'title' => 'Password updated successfully !',
-            'icon' => 'success',
-            'iconColor' => 'green'
-        ]);
+        AlertService::alert($this, config('messages.password.update'), 'success');
     }
 
     public function render()

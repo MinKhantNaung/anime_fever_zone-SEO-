@@ -54,10 +54,10 @@ class Create extends ModalComponent
             $this->dispatch('close');
             $this->dispatch('post-event');
 
-            AlertService::alert($this, config('messages.post.create'), 'success', 'green');
+            AlertService::alert($this, config('messages.post.create'), 'success');
         } catch (\Exception $e) {
             DB::rollBack();
-            AlertService::alert($this, config('messages.common.error'), 'error', 'red');
+            AlertService::alert($this, config('messages.common.error'), 'error');
         }
     }
 
