@@ -116,10 +116,9 @@ class Index extends Component
     #[On('post-event')]
     public function render()
     {
-        $posts = Post::with('media', 'topic', 'tags', 'sections')
-            ->select('id', 'topic_id', 'heading', 'slug', 'body', 'is_publish', 'is_feature', 'created_at')
-            ->orderBy('id', 'desc')
-            ->paginate(5);
+        $posts = Post::query()
+                    ->getAll()
+                    ->paginate(5);
 
         return view('livewire.post.index', [
             'posts' => $posts

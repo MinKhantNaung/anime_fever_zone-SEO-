@@ -36,4 +36,17 @@ class Tag extends Model
     {
         return $this->belongsToMany(Post::class, PostTag::class);
     }
+
+    /** Database Logic */
+    public function scopeFindWithSlug($query, $slug)
+    {
+        return $query->where('slug', $slug)
+                    ->with('media');
+    }
+
+    public function scopeGetAll($query)
+    {
+        return $query->orderBy('id', 'desc')
+                    ->with('media');
+    }
 }

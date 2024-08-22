@@ -16,23 +16,17 @@ class Home extends Component
 
     public function mount()
     {
-        $this->featuredPosts = Post::with('media')
-            ->select('id', 'heading', 'slug')
-            ->orderBy('updated_at', 'desc')
-            ->where('is_publish', true)
-            ->where('is_feature', true)
-            ->take(5)
-            ->get();
+        $this->featuredPosts = Post::query()
+                                    ->featuredPosts()
+                                    ->get();
     }
 
     #[Title('Anime Fever Zone')]
     public function render()
     {
-        $posts = Post::with('media', 'topic', 'tags')
-            ->select('id', 'topic_id', 'heading', 'slug', 'body', 'updated_at')
-            ->orderBy('updated_at', 'desc')
-            ->where('is_publish', true)
-            ->paginate(12);
+        $posts = Post::query()
+                    ->getPublishedPosts()
+                    ->paginate(12);
 
         return view('livewire.home', [
             'posts' => $posts

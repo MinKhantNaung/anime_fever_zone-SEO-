@@ -53,10 +53,9 @@ class Index extends Component
     #[On('tag-reload')]
     public function render()
     {
-        $tags = Tag::with('media')
-            ->select('id', 'name', 'slug', 'body')
-            ->orderBy('id', 'desc')
-            ->paginate(2);
+        $tags = Tag::query()
+                    ->getAll()
+                    ->paginate(2);
 
         return view('livewire.tag.index', [
             'tags' => $tags
