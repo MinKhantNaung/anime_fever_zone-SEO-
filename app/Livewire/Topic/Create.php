@@ -3,6 +3,8 @@
 namespace App\Livewire\Topic;
 
 use App\Models\Topic;
+use App\Services\AlertService;
+use App\Services\TopicService;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -23,41 +25,9 @@ class Create extends Component
     public function createNew()
     {
         if ($this->editMode) {
-            $this->validate([
-                'name' => 'required|string|max:255|unique:topics,name,' . $this->topic->id
-            ]);
-
-            $this->topic->update([
-                'name' => $this->name
-            ]);
-
-            $this->reset();
-
-            $this->dispatch('topic-created');
-
-            $this->dispatch('swal', [
-                'title' => 'Topic updated successfully !',
-                'icon' => 'success',
-                'iconColor' => 'green'
-            ]);
+            $this->updateTopic();
         } else {
-            $this->validate([
-                'name' => 'required|string|max:255|unique:topics,name'
-            ]);
-
-            Topic::create([
-                'name' => $this->name
-            ]);
-
-            $this->reset();
-
-            $this->dispatch('topic-created');
-
-            $this->dispatch('swal', [
-                'title' => 'Topic created successfully !',
-                'icon' => 'success',
-                'iconColor' => 'green'
-            ]);
+            $this->storeTopic();
         }
     }
 
@@ -67,11 +37,51 @@ class Create extends Component
 
         $this->dispatch('topic-created');
 
-        $this->dispatch('swal', [
-            'title' => 'Topic deleted successfully !',
-            'icon' => 'success',
-            'iconColor' => 'green'
+        AlertService::alert($this, config('messages.topic.destroy'), 'success');
+    }
+
+    protected function updateTopic()
+    {
+        $validated = $this->validateForUpdate();
+
+        TopicService::update($this->topic, $validated);
+
+        $this->reset();
+
+        $this->dispatch('topic-created');
+
+        AlertService::alert($this, config('messages.topic.update'), 'success');
+    }
+
+    protected function storeTopic()
+    {
+        $validated = $this->validateForStore();
+
+        TopicService::create($validated);
+
+        $this->reset();
+
+        $this->dispatch('topic-created');
+
+        AlertService::alert($this, config('messages.topic.create'), 'success');
+    }
+
+    protected function validateForUpdate()
+    {
+        $validated = $this->validate([
+            'name' => 'required|string|max:255|unique:topics,name,' . $this->topic->id
         ]);
+
+        return $validated;
+    }
+
+    protected function validateForStore()
+    {
+        $validated = $this->validate([
+            'name' => 'required|string|max:255|unique:topics,name'
+        ]);
+
+        return $validated;
     }
 
     #[On('topic-created')]

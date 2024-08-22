@@ -58,17 +58,7 @@ class Edit extends ModalComponent
             PostService::attachTags($this->post, $this->selectedTags);
 
             if ($this->media) {
-                // delete previous media
-                $media = $this->post->media;
-
-                $media = FileService::deleteFile($media);
-
-                $media->delete();
-
-                // add updated media
-                $url = FileService::storeFile($this->media);
-
-                MediaService::create(Post::class, $this->post, $url, 'image');
+                $this->updateMedia($this->media);
             }
 
             DB::commit();
@@ -96,6 +86,21 @@ class Edit extends ModalComponent
         ]);
 
         return $validated;
+    }
+
+    protected function updateMedia($newMedia)
+    {
+        // delete previous media
+        $media = $this->post->media;
+
+        $media = FileService::deleteFile($media);
+
+        $media->delete();
+
+        // add updated media
+        $url = FileService::storeFile($newMedia);
+
+        MediaService::create(Post::class, $this->post, $url, 'image');
     }
 
     public function render()

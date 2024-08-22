@@ -39,7 +39,6 @@ class Create extends ModalComponent
         try {
             $post = PostService::create($validated);
 
-            // attach tags
             PostService::attachTags($post, $this->selectedTags);
 
             // add media

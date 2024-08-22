@@ -84,11 +84,7 @@ class Index extends Component
             Mail::to($subscriber->email)->send(new PostMail($subject, $body, $post->media->url));
         }
 
-        $this->dispatch('swal', [
-            'title' => 'Successfully sent new post link to subscribers',
-            'icon' => 'success',
-            'iconColor' => 'green'
-        ]);
+        AlertService::alert($this, config('messages.email.new_post_announce'), 'success');
     }
 
     public function toggleFeature(Post $post)
@@ -98,11 +94,7 @@ class Index extends Component
         ]);
 
         $this->dispatch('post-event');
-        $this->dispatch('swal', [
-            'title' => "Success",
-            'icon' => 'success',
-            'iconColor' => 'green'
-        ]);
+        AlertService::alert($this, config('messages.common.success'), 'success');
     }
 
     #[On('post-event')]

@@ -5,7 +5,10 @@ namespace App\Livewire\Section;
 use App\Models\Media;
 use App\Models\Post;
 use App\Models\Section;
+use App\Services\AlertService;
 use App\Services\FileService;
+use App\Services\MediaService;
+use App\Services\SectionService;
 use Illuminate\Support\Facades\DB;
 use Livewire\WithFileUploads;
 use LivewireUI\Modal\ModalComponent;
@@ -28,44 +31,18 @@ class Create extends ModalComponent
 
     public function addSection()
     {
-        $this->validate([
-            'media.*' => 'file|mimes:png,jpg,jpeg,svg,webp,mp4|max:512000',
-            'heading' => 'nullable|string|max:225',
-            'body' => 'required|string'
-        ]);
+        $validated = $this->validateInputs();
 
         DB::beginTransaction();
 
         try {
-            $section = Section::create([
-                'post_id' => $this->post->id,
-                'heading' => $this->heading,
-                'body' => $this->body
-            ]);
+            $section = SectionService::create($this->post, $validated);
 
-            foreach ($this->media as $media) {
-                // get mime type
-                $mime = $this->getMime($media);
-
-                $url = FileService::storeFile($media);
-
-                // create media
-                Media::create([
-                    'mediable_id' => $section->id,
-                    'mediable_type' => Section::class,
-                    'url' => $url,
-                    'mime' => $mime
-                ]);
-            }
+            MediaService::storeMultipleMedias(Section::class, $section, $this->media);
 
             DB::commit();
 
-            // success toast
-            $this->dispatch('swal', [
-                'title' => 'Section added successfully !',
-                'icon' => 'success',
-                'iconColor' => 'green'
-            ]);
+            AlertService::alert($this, config('messages.section.create'), 'success');
 
             $this->reset();
             $this->dispatch('close');
@@ -73,21 +50,19 @@ class Create extends ModalComponent
         } catch (\Exception $e) {
             DB::rollBack();
 
-            $this->dispatch('swal', [
-                'title' => 'An unexpected error occurred. Please try again later.',
-                'icon' => 'error',
-                'iconColor' => 'red'
-            ]);
+            AlertService::alert($this, config('messages.common.error'), 'error');
         }
     }
 
-    public function getMime($media): string
+    protected function validateInputs()
     {
-        if (str()->contains($media->getMimeType(), 'video')) {
-            return 'video';
-        } else {
-            return 'image';
-        }
+        $validated = $this->validate([
+            'media.*' => 'file|mimes:png,jpg,jpeg,svg,webp,mp4|max:512000',
+            'heading' => 'nullable|string|max:225',
+            'body' => 'required|string'
+        ]);
+
+        return $validated;
     }
 
     public function render()

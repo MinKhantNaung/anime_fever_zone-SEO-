@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-class AlertService
+final class AlertService
 {
     public static function alert($viewModel, $title, $iconType)
     {
