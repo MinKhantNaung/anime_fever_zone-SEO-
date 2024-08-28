@@ -3,12 +3,10 @@
 namespace App\Livewire\Tag;
 
 use App\Models\Tag;
-use App\Models\Media;
 use App\Services\AlertService;
 use App\Services\FileService;
 use App\Services\MediaService;
 use App\Services\TagService;
-use Illuminate\Cache\TagSet;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
 use LivewireUI\Modal\ModalComponent;
@@ -20,6 +18,19 @@ class Create extends ModalComponent
     public $media;
     public $name;
     public $body;
+
+    protected $alertService;
+    protected $fileService;
+    protected $mediaService;
+    protected $tagService;
+
+    public function boot(AlertService $alertService, FileService $fileService, MediaService $mediaService, TagService $tagService)
+    {
+        $this->alertService = $alertService;
+        $this->fileService = $fileService;
+        $this->mediaService = $mediaService;
+        $this->tagService = $tagService;
+    }
 
     public static function modalMaxWidth(): string
     {
@@ -33,22 +44,22 @@ class Create extends ModalComponent
         DB::beginTransaction();
 
         try {
-            $tag = TagService::create($validated);
+            $tag = $this->tagService->create($validated);
 
-            $url = FileService::storeFile($this->media);
+            $url = $this->fileService->storeFile($this->media);
 
-            MediaService::create(Tag::class, $tag, $url, 'image');
+            $this->mediaService->create(Tag::class, $tag, $url, 'image');
 
             DB::commit();
 
-            AlertService::alert($this, config('messages.tag.create'), 'success');
+            $this->alertService->alert($this, config('messages.tag.create'), 'success');
 
             $this->reset();
             $this->dispatch('close');
             $this->dispatch('tag-reload');
         } catch (\Exception $e) {
             DB::rollback();
-            AlertService::alert($this, config('messages.common.error'), 'error');
+            $this->alertService->alert($this, config('messages.common.error'), 'error');
         }
     }
 

@@ -49,4 +49,11 @@ class Tag extends Model
         return $query->orderBy('id', 'desc')
                     ->with('media');
     }
+
+    public function getAllByName()
+    {
+        return $this->query()
+                    ->select('id', 'name')
+                    ->get();
+    }
 }

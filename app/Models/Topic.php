@@ -30,4 +30,12 @@ class Topic extends Model
     {
         return $this->hasMany(Post::class);
     }
+
+    /** Database Logic */
+    public function getAllByName()
+    {
+        return $this->query()
+                    ->select('id', 'name')
+                    ->get();
+    }
 }

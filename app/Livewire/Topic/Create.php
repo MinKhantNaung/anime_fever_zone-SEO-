@@ -15,6 +15,15 @@ class Create extends Component
     public ?Topic $topic;
     public $editMode = false;
 
+    protected $alertService;
+    protected $topicService;
+
+    public function boot(AlertService $alertService, TopicService $topicService)
+    {
+        $this->alertService = $alertService;
+        $this->topicService = $topicService;
+    }
+
     public function updateEditMode(Topic $topic)
     {
         $this->topic = $topic;
@@ -37,33 +46,33 @@ class Create extends Component
 
         $this->dispatch('topic-created');
 
-        AlertService::alert($this, config('messages.topic.destroy'), 'success');
+        $this->alertService->alert($this, config('messages.topic.destroy'), 'success');
     }
 
     protected function updateTopic()
     {
         $validated = $this->validateForUpdate();
 
-        TopicService::update($this->topic, $validated);
+        $this->topicService->update($this->topic, $validated);
 
         $this->reset();
 
         $this->dispatch('topic-created');
 
-        AlertService::alert($this, config('messages.topic.update'), 'success');
+        $this->alertService->alert($this, config('messages.topic.update'), 'success');
     }
 
     protected function storeTopic()
     {
         $validated = $this->validateForStore();
 
-        TopicService::create($validated);
+        $this->topicService->create($validated);
 
         $this->reset();
 
         $this->dispatch('topic-created');
 
-        AlertService::alert($this, config('messages.topic.create'), 'success');
+        $this->alertService->alert($this, config('messages.topic.create'), 'success');
     }
 
     protected function validateForUpdate()

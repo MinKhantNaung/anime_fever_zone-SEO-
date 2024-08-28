@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Post;
 
-use App\Models\Media;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\Topic;
@@ -11,7 +10,6 @@ use App\Services\FileService;
 use App\Services\MediaService;
 use App\Services\PostService;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
 use LivewireUI\Modal\ModalComponent;
 
@@ -24,10 +22,25 @@ class Edit extends ModalComponent
     public $heading;
     public $body;
     public $is_publish = false;
-
     public $selectedTags = null;
-
     public Post $post;
+
+    protected $tag;
+    protected $topic;
+    protected $alertService;
+    protected $fileService;
+    protected $mediaService;
+    protected $postService;
+
+    public function boot(Tag $tag, Topic $topic, AlertService $alertService, FileService $fileService, MediaService $mediaService, PostService $postService)
+    {
+        $this->tag = $tag;
+        $this->topic = $topic;
+        $this->alertService = $alertService;
+        $this->fileService = $fileService;
+        $this->mediaService = $mediaService;
+        $this->postService = $postService;
+    }
 
     public static function modalMaxWidth(): string
     {
@@ -51,11 +64,11 @@ class Edit extends ModalComponent
         DB::beginTransaction();
 
         try {
-            PostService::update($this->post, $validated);
+            $this->postService->update($this->post, $validated);
 
             // attach tags
             $this->post->tags()->detach();
-            PostService::attachTags($this->post, $this->selectedTags);
+            $this->postService->attachTags($this->post, $this->selectedTags);
 
             if ($this->media) {
                 $this->updateMedia($this->media);
@@ -67,11 +80,11 @@ class Edit extends ModalComponent
             $this->dispatch('close');
             $this->dispatch('post-event');
 
-            AlertService::alert($this, config('messages.post.update'), 'success');
+            $this->alertService->alert($this, config('messages.post.update'), 'success');
         } catch (\Exception $e) {
             DB::rollBack();
 
-            AlertService::alert($this, config('messages.common.error'), 'error');
+            $this->alertService->alert($this, config('messages.common.error'), 'error');
         }
     }
 
@@ -93,23 +106,21 @@ class Edit extends ModalComponent
         // delete previous media
         $media = $this->post->media;
 
-        $media = FileService::deleteFile($media);
+        $media = $this->fileService->deleteFile($media);
 
         $media->delete();
 
         // add updated media
-        $url = FileService::storeFile($newMedia);
+        $url = $this->fileService->storeFile($newMedia);
 
-        MediaService::create(Post::class, $this->post, $url, 'image');
+        $this->mediaService->create(Post::class, $this->post, $url, 'image');
     }
 
     public function render()
     {
-        $topics = Topic::select('id', 'name')
-            ->get();
+        $topics = $this->topic->getAllByName();
 
-        $tags = Tag::select('id', 'name')
-            ->get();
+        $tags = $this->tag->getAllByName();
 
         return view('livewire.post.edit', [
             'topics' => $topics,

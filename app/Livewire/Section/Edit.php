@@ -2,14 +2,11 @@
 
 namespace App\Livewire\Section;
 
-use App\Models\Media;
 use App\Models\Section;
 use App\Services\AlertService;
-use App\Services\FileService;
 use App\Services\MediaService;
 use App\Services\SectionService;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
 use LivewireUI\Modal\ModalComponent;
 
@@ -23,6 +20,23 @@ class Edit extends ModalComponent
 
     public Section $section;
 
+    protected $alertService;
+    protected $mediaService;
+    protected $sectionService;
+
+    public function boot(AlertService $alertService, MediaService $mediaService, SectionService $sectionService)
+    {
+        $this->alertService = $alertService;
+        $this->mediaService = $mediaService;
+        $this->sectionService = $sectionService;
+    }
+
+    public function mount()
+    {
+        $this->heading = $this->section->heading;
+        $this->body = $this->section->body;
+    }
+
     public static function modalMaxWidth(): string
     {
         return '5xl';
@@ -35,24 +49,24 @@ class Edit extends ModalComponent
         DB::beginTransaction();
 
         try {
-            SectionService::update($this->section, $validated);
+            $this->sectionService->update($this->section, $validated);
 
             if (count($this->media) > 0) {
                 $prevMedia = $this->section->media;
 
-                MediaService::destroyMultipleMedias($prevMedia);
+                $this->mediaService->destroyMultipleMedias($prevMedia);
 
-                MediaService::storeMultipleMedias(Section::class, $this->section, $this->media);
+                $this->mediaService->storeMultipleMedias(Section::class, $this->section, $this->media);
             }
 
             DB::commit();
 
-            AlertService::alert($this, config('messages.section.update'), 'success');
+            $this->alertService->alert($this, config('messages.section.update'), 'success');
 
             return $this->redirectRoute('sections.index', ['post' => $this->section->post_id], navigate: true);
         } catch (\Exception $e) {
             DB::rollBack();
-            AlertService::alert($this, config('messages.common.error'), 'error');
+            $this->alertService->alert($this, config('messages.common.error'), 'error');
         }
     }
 
@@ -65,12 +79,6 @@ class Edit extends ModalComponent
         ]);
 
         return $validated;
-    }
-
-    public function mount()
-    {
-        $this->heading = $this->section->heading;
-        $this->body = $this->section->body;
     }
 
     public function render()

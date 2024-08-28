@@ -7,15 +7,24 @@ use App\Services\AlertService;
 use Livewire\Component;
 use Livewire\Attributes\On;
 use Livewire\WithPagination;
-use App\Services\FileService;
 use App\Services\MediaService;
 use App\Services\TagService;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 
 class Index extends Component
 {
     use WithPagination;
+
+    protected $alertService;
+    protected $mediaService;
+    protected $tagService;
+
+    public function boot(AlertService $alertService, MediaService $mediaService, TagService $tagService)
+    {
+        $this->alertService = $alertService;
+        $this->mediaService = $mediaService;
+        $this->tagService = $tagService;
+    }
 
     public function deleteTag(Tag $tag)
     {
@@ -24,19 +33,19 @@ class Index extends Component
         try {
             $media = $tag->media;
 
-            MediaService::destroy($media);
+            $this->mediaService->destroy($media);
 
-            TagService::destroy($tag);
+            $this->tagService->destroy($tag);
 
             DB::commit();
 
-            AlertService::alert($this, config('messages.tag.destroy'), 'success');
+            $this->alertService->alert($this, config('messages.tag.destroy'), 'success');
 
             $this->dispatch('tag-reload');
         } catch (\Exception $e) {
             DB::rollBack();
             dd($e);
-            AlertService::alert($this, config('messages.common.error'), 'error');
+            $this->alertService->alert($this, config('messages.common.error'), 'error');
         }
     }
 

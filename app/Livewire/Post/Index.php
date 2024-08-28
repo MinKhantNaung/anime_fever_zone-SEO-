@@ -17,6 +17,15 @@ class Index extends Component
 {
     use WithPagination;
 
+    protected $alertService;
+    protected $fileService;
+
+    public function boot(AlertService $alertService, FileService $fileService)
+    {
+        $this->alertService = $alertService;
+        $this->fileService = $fileService;
+    }
+
     public function deletePost(Post $post)
     {
         DB::beginTransaction();
@@ -25,7 +34,7 @@ class Index extends Component
             // delete related media
             $media = $post->media;
 
-            $media = FileService::deleteFile($media);
+            $media = $this->fileService->deleteFile($media);
 
             $media->delete();
 
@@ -37,7 +46,7 @@ class Index extends Component
                 $medias = $section->media;
 
                 foreach ($medias as $media) {
-                    $media = FileService::deleteFile($media);
+                    $media = $this->fileService->deleteFile($media);
 
                     $media->delete();
                 }
@@ -53,10 +62,10 @@ class Index extends Component
             DB::commit();
 
             $this->dispatch('post-event');
-            AlertService::alert($this, config('messages.post.destroy'), 'success');
+            $this->alertService->alert($this, config('messages.post.destroy'), 'success');
         } catch (\Exception $e) {
             DB::rollBack();
-            AlertService::alert($this, config('messages.common.error'), 'error');
+            $this->alertService->alert($this, config('messages.common.error'), 'error');
         }
     }
 
@@ -84,7 +93,7 @@ class Index extends Component
             Mail::to($subscriber->email)->send(new PostMail($subject, $body, $post->media->url));
         }
 
-        AlertService::alert($this, config('messages.email.new_post_announce'), 'success');
+        $this->alertService->alert($this, config('messages.email.new_post_announce'), 'success');
     }
 
     public function toggleFeature(Post $post)
@@ -94,7 +103,7 @@ class Index extends Component
         ]);
 
         $this->dispatch('post-event');
-        AlertService::alert($this, config('messages.common.success'), 'success');
+        $this->alertService->alert($this, config('messages.common.success'), 'success');
     }
 
     #[On('post-event')]
