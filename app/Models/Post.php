@@ -128,8 +128,8 @@ class Post extends Model
     public function getPostsOfTopic($topicSlug)
     {
         return $this->query()
-                    ->whereHas('topic', function ($query) {
-                        $query->where('slug', $this->slug);
+                    ->whereHas('topic', function ($q) use ($topicSlug) {
+                        $q->where('slug', $topicSlug);
                     })
                     ->published()
                     ->with('media', 'topic', 'tags')
