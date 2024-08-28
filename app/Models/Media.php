@@ -10,9 +10,14 @@ class Media extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $fillable = [
+        'mediable_type',
+        'mediable_id',
+        'url',
+        'mime'
+    ];
 
-    public function mediable() : MorphTo
+    public function mediable(): MorphTo
     {
         return $this->morphTo();
     }

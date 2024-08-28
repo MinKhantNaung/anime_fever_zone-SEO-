@@ -10,7 +10,11 @@ class Section extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $fillable = [
+        'post_id',
+        'heading',
+        'body'
+    ];
 
     public function media() : MorphMany
     {

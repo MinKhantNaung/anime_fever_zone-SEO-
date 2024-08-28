@@ -9,5 +9,5 @@ class SiteSetting extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $fillable = ['email_verify_status'];
 }
