@@ -4,7 +4,7 @@ namespace App\Services;
 
 final class AlertService
 {
-    public static function alert($viewModel, $title, $iconType)
+    public function alert($viewModel, $title, $iconType)
     {
         $viewModel->dispatch('swal', [
             'title' => $title,   // title

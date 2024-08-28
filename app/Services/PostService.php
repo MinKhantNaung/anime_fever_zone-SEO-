@@ -6,9 +6,16 @@ use App\Models\Post;
 
 final class PostService
 {
-    public static function create($validated)
+    protected $post;
+
+    public function __construct(Post $post)
     {
-        $post = Post::create([
+        $this->post = $post;
+    }
+
+    public function create($validated)
+    {
+        $post = $this->post->create([
             'topic_id' => $validated['topic_id'],
             'heading' => $validated['heading'],
             'body' => $validated['body'],
@@ -18,7 +25,7 @@ final class PostService
         return $post;
     }
 
-    public static function update($post, $validated)
+    public function update($post, $validated)
     {
         $post->update([
             'topic_id' => $validated['topic_id'],
@@ -28,7 +35,7 @@ final class PostService
         ]);
     }
 
-    public static function attachTags($postModel, $selectedTags)
+    public function attachTags($postModel, $selectedTags)
     {
         if ($selectedTags != null) {
             $postModel->tags()->attach($selectedTags);

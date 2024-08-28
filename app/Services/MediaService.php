@@ -6,9 +6,18 @@ use App\Models\Media;
 
 final class MediaService
 {
-    public static function create($mainModelClass, $mainModel, $mediaUrl, $mime)
+    protected $media;
+    protected $fileService;
+
+    public function __construct(Media $media, FileService $fileService)
     {
-        Media::create([
+        $this->media = $media;
+        $this->fileService = $fileService;
+    }
+
+    public function create($mainModelClass, $mainModel, $mediaUrl, $mime)
+    {
+        $this->media->create([
             'mediable_id' => $mainModel->id,    // eg: $post->id
             'mediable_type' => $mainModelClass, // eg: Post::class
             'url' => $mediaUrl,                 // eg: file url
@@ -16,28 +25,28 @@ final class MediaService
         ]);
     }
 
-    public static function storeMultipleMedias($mainModelClass, $mainModel, Array $medias)
+    public function storeMultipleMedias($mainModelClass, $mainModel, Array $medias)
     {
         foreach ($medias as $media) {
             // get mime type
-            $mime = FileService::getMime($media);
+            $mime = $this->fileService->getMime($media);
 
-            $url = FileService::storeFile($media);
+            $url = $this->fileService->storeFile($media);
 
-            MediaService::create($mainModelClass, $mainModel, $url, $mime);
+            $this->create($mainModelClass, $mainModel, $url, $mime);
         }
     }
 
-    public static function destroy(Media $media)
+    public function destroy(Media $media)
     {
-        $media = FileService::deleteFile($media);
+        $media = $this->fileService->deleteFile($media);
         $media->delete();
     }
 
-    public static function destroyMultipleMedias($prevMedia)
+    public function destroyMultipleMedias($prevMedia)
     {
         foreach ($prevMedia as $media) {
-            self::destroy($media);
+            $this->destroy($media);
         }
     }
 }
