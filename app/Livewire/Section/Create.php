@@ -2,17 +2,14 @@
 
 namespace App\Livewire\Section;
 
-use App\Models\Media;
 use App\Models\Post;
 use App\Models\Section;
 use App\Services\AlertService;
-use App\Services\FileService;
 use App\Services\MediaService;
 use App\Services\SectionService;
 use Illuminate\Support\Facades\DB;
 use Livewire\WithFileUploads;
 use LivewireUI\Modal\ModalComponent;
-use Illuminate\Support\Facades\Storage;
 
 class Create extends ModalComponent
 {
@@ -23,6 +20,17 @@ class Create extends ModalComponent
     public $body;
 
     public Post $post;
+
+    protected $alertService;
+    protected $mediaService;
+    protected $sectionService;
+
+    public function boot(AlertService $alertService, MediaService $mediaService, SectionService $sectionService)
+    {
+        $this->alertService = $alertService;
+        $this->mediaService = $mediaService;
+        $this->sectionService = $sectionService;
+    }
 
     public static function modalMaxWidth(): string
     {
@@ -36,13 +44,13 @@ class Create extends ModalComponent
         DB::beginTransaction();
 
         try {
-            $section = SectionService::create($this->post, $validated);
+            $section = $this->sectionService->create($this->post, $validated);
 
-            MediaService::storeMultipleMedias(Section::class, $section, $this->media);
+            $this->mediaService->storeMultipleMedias(Section::class, $section, $this->media);
 
             DB::commit();
 
-            AlertService::alert($this, config('messages.section.create'), 'success');
+            $this->alertService->alert($this, config('messages.section.create'), 'success');
 
             $this->reset();
             $this->dispatch('close');
@@ -50,7 +58,7 @@ class Create extends ModalComponent
         } catch (\Exception $e) {
             DB::rollBack();
 
-            AlertService::alert($this, config('messages.common.error'), 'error');
+            $this->alertService->alert($this, config('messages.common.error'), 'error');
         }
     }
 

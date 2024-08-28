@@ -14,19 +14,22 @@ class Home extends Component
 
     public $featuredPosts;
 
+    protected $post;
+
+    public function boot(Post $post)
+    {
+        $this->post = $post;
+    }
+
     public function mount()
     {
-        $this->featuredPosts = Post::query()
-                                    ->featuredPosts()
-                                    ->get();
+        $this->featuredPosts = $this->post->getFeaturedPosts();
     }
 
     #[Title('Anime Fever Zone')]
     public function render()
     {
-        $posts = Post::query()
-                    ->getPublishedPosts()
-                    ->paginate(12);
+        $posts = $this->post->getPublishedPosts();
 
         return view('livewire.home', [
             'posts' => $posts

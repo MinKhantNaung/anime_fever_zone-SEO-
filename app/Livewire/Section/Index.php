@@ -5,7 +5,6 @@ namespace App\Livewire\Section;
 use App\Models\Post;
 use App\Models\Section;
 use App\Services\AlertService;
-use App\Services\FileService;
 use App\Services\MediaService;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
@@ -15,6 +14,15 @@ class Index extends Component
 {
     public Post $post;
 
+    protected $alertService;
+    protected $mediaService;
+
+    public function boot(AlertService $alertService, MediaService $mediaService)
+    {
+        $this->alertService = $alertService;
+        $this->mediaService = $mediaService;
+    }
+
     public function removeSection(Section $section)
     {
         DB::beginTransaction();
@@ -22,7 +30,7 @@ class Index extends Component
         try {
             $medias = $section->media;
 
-            MediaService::destroyMultipleMedias($medias);
+            $this->mediaService->destroyMultipleMedias($medias);
 
             $section->delete();
 
@@ -30,10 +38,10 @@ class Index extends Component
 
             $this->dispatch('section-reload');
 
-            AlertService::alert($this, config('messages.section.destroy'), 'success');
+            $this->alertService->alert($this, config('messages.section.destroy'), 'success');
         } catch (\Exception $e) {
             DB::rollBack();
-            AlertService::alert($this, config('messages.common.error'), 'error');
+            $this->alertService->alert($this, config('messages.common.error'), 'error');
         }
     }
 

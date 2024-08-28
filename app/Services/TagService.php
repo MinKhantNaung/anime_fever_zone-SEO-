@@ -6,9 +6,16 @@ use App\Models\Tag;
 
 final class TagService
 {
-    public static function create($validated)
+    protected $tag;
+
+    public function __construct(Tag $tag)
     {
-        $tag = Tag::create([
+        $this->tag = $tag;
+    }
+
+    public function create($validated)
+    {
+        $tag = $this->tag->create([
             'name' => $validated['name'],
             'body' => $validated['body']
         ]);
@@ -16,7 +23,7 @@ final class TagService
         return $tag;
     }
 
-    public static function update(Tag $tag, $validated)
+    public function update(Tag $tag, $validated)
     {
         $tag->update([
             'name' => $validated['name'],
@@ -24,7 +31,7 @@ final class TagService
         ]);
     }
 
-    public static function destroy(Tag $tag)
+    public function destroy(Tag $tag)
     {
         $tag->posts()->detach();
         $tag->delete();

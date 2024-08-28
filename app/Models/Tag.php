@@ -38,15 +38,24 @@ class Tag extends Model
     }
 
     /** Database Logic */
-    public function scopeFindWithSlug($query, $slug)
+    public function findWithSlug($slug)
     {
-        return $query->where('slug', $slug)
-                    ->with('media');
+        return $this->query()
+                    ->where('slug', $slug)
+                    ->with('media')
+                    ->first();
     }
 
     public function scopeGetAll($query)
     {
         return $query->orderBy('id', 'desc')
                     ->with('media');
+    }
+
+    public function getAllByName()
+    {
+        return $this->query()
+                    ->select('id', 'name')
+                    ->get();
     }
 }

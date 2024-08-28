@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Storage;
 
 final class FileService
 {
-    public static function deleteFile($fileModel)
+    public function deleteFile($fileModel)
     {
         $prev_url = $fileModel->url;
 
@@ -20,7 +20,7 @@ final class FileService
         return $fileModel;
     }
 
-    public static function storeFile($fileModel)
+    public function storeFile($fileModel)
     {
         $file_name = uniqid() . '_' . $fileModel->getClientOriginalName();
 
@@ -31,7 +31,7 @@ final class FileService
         return $url;
     }
 
-    public static function getMime($media): string
+    public function getMime($media): string
     {
         if (str()->contains($media->getMimeType(), 'video')) {
             return 'video';

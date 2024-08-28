@@ -10,11 +10,17 @@ class TopicNav extends Component
 {
     public $topics;
 
+    protected $topic;
+
+    public function boot(Topic $topic)
+    {
+        $this->topic = $topic;
+    }
+
     #[On('topic-created')]
     public function mount()
     {
-        $this->topics = Topic::select('id', 'name', 'slug')
-            ->get();
+        $this->topics = $this->topic->getAllByName();
     }
 
     public function render()

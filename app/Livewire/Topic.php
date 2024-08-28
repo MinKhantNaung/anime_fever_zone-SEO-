@@ -2,7 +2,6 @@
 
 namespace App\Livewire;
 
-use Carbon\Carbon;
 use App\Models\Post;
 use Livewire\Component;
 
@@ -12,18 +11,21 @@ class Topic extends Component
 
     public $featuredPosts;
 
+    protected $post;
+
+    public function boot(Post $post)
+    {
+        $this->post = $post;
+    }
+
     public function mount()
     {
-        $this->featuredPosts = Post::query()
-                                    ->featuredPosts()
-                                    ->get();
+        $this->featuredPosts = $this->post->getFeaturedPosts();
     }
 
     public function render()
     {
-        $posts = Post::query()
-                    ->getPostsOfTopic($this->slug)
-                    ->paginate(12);
+        $posts = $this->post->getPostsOfTopic($this->slug);
 
         return view('livewire.topic', [
             'posts' => $posts

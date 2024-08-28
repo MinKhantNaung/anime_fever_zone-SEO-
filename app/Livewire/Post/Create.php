@@ -3,7 +3,6 @@
 namespace App\Livewire\Post;
 
 use App\Models\Post;
-use App\Models\Media;
 use App\Models\Tag;
 use App\Models\Topic;
 use App\Services\AlertService;
@@ -13,7 +12,6 @@ use App\Services\PostService;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
 use LivewireUI\Modal\ModalComponent;
-use Illuminate\Support\Facades\Storage;
 
 class Create extends ModalComponent
 {
@@ -26,6 +24,26 @@ class Create extends ModalComponent
     public $is_publish = false;
     public $selectedTags = null;
 
+    // Models, Services
+    protected $post;
+    protected $topic;
+    protected $tag;
+    protected $alertService;
+    protected $fileService;
+    protected $mediaService;
+    protected $postService;
+
+    public function boot(Post $post, Topic $topic, Tag $tag, AlertService $alertService, FileService $fileService, MediaService $mediaService, PostService $postService)
+    {
+        $this->post = $post;
+        $this->topic = $topic;
+        $this->tag = $tag;
+        $this->alertService = $alertService;
+        $this->fileService = $fileService;
+        $this->mediaService = $mediaService;
+        $this->postService = $postService;
+    }
+
     public static function modalMaxWidth(): string
     {
         return '5xl';
@@ -37,15 +55,15 @@ class Create extends ModalComponent
 
         DB::beginTransaction();
         try {
-            $post = PostService::create($validated);
+            $post = $this->postService->create($validated);
 
-            PostService::attachTags($post, $this->selectedTags);
+            $this->postService->attachTags($post, $this->selectedTags);
 
             // add media
-            $url = FileService::storeFile($this->media);
+            $url = $this->fileService->storeFile($this->media);
 
             // create media
-            MediaService::create(Post::class, $post, $url, 'image');
+            $this->mediaService->create(Post::class, $post, $url, 'image');
 
             DB::commit();
 
@@ -53,10 +71,10 @@ class Create extends ModalComponent
             $this->dispatch('close');
             $this->dispatch('post-event');
 
-            AlertService::alert($this, config('messages.post.create'), 'success');
+            $this->alertService->alert($this, config('messages.post.create'), 'success');
         } catch (\Exception $e) {
             DB::rollBack();
-            AlertService::alert($this, config('messages.common.error'), 'error');
+            $this->alertService->alert($this, config('messages.common.error'), 'error');
         }
     }
 
@@ -74,11 +92,9 @@ class Create extends ModalComponent
 
     public function render()
     {
-        $topics = Topic::select('id', 'name')
-            ->get();
+        $topics = $this->topic->getAllByName();
 
-        $tags = Tag::select('id', 'name')
-            ->get();
+        $tags = $this->tag->getAllByName();
 
         return view('livewire.post.create', [
             'topics' => $topics,

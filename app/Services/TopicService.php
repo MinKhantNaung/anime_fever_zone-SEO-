@@ -6,14 +6,21 @@ use App\Models\Topic;
 
 final class TopicService
 {
-    public static function create($validated)
+    protected $topic;
+
+    public function __construct(Topic $topic)
     {
-        Topic::create([
+        $this->topic = $topic;
+    }
+
+    public function create($validated)
+    {
+        $this->topic->create([
             'name' => $validated['name']
         ]);
     }
 
-    public static function update(Topic $topic, $validated)
+    public function update(Topic $topic, $validated)
     {
         $topic->update([
             'name' => $validated['name']

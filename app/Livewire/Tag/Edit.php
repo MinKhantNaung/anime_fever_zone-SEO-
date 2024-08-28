@@ -3,7 +3,6 @@
 namespace App\Livewire\Tag;
 
 use App\Models\Tag;
-use App\Models\Media;
 use App\Services\AlertService;
 use App\Services\FileService;
 use App\Services\MediaService;
@@ -11,7 +10,6 @@ use App\Services\TagService;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
 use LivewireUI\Modal\ModalComponent;
-use Illuminate\Support\Facades\Storage;
 
 class Edit extends ModalComponent
 {
@@ -22,6 +20,25 @@ class Edit extends ModalComponent
     public $body;
 
     public Tag $tag;
+
+    protected $alertService;
+    protected $fileService;
+    protected $mediaService;
+    protected $tagService;
+
+    public function boot(AlertService $alertService, FileService $fileService, MediaService $mediaService, TagService $tagService)
+    {
+        $this->alertService = $alertService;
+        $this->fileService = $fileService;
+        $this->mediaService = $mediaService;
+        $this->tagService = $tagService;
+    }
+
+    public function mount()
+    {
+        $this->name = $this->tag->name;
+        $this->body = $this->tag->body;
+    }
 
     public static function modalMaxWidth(): string
     {
@@ -35,17 +52,17 @@ class Edit extends ModalComponent
         DB::beginTransaction();
 
         try {
-            TagService::update($this->tag, $validated);
+            $this->tagService->update($this->tag, $validated);
 
             if ($this->media) {
                 // delete previous media
                 $media = $this->tag->media;
-                MediaService::destroy($media);
+                $this->mediaService->destroy($media);
 
                 // add updated media
-                $url = FileService::storeFile($this->media);
+                $url = $this->fileService->storeFile($this->media);
 
-                MediaService::create(Tag::class, $this->tag, $url, 'image');
+                $this->mediaService->create(Tag::class, $this->tag, $url, 'image');
             }
 
             DB::commit();
@@ -54,10 +71,10 @@ class Edit extends ModalComponent
             $this->dispatch('close');
             $this->dispatch('tag-reload');
 
-            AlertService::alert($this, config('messages.tag.update'), 'success');
+            $this->alertService->alert($this, config('messages.tag.update'), 'success');
         } catch (\Exception $e) {
             DB::rollback();
-            AlertService::alert($this, config('messages.common.error'), 'error');
+            $this->alertService->alert($this, config('messages.common.error'), 'error');
         }
     }
 
@@ -70,12 +87,6 @@ class Edit extends ModalComponent
         ]);
 
         return $validated;
-    }
-
-    public function mount()
-    {
-        $this->name = $this->tag->name;
-        $this->body = $this->tag->body;
     }
 
     public function render()
