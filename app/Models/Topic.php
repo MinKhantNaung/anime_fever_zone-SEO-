@@ -35,7 +35,7 @@ class Topic extends Model
     public function getAllByName()
     {
         return $this->query()
-                    ->select('id', 'name')
+                    ->select('id', 'name', 'slug')
                     ->get();
     }
 }

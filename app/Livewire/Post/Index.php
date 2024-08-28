@@ -17,11 +17,13 @@ class Index extends Component
 {
     use WithPagination;
 
+    protected $post;
     protected $alertService;
     protected $fileService;
 
-    public function boot(AlertService $alertService, FileService $fileService)
+    public function boot(Post $post, AlertService $alertService, FileService $fileService)
     {
+        $this->post = $post;
         $this->alertService = $alertService;
         $this->fileService = $fileService;
     }
@@ -109,9 +111,7 @@ class Index extends Component
     #[On('post-event')]
     public function render()
     {
-        $posts = Post::query()
-                    ->getAll()
-                    ->paginate(5);
+        $posts = $this->post->getAllPerFive();
 
         return view('livewire.post.index', [
             'posts' => $posts

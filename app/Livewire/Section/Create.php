@@ -25,16 +25,16 @@ class Create extends ModalComponent
     protected $mediaService;
     protected $sectionService;
 
-    public static function modalMaxWidth(): string
-    {
-        return '5xl';
-    }
-
     public function boot(AlertService $alertService, MediaService $mediaService, SectionService $sectionService)
     {
         $this->alertService = $alertService;
         $this->mediaService = $mediaService;
         $this->sectionService = $sectionService;
+    }
+
+    public static function modalMaxWidth(): string
+    {
+        return '5xl';
     }
 
     public function addSection()

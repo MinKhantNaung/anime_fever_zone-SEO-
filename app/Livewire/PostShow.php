@@ -19,6 +19,24 @@ class PostShow extends Component
     public $email;
     public bool $emailVerifyStatus;
 
+    protected $postModel;
+    protected $siteSetting;
+
+    public function boot(Post $postModel, SiteSetting $siteSetting)
+    {
+        $this->postModel = $postModel;
+        $this->siteSetting = $siteSetting;
+    }
+
+    public function mount()
+    {
+        $this->post = $this->postModel->findPostWithSlug($this->slug);
+
+        $this->featuredPosts = $this->postModel->featuredPostsForPostPage($this->post->id);
+
+        $this->emailVerifyStatus = $this->siteSetting->first()->email_verify_status;
+    }
+
     public function subscribe()
     {
         $this->validate([
@@ -50,19 +68,6 @@ class PostShow extends Component
             'icon' => 'success',
             'iconColor' => 'green'
         ]);
-    }
-
-    public function mount()
-    {
-        $this->post = Post::query()
-                        ->findPostWithSlug($this->slug)
-                        ->first();
-
-        $this->featuredPosts = Post::query()
-                                    ->featuredPostsForPostPage($this->post->id)
-                                    ->get();
-
-        $this->emailVerifyStatus = SiteSetting::first()->email_verify_status;
     }
 
     public function render()

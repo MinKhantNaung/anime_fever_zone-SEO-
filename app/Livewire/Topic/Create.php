@@ -15,11 +15,13 @@ class Create extends Component
     public ?Topic $topic;
     public $editMode = false;
 
+    protected $topicModel;
     protected $alertService;
     protected $topicService;
 
-    public function boot(AlertService $alertService, TopicService $topicService)
+    public function boot(Topic $topicModel, AlertService $alertService, TopicService $topicService)
     {
+        $this->topicModel = $topicModel;
         $this->alertService = $alertService;
         $this->topicService = $topicService;
     }
@@ -96,8 +98,7 @@ class Create extends Component
     #[On('topic-created')]
     public function render()
     {
-        $topics = Topic::select('id', 'name', 'slug')
-            ->get();
+        $topics = $this->topicModel->getAllByName();
 
         return view('livewire.topic.create', [
             'topics' => $topics

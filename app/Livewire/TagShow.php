@@ -16,22 +16,25 @@ class TagShow extends Component
     public $tag;
     public $featuredPosts;
 
+    protected $post;
+    protected $tagModel;
+
+    public function boot(Post $post, Tag $tagModel)
+    {
+        $this->post = $post;
+        $this->tagModel = $tagModel;
+    }
+
     public function mount()
     {
-        $this->tag = Tag::query()
-                        ->findWithSlug($this->slug)
-                        ->first();
+        $this->tag = $this->tagModel->findWithSlug($this->slug);
 
-        $this->featuredPosts = Post::query()
-                                    ->featuredPosts()
-                                    ->get();
+        $this->featuredPosts = $this->post->getFeaturedPosts();
     }
 
     public function render()
     {
-        $posts = Post::query()
-                    ->getPostsOfTag($this->slug)
-                    ->paginate(12);
+        $posts = $this->post->getPostsOfTag($this->slug);
 
         return view('livewire.tag-show', [
             'posts' => $posts

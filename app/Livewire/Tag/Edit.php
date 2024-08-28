@@ -34,6 +34,12 @@ class Edit extends ModalComponent
         $this->tagService = $tagService;
     }
 
+    public function mount()
+    {
+        $this->name = $this->tag->name;
+        $this->body = $this->tag->body;
+    }
+
     public static function modalMaxWidth(): string
     {
         return '5xl';
@@ -81,12 +87,6 @@ class Edit extends ModalComponent
         ]);
 
         return $validated;
-    }
-
-    public function mount()
-    {
-        $this->name = $this->tag->name;
-        $this->body = $this->tag->body;
     }
 
     public function render()

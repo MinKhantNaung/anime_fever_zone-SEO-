@@ -3,7 +3,6 @@
 namespace App\Livewire\Profile;
 
 use App\Models\User;
-use App\Models\Media;
 use Livewire\Component;
 use App\Models\SiteSetting;
 use Livewire\Attributes\On;
@@ -23,13 +22,28 @@ class Edit extends Component
     public $email;
     public bool $checked;
 
+    protected $siteSetting;
+    protected $alertService;
+    protected $fileService;
+    protected $mediaService;
+    protected $siteSettingService;
+
+    public function boot(SiteSetting $siteSetting, AlertService $alertService, FileService $fileService, MediaService $mediaService, SiteSettingService $siteSettingService)
+    {
+        $this->siteSetting = $siteSetting;
+        $this->alertService = $alertService;
+        $this->fileService = $fileService;
+        $this->mediaService = $mediaService;
+        $this->siteSettingService = $siteSettingService;
+    }
+
     public function isChecked()
     {
         $siteSetting = SiteSetting::first();
 
-        SiteSettingService::update($siteSetting, $this->checked);
+        $this->siteSettingService->update($siteSetting, $this->checked);
 
-        AlertService::alert($this, config('messages.email.verify_toggle'), 'success');
+        $this->alertService->alert($this, config('messages.email.verify_toggle'), 'success');
     }
 
     public function saveProfile()
@@ -44,7 +58,7 @@ class Edit extends Component
 
         $this->reset();
         $this->dispatch('profile-reload');
-        AlertService::alert($this, config('messages.profile.update'), 'success');
+        $this->alertService->alert($this, config('messages.profile.update'), 'success');
     }
 
     protected function validateInputs()
@@ -76,14 +90,14 @@ class Edit extends Component
         $media = auth()->user()->media;
 
         if ($media) {
-            $media = FileService::deleteFile($media);
+            $media = $this->fileService->deleteFile($media);
             $media->delete();
         }
 
         // add updated media
-        $url = FileService::storeFile($newMedia);
+        $url = $this->fileService->storeFile($newMedia);
 
-        MediaService::create(User::class, auth()->user(), $url, 'image');
+        $this->mediaService->create(User::class, auth()->user(), $url, 'image');
     }
 
     #[On('profile-reload')]

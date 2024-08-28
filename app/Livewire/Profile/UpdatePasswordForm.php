@@ -15,6 +15,13 @@ class UpdatePasswordForm extends Component
     public string $password = '';
     public string $password_confirmation = '';
 
+    protected $alertService;
+
+    public function boot(AlertService $alertService)
+    {
+        $this->alertService = $alertService;
+    }
+
     /**
      * Update the password for the currently authenticated user.
      */
@@ -39,7 +46,7 @@ class UpdatePasswordForm extends Component
 
         $this->dispatch('password-updated');
 
-        AlertService::alert($this, config('messages.password.update'), 'success');
+        $this->alertService->alert($this, config('messages.password.update'), 'success');
     }
 
     public function render()

@@ -38,10 +38,12 @@ class Tag extends Model
     }
 
     /** Database Logic */
-    public function scopeFindWithSlug($query, $slug)
+    public function findWithSlug($slug)
     {
-        return $query->where('slug', $slug)
-                    ->with('media');
+        return $this->query()
+                    ->where('slug', $slug)
+                    ->with('media')
+                    ->first();
     }
 
     public function scopeGetAll($query)
