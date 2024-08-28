@@ -88,7 +88,8 @@ class Post extends Model
 
     public function getAllPerFive()
     {
-        return $this->orderBy('id', 'desc')
+        return $this->query()
+                    ->orderBy('id', 'desc')
                     ->with('media', 'topic', 'tags', 'sections')
                     ->paginate(5);
     }

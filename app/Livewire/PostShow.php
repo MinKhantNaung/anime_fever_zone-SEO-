@@ -8,6 +8,8 @@ use Livewire\Component;
 use App\Mail\WebsiteMail;
 use App\Models\SiteSetting;
 use App\Models\Subscriber;
+use App\Services\AlertService;
+use App\Services\SubscriberService;
 use Illuminate\Support\Facades\Mail;
 
 class PostShow extends Component
@@ -21,11 +23,15 @@ class PostShow extends Component
 
     protected $postModel;
     protected $siteSetting;
+    protected $alertService;
+    protected $subscriberService;
 
-    public function boot(Post $postModel, SiteSetting $siteSetting)
+    public function boot(Post $postModel, SiteSetting $siteSetting, AlertService $alertService, SubscriberService $subscriberService)
     {
         $this->postModel = $postModel;
         $this->siteSetting = $siteSetting;
+        $this->alertService = $alertService;
+        $this->subscriberService = $subscriberService;
     }
 
     public function mount()
@@ -39,35 +45,23 @@ class PostShow extends Component
 
     public function subscribe()
     {
-        $this->validate([
-            'email' => 'required|string|email|unique:subscribers'
-        ]);
+        $validated = $this->validateForSubscribe();
 
         $token = hash('sha256', time());
 
-        Subscriber::create([
-            'email' => $this->email,
-            'token' => $token,
-            'status' => 'Pending'
+        $this->subscriberService->store($validated, $token);
+        $this->subscriberService->sendMail($validated, $token);
+
+        $this->alertService->alertForSubscribe($this, config('messages.email.subscriber_check'), 'success');
+    }
+
+    protected function validateForSubscribe()
+    {
+        $validated = $this->validate([
+            'email' => 'required|string|email|unique:subscribers'
         ]);
 
-        // Send email
-        $subject = 'Please Comfirm Subscription';
-        $verification_link = url('subscriber/verify/' . $token . '/' . $this->email);
-        $message = 'Please click on the following link in order to verify as subscriber:<br><br>';
-
-        $message .= '<a href="' . $verification_link . '">';
-        $message .= $verification_link;
-        $message .= '</a><br><br>';
-        $message .= 'If you received this email by mistake, simply delete it. You will not be subscribed if you do not  click the confirmation link above.';
-
-        Mail::to($this->email)->send(new WebsiteMail($subject, $message));
-
-        $this->dispatch('subscribed', [
-            'title' => 'Thanks, please check your inbox to confirm subscription!',
-            'icon' => 'success',
-            'iconColor' => 'green'
-        ]);
+        return $validated;
     }
 
     public function render()

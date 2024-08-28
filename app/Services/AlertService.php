@@ -12,4 +12,13 @@ final class AlertService
             'iconColor' => $iconType == 'success' ? 'green' : 'red' // 'green' or 'red'
         ]);
     }
+
+    public function alertForSubscribe($viewModel, $title, $iconType)
+    {
+        $viewModel->dispatch('subscribed', [
+            'title' => $title,
+            'icon' => $iconType,
+            'iconColor' => $iconType == 'success' ? 'green' : 'red' // 'green' or 'red'
+        ]);
+    }
 }
