@@ -46,10 +46,12 @@ class Tag extends Model
                     ->first();
     }
 
-    public function scopeGetAll($query)
+    public function getAllPerTwo()
     {
-        return $query->orderBy('id', 'desc')
-                    ->with('media');
+        return $this->query()
+                    ->orderBy('id', 'desc')
+                    ->with('media')
+                    ->paginate(2);
     }
 
     public function getAllByName()

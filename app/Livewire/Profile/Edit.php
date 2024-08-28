@@ -90,8 +90,7 @@ class Edit extends Component
         $media = auth()->user()->media;
 
         if ($media) {
-            $media = $this->fileService->deleteFile($media);
-            $media->delete();
+            $this->mediaService->destroy($media);
         }
 
         // add updated media

@@ -8,8 +8,8 @@ use Livewire\Component;
 use App\Models\Subscriber;
 use Livewire\Attributes\On;
 use Livewire\WithPagination;
-use App\Services\FileService;
 use App\Services\AlertService;
+use App\Services\PostService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
@@ -19,13 +19,13 @@ class Index extends Component
 
     protected $post;
     protected $alertService;
-    protected $fileService;
+    protected $postService;
 
-    public function boot(Post $post, AlertService $alertService, FileService $fileService)
+    public function boot(Post $post, AlertService $alertService, PostService $postService)
     {
         $this->post = $post;
         $this->alertService = $alertService;
-        $this->fileService = $fileService;
+        $this->postService = $postService;
     }
 
     public function deletePost(Post $post)
@@ -33,34 +33,7 @@ class Index extends Component
         DB::beginTransaction();
 
         try {
-            // delete related media
-            $media = $post->media;
-
-            $media = $this->fileService->deleteFile($media);
-
-            $media->delete();
-
-            // delete its sections
-            $sections = $post->sections;
-
-            foreach ($sections as $section) {
-                // delete section's all media
-                $medias = $section->media;
-
-                foreach ($medias as $media) {
-                    $media = $this->fileService->deleteFile($media);
-
-                    $media->delete();
-                }
-
-                $section->delete();
-            }
-
-            // Remove relationships between post and associated tags
-            $post->tags()->detach();
-
-            $post->delete();
-
+            $this->postService->destroy($post);
             DB::commit();
 
             $this->dispatch('post-event');
@@ -100,9 +73,7 @@ class Index extends Component
 
     public function toggleFeature(Post $post)
     {
-        $post->update([
-            'is_feature' => !$post->is_feature
-        ]);
+        $this->postService->toggleIsFeature($post);
 
         $this->dispatch('post-event');
         $this->alertService->alert($this, config('messages.common.success'), 'success');

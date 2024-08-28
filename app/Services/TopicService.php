@@ -26,4 +26,9 @@ final class TopicService
             'name' => $validated['name']
         ]);
     }
+
+    public function destroy(Topic $topic)
+    {
+        $topic->delete();
+    }
 }

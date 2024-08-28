@@ -8,10 +8,12 @@ use App\Models\Section;
 final class SectionService
 {
     protected $section;
+    protected $mediaService;
 
-    public function __construct(Section $section)
+    public function __construct(Section $section, MediaService $mediaService)
     {
         $this->section = $section;
+        $this->mediaService = $mediaService;
     }
 
     public function create(Post $post, $validated)
@@ -31,5 +33,12 @@ final class SectionService
             'heading' => $validated['heading'],
             'body' => $validated['body']
         ]);
+    }
+
+    public function destroy(Section $section)
+    {
+        $medias = $section->media;
+        $this->mediaService->destroyMultipleMedias($medias);
+        $section->delete();
     }
 }

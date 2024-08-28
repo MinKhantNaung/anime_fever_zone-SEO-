@@ -45,13 +45,10 @@ class Create extends ModalComponent
 
         try {
             $tag = $this->tagService->create($validated);
-
             $url = $this->fileService->storeFile($this->media);
-
             $this->mediaService->create(Tag::class, $tag, $url, 'image');
 
             DB::commit();
-
             $this->alertService->alert($this, config('messages.tag.create'), 'success');
 
             $this->reset();
