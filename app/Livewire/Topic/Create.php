@@ -44,7 +44,7 @@ class Create extends Component
 
     public function deleteTopic(Topic $topic)
     {
-        $topic->delete();
+        $this->topicService->destroy($topic);
 
         $this->dispatch('topic-created');
 

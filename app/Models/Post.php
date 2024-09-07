@@ -16,7 +16,14 @@ class Post extends Model
 {
     use HasFactory, Commentable;
 
-    protected $guarded = [];
+    protected $fillable = [
+        'topic_id',
+        'heading',
+        'slug',
+        'body',
+        'is_feature',
+        'is_publish'
+    ];
 
     protected $casts = [
         'is_publish' => 'boolean',
@@ -56,6 +63,12 @@ class Post extends Model
     }
 
     /** Database Logic */
+    public function scopePublished($query)
+    {
+        return $query->where('is_publish', true)
+                    ->orderBy('updated_at', 'desc');
+    }
+
     public function findPostWithSlug($postSlug)
     {
         return $this->query()
@@ -67,9 +80,8 @@ class Post extends Model
     public function getFeaturedPosts()
     {
         return $this->query()
-                    ->where('is_publish', true)
+                    ->published()
                     ->where('is_feature', true)
-                    ->orderBy('updated_at', 'desc')
                     ->with('media')
                     ->take(5)
                     ->get();
@@ -97,8 +109,7 @@ class Post extends Model
     public function getPublishedPosts()
     {
         return $this->query()
-                    ->where('is_publish', true)
-                    ->orderBy('updated_at', 'desc')
+                    ->published()
                     ->with('media', 'topic', 'tags')
                     ->paginate(12);
     }
@@ -109,8 +120,7 @@ class Post extends Model
                     ->whereHas('tags', function ($q) use ($tagSlug) {
                         $q->where('slug', $tagSlug);
                     })
-                    ->where('is_publish', true)
-                    ->orderBy('updated_at', 'desc')
+                    ->published()
                     ->with('media', 'topic', 'tags')
                     ->paginate(12);
     }
@@ -118,11 +128,10 @@ class Post extends Model
     public function getPostsOfTopic($topicSlug)
     {
         return $this->query()
-                    ->whereHas('topic', function ($query) {
-                        $query->where('slug', $this->slug);
+                    ->whereHas('topic', function ($q) use ($topicSlug) {
+                        $q->where('slug', $topicSlug);
                     })
-                    ->where('is_publish', true)
-                    ->orderBy('updated_at', 'desc')
+                    ->published()
                     ->with('media', 'topic', 'tags')
                     ->paginate(12);
     }

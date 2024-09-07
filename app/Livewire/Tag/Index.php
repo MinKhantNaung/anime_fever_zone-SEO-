@@ -15,12 +15,14 @@ class Index extends Component
 {
     use WithPagination;
 
+    protected $tag;
     protected $alertService;
     protected $mediaService;
     protected $tagService;
 
-    public function boot(AlertService $alertService, MediaService $mediaService, TagService $tagService)
+    public function boot(Tag $tag, AlertService $alertService, MediaService $mediaService, TagService $tagService)
     {
+        $this->tag = $tag;
         $this->alertService = $alertService;
         $this->mediaService = $mediaService;
         $this->tagService = $tagService;
@@ -38,9 +40,7 @@ class Index extends Component
             $this->tagService->destroy($tag);
 
             DB::commit();
-
             $this->alertService->alert($this, config('messages.tag.destroy'), 'success');
-
             $this->dispatch('tag-reload');
         } catch (\Exception $e) {
             DB::rollBack();
@@ -52,9 +52,7 @@ class Index extends Component
     #[On('tag-reload')]
     public function render()
     {
-        $tags = Tag::query()
-                    ->getAll()
-                    ->paginate(2);
+        $tags = $this->tag->getAllPerTwo();
 
         return view('livewire.tag.index', [
             'tags' => $tags

@@ -11,7 +11,10 @@ class Topic extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $fillable = [
+        'name',
+        'slug'
+    ];
 
     protected static function boot()
     {
