@@ -39,7 +39,7 @@ class Edit extends Component
 
     public function isChecked()
     {
-        $siteSetting = SiteSetting::first();
+        $siteSetting = $this->siteSetting->first();
 
         $this->siteSettingService->update($siteSetting, $this->checked);
 
@@ -48,13 +48,11 @@ class Edit extends Component
 
     public function saveProfile()
     {
-        $this->validateInputs();
+        $validated = $this->validateInputs();
 
-        $this->updateProfile();
+        $this->updateProfile($validated);
 
-        if ($this->media) {
-            $this->updateMedia($this->media);
-        }
+        $this->updateMedia($validated['media']);
 
         $this->reset();
         $this->dispatch('profile-reload');
@@ -70,11 +68,11 @@ class Edit extends Component
         ]);
     }
 
-    protected function updateProfile()
+    protected function updateProfile($validated)
     {
         auth()->user()->fill([
-            'name' => $this->name,
-            'email' => $this->email
+            'name' => $validated['name'],
+            'email' => $validated['email']
         ]);
 
         if (auth()->user()->isDirty('email')) {
@@ -86,17 +84,19 @@ class Edit extends Component
 
     protected function updateMedia($newMedia)
     {
-        // delete previous media
-        $media = auth()->user()->media;
+        if ($newMedia) {
+            // delete previous media
+            $media = auth()->user()->media;
 
-        if ($media) {
-            $this->mediaService->destroy($media);
+            if ($media) {
+                $this->mediaService->destroy($media);
+            }
+
+            // add updated media
+            $url = $this->fileService->storeFile($newMedia);
+
+            $this->mediaService->create(User::class, auth()->user(), $url, 'image');
         }
-
-        // add updated media
-        $url = $this->fileService->storeFile($newMedia);
-
-        $this->mediaService->create(User::class, auth()->user(), $url, 'image');
     }
 
     #[On('profile-reload')]
