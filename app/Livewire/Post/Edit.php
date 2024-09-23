@@ -70,8 +70,8 @@ class Edit extends ModalComponent
             $this->post->tags()->detach();
             $this->postService->attachTags($this->post, $this->selectedTags);
 
-            if ($this->media) {
-                $this->updateMedia($this->media);
+            if ($validated['media']) {
+                $this->updateMedia($validated['media']);
             }
 
             DB::commit();
@@ -95,7 +95,8 @@ class Edit extends ModalComponent
             'topic_id' => 'required|integer',
             'heading' => 'required|string|max:255|unique:posts,heading,' . $this->post->id,
             'body' => 'required|string',
-            'is_publish' => 'required|boolean'
+            'is_publish' => 'required|boolean',
+            'selectedTags' => 'nullable|array'
         ]);
 
         return $validated;
@@ -116,7 +117,6 @@ class Edit extends ModalComponent
     public function render()
     {
         $topics = $this->topic->getAllByName();
-
         $tags = $this->tag->getAllByName();
 
         return view('livewire.post.edit', [
