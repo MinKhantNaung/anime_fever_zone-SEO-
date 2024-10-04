@@ -10,7 +10,7 @@
 
 <body>
     <div style="text-align: center">
-        <img src="{{ $imagePath }}" alt="anime_fever_zone_logo" style="width: 100%">
+        <img src="{{ $message->embed($imagePath) }}" alt="New Post Image" style="width: 100%">
     </div>
     <p style="font-size: 20px">{!! $body !!}</p>
 </body>
