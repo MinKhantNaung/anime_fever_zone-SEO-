@@ -73,7 +73,7 @@ class Index extends Component
 
     public function toggleFeature(Post $post)
     {
-        $this->postService->toggleIsFeature($post);
+        defer(fn () => $this->postService->toggleIsFeature($post))->always();
 
         $this->dispatch('post-event');
         $this->alertService->alert($this, config('messages.common.success'), 'success');
