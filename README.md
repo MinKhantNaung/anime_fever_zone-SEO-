@@ -19,7 +19,17 @@ You can visit here: 'https://animefeverzone.com'
   - Can upload one image.
 - Post Management:
   - Ability to create, update and delete posts.
-  - Can upload multiple images and videos.
+  - Can upload one post image.
+  - Can manage which posts are featured.
+  - Can send new post emails to subscribers.
+    - Section Management: 
+      - Ability to create, update and delete sections of a post.
+      - Can upload multiple images and videos.
+- Profile Management: 
+  - Can update or delete profile details and profile image.
+  - Can update password.
+  - Can delete own account.
+  - Can decide to enable or disable the email subscription feature on the post page.
 
 ## Frondend Features
 
@@ -27,14 +37,16 @@ You can visit here: 'https://animefeverzone.com'
 2. **User Authentication**: The frontend includes a user authentication system that allows users to create accounts, log in, and manage their profiles. They can also reset password.
 3. **Tag Section**:  The frontend incorporates a tag section that features related posts.
 4. **Post Section**: When users click a post, they can see post with images and videos.
-7. **Comment System**: In post page, it includes a comment system. Users can comment in posts. *Authorized users have the ability to update and delete their own comments if necessary*.
-8. **Like System**: Authenticated and non-authenticated users can like posts.
+5. **Comment System**: In post page, it includes a comment system. Users can comment in posts. *Authorized users have the ability to update and delete their own comments if necessary*.
+6. **Like System**: Authenticated and non-authenticated users can like posts.
+7. **Email Subscription**: Any user can subscribe to new post notifications by verifying their email.
 
 
 ## Technologies Used 
 
-- Laravel (10)
-- Livewire v3 (SPA)
+- PHP (Always latest version)
+- Laravel (Always latest version)
+- Livewire (SPA)
 - Alpine
 - HTML/CSS
 - Javascript
