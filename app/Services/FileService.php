@@ -22,7 +22,7 @@ final class FileService
 
     public function storeFile($fileModel)
     {
-        $file_name = uniqid() . '_' . $fileModel->getClientOriginalName();
+        $file_name = uniqid() . '_' . $fileModel->hashName();
 
         $path = $fileModel->storeAs('media', $file_name, 'public');
 
