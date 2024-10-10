@@ -12,6 +12,8 @@ use App\Services\AlertService;
 use App\Services\SubscriberService;
 use Illuminate\Support\Facades\Mail;
 
+use function Illuminate\Support\defer;
+
 class PostShow extends Component
 {
     public $slug;
@@ -50,7 +52,8 @@ class PostShow extends Component
         $token = hash('sha256', time());
 
         $this->subscriberService->store($validated, $token);
-        $this->subscriberService->sendMail($validated, $token);
+
+        defer(fn () => $this->subscriberService->sendMail($validated, $token))->always();
 
         $this->alertService->alertForSubscribe($this, config('messages.email.subscriber_check'), 'success');
     }

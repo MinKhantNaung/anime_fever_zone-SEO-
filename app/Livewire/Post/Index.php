@@ -13,6 +13,8 @@ use App\Services\PostService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
+use function Illuminate\Support\defer;
+
 class Index extends Component
 {
     use WithPagination;
@@ -73,7 +75,7 @@ class Index extends Component
 
     public function toggleFeature(Post $post)
     {
-        defer(fn () => $this->postService->toggleIsFeature($post))->always();
+        defer(fn () => $this->postService->toggleIsFeature($post));
 
         $this->dispatch('post-event');
         $this->alertService->alert($this, config('messages.common.success'), 'success');
