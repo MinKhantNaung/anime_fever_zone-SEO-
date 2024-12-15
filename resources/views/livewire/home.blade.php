@@ -28,7 +28,7 @@ the latest trends and discussions across a wide range of topics." />
             <div class="grid grid-cols-12 gap-1 bg-white shadow my-4">
                 <div class="col-span-12 lg:col-span-5">
                     <a wire:navigate href="{{ route('post', $post->slug) }}">
-                        <img src="{{ $post->media->url }}" alt="{{ $post->heading }}" class="w-full object-cover">
+                        <img src="{{ $post->media->url }}" alt="Image representing {{ $post->heading }}" class="w-full object-cover">
                     </a>
                 </div>
 
