@@ -4,9 +4,12 @@ namespace App\Livewire;
 
 use App\Models\Post;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Topic extends Component
 {
+    use WithPagination;
+
     public $slug;
 
     public $featuredPosts;

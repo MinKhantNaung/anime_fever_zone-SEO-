@@ -44,7 +44,7 @@ class Index extends Component
             $this->dispatch('tag-reload');
         } catch (\Exception $e) {
             DB::rollBack();
-            dd($e);
+
             $this->alertService->alert($this, config('messages.common.error'), 'error');
         }
     }
