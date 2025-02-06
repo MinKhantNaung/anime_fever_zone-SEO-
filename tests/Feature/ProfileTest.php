@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\SiteSetting;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Volt\Volt;
@@ -14,12 +15,13 @@ class ProfileTest extends TestCase
     public function test_profile_page_is_displayed(): void
     {
         $user = User::factory()->create();
+        SiteSetting::factory()->create();
 
         $response = $this->actingAs($user)->get('/profile');
 
         $response
             ->assertOk()
-            ->assertSeeVolt('profile.update-profile-information-form')
+            ->assertSeeVolt('profile.edit')
             ->assertSeeVolt('profile.update-password-form')
             ->assertSeeVolt('profile.delete-user-form');
     }
