@@ -3,13 +3,13 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use App\Traits\Commentable;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Usamamuneerchaudhary\Commentify\Traits\Commentable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Post extends Model
