@@ -20,7 +20,7 @@
                 @foreach ($comments as $comment)
                     <livewire:comment-feature.comment :$comment :key="$comment->id" />
                 @endforeach
-                {{ $comments->links() }}
+                {{ $comments->links(data: ['scrollTo' => false]) }}
             @else
                 <p>No comments yet!</p>
             @endif
