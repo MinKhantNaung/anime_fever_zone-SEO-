@@ -169,7 +169,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\VoltServiceProvider::class,
-        Usamamuneerchaudhary\Commentify\Providers\CommentifyServiceProvider::class
+        App\Providers\CommentifyServiceProvider::class
     ])->toArray(),
 
     /*
