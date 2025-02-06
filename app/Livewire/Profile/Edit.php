@@ -37,6 +37,14 @@ class Edit extends Component
         $this->siteSettingService = $siteSettingService;
     }
 
+    #[On('profile-reload')]
+    public function mount()
+    {
+        $this->name = auth()->user()->name;
+        $this->email = auth()->user()->email;
+        $this->checked = SiteSetting::first()->email_verify_status;
+    }
+
     public function isChecked()
     {
         $siteSetting = $this->siteSetting->first();
@@ -48,7 +56,7 @@ class Edit extends Component
 
     public function saveProfile()
     {
-        $validated = $this->validateInputs();
+        $validated = $this->validateRequests();
 
         $this->updateProfile($validated);
 
@@ -59,9 +67,9 @@ class Edit extends Component
         $this->alertService->alert($this, config('messages.profile.update'), 'success');
     }
 
-    protected function validateInputs()
+    protected function validateRequests()
     {
-        $this->validate([
+        return $this->validate([
             'media' => 'nullable|file|mimes:png,jpg,jpeg,svg,webp|max:5120',
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore(auth()->user()->id)],
@@ -97,14 +105,6 @@ class Edit extends Component
 
             $this->mediaService->create(User::class, auth()->user(), $url, 'image');
         }
-    }
-
-    #[On('profile-reload')]
-    public function mount()
-    {
-        $this->name = auth()->user()->name;
-        $this->email = auth()->user()->email;
-        $this->checked = SiteSetting::first()->email_verify_status;
     }
 
     public function render()
