@@ -53,13 +53,14 @@ class ProfileTest extends TestCase
     public function test_email_verification_status_is_unchanged_when_the_email_address_is_unchanged(): void
     {
         $user = User::factory()->create();
+        SiteSetting::factory()->create();
 
         $this->actingAs($user);
 
-        $component = Volt::test('profile.update-profile-information-form')
+        $component = Livewire::test('profile.edit')
             ->set('name', 'Test User')
             ->set('email', $user->email)
-            ->call('updateProfileInformation');
+            ->call('saveProfile');
 
         $component
             ->assertHasNoErrors()
