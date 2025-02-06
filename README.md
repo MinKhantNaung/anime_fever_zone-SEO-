@@ -55,12 +55,12 @@ You can visit here: 'https://animefeverzone.com'
 - Create an empty database for my web project
   - created database name must match from .env file
 - Start npm 
-  - **npm run build**
+  - **npm run dev**
 - Migrate
   - **php artisan migrate**
 - Seed Database
   - **php artisan db:seed**
-- Delete storage folder from public/ and link storage
+- Link storage
   - **php artisan storage:link**
 - Start 
   - **php artisan serve**
