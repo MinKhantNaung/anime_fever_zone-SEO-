@@ -14,7 +14,7 @@
                     'button' => 'Post comment',
                 ])
             @else
-                <a class="mt-2 text-sm" href="/login">Log in to comment!</a>
+                <a wire:navigate class="mt-2 text-sm" href="/login">Log in to comment!</a>
             @endauth
             @if ($comments->count())
                 @foreach ($comments as $comment)
