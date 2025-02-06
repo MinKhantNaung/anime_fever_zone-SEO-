@@ -3,12 +3,13 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Traits\HasUserAvatar;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Usamamuneerchaudhary\Commentify\Traits\HasUserAvatar;
 
 class User extends Authenticatable
 {
@@ -48,5 +49,10 @@ class User extends Authenticatable
     public function media(): MorphOne
     {
         return $this->morphOne(Media::class, 'mediable');
+    }
+
+    public function likes(): HasMany
+    {
+        return $this->hasMany(CommentLike::class);
     }
 }
