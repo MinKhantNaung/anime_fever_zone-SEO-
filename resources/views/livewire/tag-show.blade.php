@@ -76,7 +76,7 @@
         @endif
 
         <div class="w-full">
-            {{ $posts->links(data: ['scrollTo' => false]) }}
+            {{ $posts->links() }}
         </div>
 
     </section>

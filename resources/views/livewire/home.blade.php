@@ -62,7 +62,7 @@ the latest trends and discussions across a wide range of topics." />
         @endif
 
         <div class="w-full">
-            {{ $posts->links(data: ['scrollTo' => false]) }}
+            {{ $posts->links() }}
         </div>
 
     </section>
