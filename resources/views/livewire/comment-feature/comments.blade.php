@@ -7,6 +7,7 @@
             </div>
             @auth
                 @include('livewire.partials.comment-form', [
+                    'users' => $users,
                     'method' => 'postComment',
                     'state' => 'newCommentState',
                     'inputId' => 'comment',
