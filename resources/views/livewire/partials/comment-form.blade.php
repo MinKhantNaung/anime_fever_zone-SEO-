@@ -21,7 +21,7 @@
                   oninput="detectAtSymbol()"
         ></textarea>
         @if (!empty($users) && $users->count() > 0)
-            @include('livewire.partials.dropdowns.users')
+            @include('livewire.partials.dropdowns.users', ['users' => $users])
         @endif
         @error($state.'.body')
         <p class="mt-2 text-sm text-red-600">

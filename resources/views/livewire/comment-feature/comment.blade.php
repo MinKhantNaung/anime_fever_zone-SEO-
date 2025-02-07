@@ -76,7 +76,7 @@
             <div class="flex items-center mt-4 space-x-4">
                 <livewire:comment-feature.like :$comment :key="$comment->id" />
 
-                @include('livewire.partials.comment-reply')
+                @include('livewire.partials.comment-reply', ['comment' => $comment])
 
             </div>
 
@@ -85,6 +85,7 @@
 
     @if ($isReplying)
         @include('livewire.partials.comment-form', [
+            'users' => $users,
             'method' => 'postReply',
             'state' => 'replyState',
             'inputId' => 'reply-comment',
