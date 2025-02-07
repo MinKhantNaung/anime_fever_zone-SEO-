@@ -17,11 +17,15 @@
             @else
                 <a wire:navigate class="mt-2 text-sm" href="/login">Log in to comment!</a>
             @endauth
+
+            {{-- Showing Comments --}}
             @if ($comments->count())
-                @foreach ($comments as $comment)
-                    <livewire:comment-feature.comment :$comment :key="$comment->id" />
-                @endforeach
-                {{ $comments->links(data: ['scrollTo' => false]) }}
+                <div id="paginated-comments">
+                    @foreach ($comments as $comment)
+                        <livewire:comment-feature.comment :$comment :key="$comment->id" />
+                    @endforeach
+                    {{ $comments->links(data: ['scrollTo' => '#paginated-comments']) }}
+                </div>
             @else
                 <p>No comments yet!</p>
             @endif
