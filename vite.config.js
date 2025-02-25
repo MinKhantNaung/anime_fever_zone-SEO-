@@ -17,4 +17,11 @@ export default defineConfig({
             refresh: ['resources/css/app.css'],
         }),
     ],
+    // Allow cors (Not recommended for production)
+    server: {
+        hmr: {
+            host: 'localhost',
+        },
+        cors: true
+    },
 });
