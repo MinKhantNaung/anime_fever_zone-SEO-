@@ -32,7 +32,7 @@
         </div>
 
         <div class="flex items-center gap-4">
-            <button type="submit" class="btn btn-primary px-5 mt-5">{{ __('Save') }}</button>
+            <button type="submit" class="btn btn-secondary px-5 mt-5">{{ __('Save') }}</button>
 
             <x-action-message class="me-3" on="password-updated">
                 {{ __('Saved.') }}
