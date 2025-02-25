@@ -46,6 +46,9 @@ class Create extends Component
     {
         $this->topicService->destroy($topic);
 
+        $this->topic = null;
+        $this->name = null;
+        $this->editMode = false;
         $this->dispatch('topic-created');
 
         $this->alertService->alert($this, config('messages.topic.destroy'), 'success');
