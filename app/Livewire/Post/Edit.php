@@ -91,12 +91,13 @@ class Edit extends ModalComponent
     protected function validateInputs()
     {
         $validated = $this->validate([
-            'media' => 'nullable|file|mimes:png,jpg,jpeg,svg,webp|max:5120',
-            'topic_id' => 'required|integer',
-            'heading' => 'required|string|max:255|unique:posts,heading,' . $this->post->id,
-            'body' => 'required|string',
-            'is_publish' => 'required|boolean',
-            'selectedTags' => 'nullable|array'
+            'media' => ['nullable', 'file', 'mimes:png,jpg,jpeg,svg,webp', 'max:5120'],
+            'topic_id' => ['required', 'integer'],
+            'heading' => ['required', 'string', 'max:255', 'unique:posts,heading,' . $this->post->id],
+            'body' => ['required', 'string'],
+            'is_publish' => ['required', 'boolean'],
+            'selectedTags' => ['nullable', 'array'],
+            'selectedTags.*' => ['integer']
         ]);
 
         return $validated;

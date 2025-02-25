@@ -70,7 +70,7 @@ class Edit extends Component
     protected function validateRequests()
     {
         return $this->validate([
-            'media' => 'nullable|file|mimes:png,jpg,jpeg,svg,webp|max:5120',
+            'media' => ['nullable', 'file', 'mimes:png,jpg,jpeg,svg,webp', 'max:5120'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore(auth()->user()->id)],
         ]);

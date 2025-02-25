@@ -80,7 +80,7 @@ class Create extends Component
     protected function validateForUpdate()
     {
         $validated = $this->validate([
-            'name' => 'required|string|max:255|unique:topics,name,' . $this->topic->id
+            'name' => ['required', 'string', 'max:255', 'unique:topics,name,' . $this->topic->id],
         ]);
 
         return $validated;
@@ -89,7 +89,7 @@ class Create extends Component
     protected function validateForStore()
     {
         $validated = $this->validate([
-            'name' => 'required|string|max:255|unique:topics,name'
+            'name' => ['required', 'string', 'max:255', 'unique:topics,name'],
         ]);
 
         return $validated;

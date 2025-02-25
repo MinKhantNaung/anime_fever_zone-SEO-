@@ -51,7 +51,7 @@ class Comment extends Component
     {
         $this->authorize('update', $this->comment);
         $this->validate([
-            'editState.body' => 'required|min:2'
+            'editState.body' => ['required', 'min:2']
         ]);
         $this->comment->update($this->editState);
         $this->isEditing = false;
@@ -74,7 +74,7 @@ class Comment extends Component
             return;
         }
         $this->validate([
-            'replyState.body' => 'required'
+            'replyState.body' => ['required']
         ]);
         $reply = $this->comment->children()->make($this->replyState);
         $reply->user()->associate(Auth::user());

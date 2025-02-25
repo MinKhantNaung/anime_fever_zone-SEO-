@@ -6,12 +6,13 @@ use Carbon\Carbon;
 use App\Models\Post;
 use Livewire\Component;
 use App\Mail\WebsiteMail;
-use App\Models\SiteSetting;
 use App\Models\Subscriber;
+use App\Models\SiteSetting;
 use App\Services\AlertService;
+use Illuminate\Validation\Rule;
 use App\Services\SubscriberService;
-use Illuminate\Support\Facades\Mail;
 
+use Illuminate\Support\Facades\Mail;
 use function Illuminate\Support\defer;
 
 class PostShow extends Component
@@ -61,7 +62,9 @@ class PostShow extends Component
     protected function validateForSubscribe()
     {
         $validated = $this->validate([
-            'email' => 'required|string|email|unique:subscribers'
+            'email' => ['required', 'string', 'email', Rule::unique('subscribers')->where(function ($query) {
+                return $query->where('status', 'Active');
+            })]
         ]);
 
         return $validated;

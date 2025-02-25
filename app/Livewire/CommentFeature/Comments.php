@@ -49,7 +49,7 @@ class Comments extends Component
     public function postComment(): void
     {
         $this->validate([
-            'newCommentState.body' => 'required'
+            'newCommentState.body' => ['required']
         ]);
 
         $comment = $this->model->comments()->make($this->newCommentState);
