@@ -58,7 +58,6 @@
     <script>
         document.addEventListener('livewire:init', () => {
             Livewire.on('swal', (event) => {
-                // console.log(event)
                 Swal.fire({
                     title: event[0].title,
                     icon: event[0].icon,
@@ -72,7 +71,6 @@
             });
 
             Livewire.on('subscribed', (event) => {
-                // console.log(event)
                 Swal.fire({
                     title: event[0].title,
                     icon: event[0].icon,

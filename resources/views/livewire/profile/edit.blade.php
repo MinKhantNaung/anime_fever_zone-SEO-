@@ -58,7 +58,7 @@
             </div>
 
             <div class="col-span-12 text-center">
-                <button wire:click.prevent="saveProfile" type="button" class="btn btn-primary px-5 mt-5">Save</button>
+                <button wire:click.prevent="saveProfile" type="button" class="btn btn-secondary px-5 mt-5">Save</button>
             </div>
 
             {{-- Lock Email Verification --}}
