@@ -82,12 +82,12 @@ class Create extends ModalComponent
     {
         $validated = $this->validate([
             'media' => ['required', 'file', 'mimes:png,jpg,jpeg,svg,webp', 'max:5120'],
-            'topic_id' => ['required', 'integer'],
+            'topic_id' => ['required', 'integer', 'exists:topics,id'],
             'heading' => ['required', 'string', 'max:255', 'unique:posts,heading'],
             'body' => ['required', 'string'],
             'is_publish' => ['required', 'boolean'],
             'selectedTags' => ['nullable', 'array'],
-            'selectedTags.*' => ['integer']
+            'selectedTags.*' => ['integer', 'exists:tags,id']
         ]);
         return $validated;
     }
