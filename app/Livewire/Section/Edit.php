@@ -74,7 +74,7 @@ class Edit extends ModalComponent
     {
         $validated = $this->validate([
             'media' => ['nullable', 'array'],
-            'media.*' => ['file', 'mimes:png,jpg,jpeg,svg,webp,mp4', 'max:512000'],
+            'media.*' => ['file', 'mimes:png,jpg,jpeg,webp,mp4', 'max:512000'],
             'heading' => ['nullable', 'string', 'max:225'],
             'body' => ['required', 'string'],
         ]);

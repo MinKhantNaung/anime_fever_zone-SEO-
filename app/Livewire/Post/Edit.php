@@ -91,7 +91,7 @@ class Edit extends ModalComponent
     protected function validateInputs()
     {
         $validated = $this->validate([
-            'media' => ['nullable', 'file', 'mimes:png,jpg,jpeg,svg,webp', 'max:5120'],
+            'media' => ['nullable', 'file', 'mimes:png,jpg,jpeg,webp', 'max:5120'],
             'topic_id' => ['required', 'integer', 'exists:topics,id'],
             'heading' => ['required', 'string', 'max:255', 'unique:posts,heading,' . $this->post->id],
             'body' => ['required', 'string'],
