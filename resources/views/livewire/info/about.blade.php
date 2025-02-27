@@ -16,7 +16,7 @@
                 <p class="text-lg font-medium mt-5">
                     Hey there, fellow anime enthusiasts! I'm Min Khant Naung, the sole developer and writer behind Anime
                     Fever
-                    Zone (Tech - Laravel 10, Livewire 3, Alpine). This blog isn't just a project for me; it's a labor of love fueled by my deep passion for all
+                    Zone (Tech - PHP (Always latest version), Laravel (Always latest version), Livewire 3, Alpine). This blog isn't just a project for me; it's a labor of love fueled by my deep passion for all
                     things anime.
                 </p>
             </div>
