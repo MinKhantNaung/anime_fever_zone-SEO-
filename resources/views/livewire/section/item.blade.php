@@ -5,19 +5,23 @@
 
     <div class="my-2 max-w-lg mx-auto">
         {{-- Swiper JS --}}
-        <div x-init="new Swiper($el, {
-            modules: [Navigation, Pagination],
-            loop: true,
+        <div x-data="{
+                slides: null
+            }" x-init="
+            slides = $el.querySelectorAll('.swiper-slide');
+            new Swiper($el, {
+                modules: [Navigation, Pagination],
+                loop: slides.length === 0 || slides.length === 1 ? false : true,
 
-            pagination: {
-                el: '.swiper-pagination',
-            },
+                pagination: {
+                    el: '.swiper-pagination',
+                },
 
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-        })" class="swiper border bg-white">
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+            })" class="swiper border bg-white">
             <!-- Additional required wrapper -->
             <ul x-cloak class="swiper-wrapper">
                 <!-- Slides -->
