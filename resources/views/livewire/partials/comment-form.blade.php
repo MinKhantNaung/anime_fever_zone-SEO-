@@ -39,3 +39,25 @@
     </button>
 
 </form>
+
+<script>
+    function detectAtSymbol() {
+        const textarea = document.getElementById('reply-comment');
+        if (!textarea) {
+            return;
+        }
+
+        const cursorPosition = textarea.selectionStart;
+        const textBeforeCursor = textarea.value.substring(0, cursorPosition);
+        const atSymbolPosition = textBeforeCursor.lastIndexOf('@');
+
+        if (atSymbolPosition !== -1) {
+            const searchTerm = textBeforeCursor.substring(atSymbolPosition + 1);
+            if (searchTerm.trim().length > 0) {
+                @this.dispatch('getUsers', {
+                    searchTerm: searchTerm
+                });
+            }
+        }
+    }
+</script>
