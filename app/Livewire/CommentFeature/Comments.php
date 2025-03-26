@@ -31,6 +31,7 @@ class Comments extends Component
         'newCommentState.body' => 'comment'
     ];
 
+    #[On('refreshComments')]
     public function render()
     {
         $comments = $this->model

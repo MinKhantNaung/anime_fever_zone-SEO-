@@ -64,7 +64,8 @@ class Comment extends Component
         $this->authorize('destroy', $this->comment);
         $this->comment->delete();
         $this->showOptions = false;
-        $this->dispatch('refresh');
+
+        $this->dispatch('refreshComments')->to(Comments::class);
     }
 
     #[On('refresh')]
