@@ -35,7 +35,9 @@ class Index extends Component
         try {
             $media = $tag->media;
 
-            $this->mediaService->destroy($media);
+            if ($media) {
+                $this->mediaService->destroy($media);
+            }
 
             $this->tagService->destroy($tag);
 

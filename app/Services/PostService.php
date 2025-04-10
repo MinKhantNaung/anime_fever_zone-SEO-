@@ -55,9 +55,12 @@ final class PostService
 
     public function destroy(Post $post)
     {
+        $post->load(['media', 'sections.media', 'tags']);
         // delete related media
         $media = $post->media;
-        $this->mediaService->destroy($media);
+        if ($media) {
+            $this->mediaService->destroy($media);
+        }
 
         // delete its sections
         $sections = $post->sections;

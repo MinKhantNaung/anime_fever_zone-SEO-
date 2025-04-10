@@ -25,10 +25,12 @@ Route::get('/blog/{slug}', PostShow::class)->name('post');
 Route::get('/subscriber/verify/{token}/{email}', SubscriberController::class)->name('subscriber_verify');
 
 // info
-Route::get('/about', About::class)->name('about');
-Route::get('/privacy-policy', Privacy::class)->name('privacy');
-Route::get('/terms', Term::class)->name('term');
-Route::get('/contact/us', Contact::class)->name('contact');
+Route::middleware('cache.headers:public;max_age=2628000;etag')->group(function () {
+    Route::get('/about', About::class)->name('about');
+    Route::get('/privacy-policy', Privacy::class)->name('privacy');
+    Route::get('/terms', Term::class)->name('term');
+    Route::get('/contact/us', Contact::class)->name('contact');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', Edit::class)->name('profile.edit');

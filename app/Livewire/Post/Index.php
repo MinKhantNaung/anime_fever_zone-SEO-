@@ -33,7 +33,6 @@ class Index extends Component
     public function deletePost(Post $post)
     {
         DB::beginTransaction();
-
         try {
             $this->postService->destroy($post);
             DB::commit();

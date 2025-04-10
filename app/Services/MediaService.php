@@ -25,7 +25,7 @@ final class MediaService
         ]);
     }
 
-    public function storeMultipleMedias($mainModelClass, $mainModel, Array $medias)
+    public function storeMultipleMedias($mainModelClass, $mainModel, array $medias)
     {
         foreach ($medias as $media) {
             // get mime type
@@ -37,7 +37,7 @@ final class MediaService
         }
     }
 
-    public function destroy(Media $media)
+    public function destroy(Media $media): void
     {
         $media = $this->fileService->deleteFile($media);
         $media->delete();
