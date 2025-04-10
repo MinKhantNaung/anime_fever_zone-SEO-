@@ -55,6 +55,7 @@ final class PostService
 
     public function destroy(Post $post)
     {
+        $post->load(['media', 'sections.media', 'tags']);
         // delete related media
         $media = $post->media;
         if ($media) {
