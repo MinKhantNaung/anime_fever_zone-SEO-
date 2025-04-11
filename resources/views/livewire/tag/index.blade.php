@@ -1,15 +1,17 @@
 <div class="container mx-auto flex flex-wrap py-6">
 
     <section class="w-full md:w-2/3 flex flex-col items-center px-3">
-        <button onclick="Livewire.dispatch('openModal', { component: 'tag.create' })" class="btn btn-secondary">+ Create
-            New</button>
+        <a href="{{ route('tags.create') }}" class="btn btn-secondary">
+            + Create New
+        </a>
 
         <div class="grid grid-cols-12 w-full my-3">
 
             @foreach ($tags as $tag)
                 <div class="hidden lg:block lg:col-span-4"></div>
                 <div class="col-span-12 lg:col-span-4">
-                    <img src="{{ optional($tag->media)->url }}" alt="Image representing {{ $tag->name }}" class="w-[100%]">
+                    <img src="{{ optional($tag->media)->url }}" alt="Image representing {{ $tag->name }}"
+                        class="w-[100%]">
                 </div>
 
                 <h1 class="col-span-12 text-center font-bold text-2xl my-3">
@@ -24,10 +26,10 @@
                     <form wire:submit.prevent="deleteTag({{ $tag->id }})">
 
                         @csrf
-                        <span onclick="Livewire.dispatch('openModal', { component: 'tag.edit', arguments: { tag: {{ $tag->id }} }})" class="inline-block cursor-pointer">
+                        <a href="{{ route('tags.edit', $tag->id) }}" class="inline-block cursor-pointer">
                             {{-- Edit button --}}
                             <x-icons.edit-icon />
-                        </span>
+                        </a>
                         <button onclick="return confirm('Are you sure to delete?')">
                             {{-- Delete button --}}
                             <x-icons.trash-icon />

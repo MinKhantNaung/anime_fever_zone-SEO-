@@ -1,19 +1,97 @@
+<?php
+
+use Livewire\Volt\Component;
+use App\Models\Tag;
+use App\Models\Media;
+use App\Services\FileService;
+use App\Services\TagService;
+use App\Services\MediaService;
+use App\Services\AlertService;
+use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\DB;
+
+new class extends Component {
+    use WithFileUploads;
+
+    public $media;
+    public $name;
+    public $body;
+
+    protected $tagService;
+    protected $mediaService;
+    protected $alertService;
+    protected FileService $fileService;
+
+    public function boot(TagService $tagService, MediaService $mediaService, AlertService $alertService, FileService $fileService)
+    {
+        $this->tagService = $tagService;
+        $this->fileService = $fileService;
+        $this->mediaService = $mediaService;
+        $this->alertService = $alertService;
+    }
+
+    public function mount()
+    {
+        $this->body = '';
+    }
+
+    public function createTag()
+    {
+        // validate
+        $validated = $this->validateRequests();
+
+        DB::beginTransaction();
+
+        try {
+            $tag = $this->tagService->create($validated);
+
+            // add media
+            $url = $this->fileService->storeFile($this->media);
+            $this->mediaService->create(Tag::class, $tag, $url, 'image');
+
+            DB::commit();
+
+            $this->alertService->alert($this, config('messages.tag.create'), 'success');
+
+            $this->reset();
+            $this->dispatch('tag-reload');
+
+            return $this->redirectRoute('tags.index', navigate: true);
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            $this->alertService->alert($this, config('messages.common.error'), 'error');
+        }
+    }
+
+    protected function validateRequests()
+    {
+        return $this->validate([
+            'media' => 'required|file|mimes:webp|max:5120',
+            'name' => 'required|string|max:225|unique:tags,name',
+            'body' => 'required|string',
+        ]);
+    }
+}; ?>
+
 @section('meta-og')
     <link rel="stylesheet" href="{{ asset('assets/trix/trix.min.css') }}">
+    <script src="{{ asset('assets/trix/trix.umd.min.js') }}"></script>
 @endsection
 
 <div class="bg-white flex flex-col border gap-y-4 px-5 max-w-5xl mx-auto">
 
     <header class="w-full py-2 border-b">
         <h1 class="font-bold text-center border-b-2 border-b-violet-600 py-8 text-3xl text-[#d122e3]">
-            Update Existing Tag
+            Create New Tag
         </h1>
     </header>
 
-    <form wire:submit='updateTag'>
+    <form wire:submit='createTag'>
         <main class="grid grid-cols-12 gap-3 h-full w-full overflow-hidden">
 
             {{-- Media --}}
+            {{-- left side --}}
             <aside class="col-span-12 m-auto items-center w-full overflow-scroll">
 
                 @if (!$media)
@@ -34,7 +112,7 @@
                         </span>
 
                         <span class="text-black text-sm rounded-lg p-2 px-4">
-                            Upload Image if you want to update previous image
+                            Click To Upload Image
                         </span>
                     </label>
                     @error('media')
@@ -73,13 +151,10 @@
                     <div class="label mt-5">
                         <span class="label-text text-lg text-[#9926f0]">Body (Description)</span>
                     </div>
-                    <div wire:ignore>
-                        <input id="trix-editor-content" type="hidden" name="body" value="{{ $body }}">
-                        <trix-editor input="trix-editor-content" placeholder="Enter description"></trix-editor>
-                    </div>
-                    @error('body')
-                        <x-input-error messages="{{ $message }}" />
-                    @enderror
+                    <livewire:trix-editor wire:model='body'>
+                        @error('body')
+                            <x-input-error messages="{{ $message }}" />
+                        @enderror
                 </div>
             </aside>
 
@@ -90,7 +165,7 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M5 12h14m-7 7V5" />
                     </svg>
-                    Update
+                    Create
                 </button>
             </div>
 
@@ -98,13 +173,3 @@
     </form>
 
 </div>
-
-@push('scripts')
-    <script src="{{ asset('assets/trix/trix.umd.min.js') }}"></script>
-    <script>
-        const trixEditor = document.getElementById('trix-editor-content');
-        addEventListener('trix-blur', (event) => {
-            @this.set('body', trixEditor.getAttribute('value'))
-        })
-    </script>
-@endpush
