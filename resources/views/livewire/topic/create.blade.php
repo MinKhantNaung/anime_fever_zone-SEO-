@@ -4,7 +4,7 @@
 
         <h1>Topic</h1>
 
-        <form wire:submit.prevent="createNew()">
+        <form wire:submit.prevent="createOrUpdateTopic()">
             <label class="input input-bordered flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                     <path fill-rule="evenodd"
