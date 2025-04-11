@@ -24,13 +24,7 @@
                             id="custom-file-input" class="sr-only">
 
                         <span class="m-auto mt-2">
-                            <svg class="w-14 h-14 text-gray-800 dark:text-white" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                                viewBox="0 0 24 24">
-                                <path fill-rule="evenodd"
-                                    d="M5 4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4Zm12 12V5H7v11h10Zm-5 1a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H12Z"
-                                    clip-rule="evenodd" />
-                            </svg>
+                            <x-icons.potrait-image-icon />
                         </span>
 
                         <span class="text-black text-sm rounded-lg p-2 px-4">
@@ -85,11 +79,7 @@
 
             <div class="col-span-12 text-center my-4">
                 <button class="btn bg-[#d122e3] hover:bg-[#9926f0] text-white">
-                    <svg class="w-6 h-6 text-gray-100" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                        fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M5 12h14m-7 7V5" />
-                    </svg>
+                    <x-icons.plus-icon />
                     Update
                 </button>
             </div>
