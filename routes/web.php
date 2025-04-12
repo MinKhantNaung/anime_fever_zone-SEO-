@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 use App\Livewire\Post\Index as PostIndex;
 use App\Http\Controllers\SubscriberController;
 use App\Livewire\Section\Index as SectionIndex;
+use App\Livewire\Section\Create as SectionCreate;
+use App\Livewire\Section\Edit as SectionEdit;
 use App\Livewire\Tag\Edit as TagEdit;
 
 Route::get('/', Home::class)->name('home');
@@ -47,6 +49,8 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/posts', PostIndex::class)->name('posts.index');
             Route::get('/posts/{post}/sections', SectionIndex::class)->name('sections.index');
+            Route::get('/posts/{post}/sections/create', SectionCreate::class)->name('sections.create');
+            Route::get('/posts/sections/{section}/edit', SectionEdit::class)->name('sections.edit');
         });
     });
 });

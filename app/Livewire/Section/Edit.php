@@ -7,10 +7,10 @@ use App\Services\AlertService;
 use App\Services\MediaService;
 use App\Services\SectionService;
 use Illuminate\Support\Facades\DB;
+use Livewire\Component;
 use Livewire\WithFileUploads;
-use LivewireUI\Modal\ModalComponent;
 
-class Edit extends ModalComponent
+class Edit extends Component
 {
     use WithFileUploads;
 
@@ -35,11 +35,6 @@ class Edit extends ModalComponent
     {
         $this->heading = $this->section->heading;
         $this->body = $this->section->body;
-    }
-
-    public static function modalMaxWidth(): string
-    {
-        return '5xl';
     }
 
     public function updateSection()

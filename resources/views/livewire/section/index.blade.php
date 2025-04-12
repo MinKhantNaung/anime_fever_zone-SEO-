@@ -23,12 +23,10 @@
                         <form wire:submit.prevent="removeSection({{ $section->id }})">
 
                             @csrf
-                            <span
-                                onclick="Livewire.dispatch('openModal', { component: 'section.edit', arguments: { section: {{ $section->id }} } })"
-                                class="inline-block cursor-pointer">
+                            <a href="{{ route('sections.edit', $section) }}" class="inline-block cursor-pointer">
                                 {{-- Edit button --}}
                                 <x-icons.edit-icon />
-                            </span>
+                            </a>
                             <button onclick="return confirm('Are you sure to delete?')">
                                 {{-- Delete button --}}
                                 <x-icons.trash-icon />
@@ -55,11 +53,9 @@
             </div>
         </article>
 
-        <button
-            onclick="Livewire.dispatch('openModal', { component: 'section.create', arguments: { post: {{ $post->id }} } })"
-            class="btn btn-secondary ml-auto">+
+        <a href="{{ route('sections.create', $post) }}" class="btn btn-secondary ml-auto">+
             Add New Section
-        </button>
+        </a>
 
     </section>
 
