@@ -56,6 +56,7 @@ class PostShow extends Component
 
         defer(fn () => $this->subscriberService->sendMail($validated, $token))->always();
 
+        $this->email = '';
         $this->alertService->alertForSubscribe($this, config('messages.email.subscriber_check'), 'success');
     }
 
