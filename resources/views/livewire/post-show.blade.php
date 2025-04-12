@@ -71,15 +71,19 @@
             @if ($emailVerifyStatus)
                 <div class="w-full bg-gray-400 mt-5 rounded-lg py-5 px-4 text-xl font-extrabold">
                     <h1>Subscribe To Our Newletter!</h1>
-                    <input wire:model='email' type="email" class="mt-5 focus:ring-0 w-full text-lg"
-                        placeholder="Email Address">
-                    @error('email')
-                        <x-input-error messages="{{ $message }}" />
-                    @enderror
-                    <button wire:loading.attr='disabled' wire:click.prevent='subscribe'
-                        class="btn btn-secondary text-lg mt-5">
-                        Subscribe
-                    </button>
+                    <form wire:submit.prevent='subscribe'>
+
+                        @csrf
+                        <input wire:model='email' type="email" class="mt-5 focus:ring-0 w-full text-lg"
+                            placeholder="Email Address">
+                        @error('email')
+                            <x-input-error messages="{{ $message }}" />
+                        @enderror
+                        <button wire:loading.attr='disabled' wire:click.prevent='subscribe'
+                            class="btn btn-secondary text-lg mt-5">
+                            Subscribe
+                        </button>
+                    </form>
                 </div>
             @endif
 

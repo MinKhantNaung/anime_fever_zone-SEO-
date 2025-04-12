@@ -2,17 +2,12 @@
 
 namespace App\Livewire;
 
-use Carbon\Carbon;
 use App\Models\Post;
 use Livewire\Component;
-use App\Mail\WebsiteMail;
-use App\Models\Subscriber;
 use App\Models\SiteSetting;
 use App\Services\AlertService;
 use Illuminate\Validation\Rule;
 use App\Services\SubscriberService;
-
-use Illuminate\Support\Facades\Mail;
 use function Illuminate\Support\defer;
 
 class PostShow extends Component
@@ -56,6 +51,7 @@ class PostShow extends Component
 
         defer(fn () => $this->subscriberService->sendMail($validated, $token))->always();
 
+        $this->email = '';
         $this->alertService->alertForSubscribe($this, config('messages.email.subscriber_check'), 'success');
     }
 

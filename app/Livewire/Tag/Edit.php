@@ -4,14 +4,14 @@ namespace App\Livewire\Tag;
 
 use App\Models\Tag;
 use App\Services\AlertService;
-use App\Services\FileService;
 use App\Services\MediaService;
 use App\Services\TagService;
+use App\Services\FileService;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
-use LivewireUI\Modal\ModalComponent;
+use Livewire\Component;
 
-class Edit extends ModalComponent
+class Edit extends Component
 {
     use WithFileUploads;
 
@@ -21,17 +21,17 @@ class Edit extends ModalComponent
 
     public Tag $tag;
 
+    protected $tagService;
+    protected $mediaService;
     protected $alertService;
     protected $fileService;
-    protected $mediaService;
-    protected $tagService;
 
-    public function boot(AlertService $alertService, FileService $fileService, MediaService $mediaService, TagService $tagService)
+    public function boot(TagService $tagService, MediaService $mediaService, AlertService $alertService, FileService $fileService)
     {
+        $this->tagService = $tagService;
+        $this->mediaService = $mediaService;
         $this->alertService = $alertService;
         $this->fileService = $fileService;
-        $this->mediaService = $mediaService;
-        $this->tagService = $tagService;
     }
 
     public function mount()
@@ -40,17 +40,12 @@ class Edit extends ModalComponent
         $this->body = $this->tag->body;
     }
 
-    public static function modalMaxWidth(): string
-    {
-        return '5xl';
-    }
-
     public function updateTag()
     {
-        $validated = $this->validateInputs();
+        // validate
+        $validated = $this->validateRequests();
 
         DB::beginTransaction();
-
         try {
             $this->tagService->update($this->tag, $validated);
 
@@ -58,38 +53,31 @@ class Edit extends ModalComponent
                 // delete previous media
                 $media = $this->tag->media;
 
-                if ($media) {
-                    $this->mediaService->destroy($media);
-                }
+                $this->mediaService->destroy($media);
 
                 // add updated media
                 $url = $this->fileService->storeFile($this->media);
-
                 $this->mediaService->create(Tag::class, $this->tag, $url, 'image');
             }
 
             DB::commit();
 
-            $this->reset();
-            $this->dispatch('close');
-            $this->dispatch('tag-reload');
-
             $this->alertService->alert($this, config('messages.tag.update'), 'success');
-        } catch (\Exception $e) {
+
+            return $this->redirectRoute('tags.index', navigate: true);
+        } catch (\Throwable $e) {
             DB::rollback();
             $this->alertService->alert($this, config('messages.common.error'), 'error');
         }
     }
 
-    protected function validateInputs()
+    protected function validateRequests()
     {
-        $validated = $this->validate([
-            'media' => ['nullable', 'file', 'mimes:png,jpg,jpeg,webp', 'max:5120'],
-            'name' => ['required', 'string', 'max:225', 'unique:tags,name,' . $this->tag->id],
+        return $this->validate([
+            'media' => ['nullable', 'file', 'mimes:webp', 'max:5120'],
+            'name' => ['required', 'string', 'max:255', 'unique:tags,name,' . $this->tag->id],
             'body' => ['required', 'string'],
         ]);
-
-        return $validated;
     }
 
     public function render()

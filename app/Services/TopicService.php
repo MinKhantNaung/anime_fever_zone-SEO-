@@ -13,21 +13,21 @@ final class TopicService
         $this->topic = $topic;
     }
 
-    public function create($validated)
+    public function create(array $attributes): void
     {
         $this->topic->create([
-            'name' => $validated['name']
+            'name' => $attributes['name']
         ]);
     }
 
-    public function update(Topic $topic, $validated)
+    public function update(Topic $topic, array $attributes): void
     {
         $topic->update([
-            'name' => $validated['name']
+            'name' => $attributes['name']
         ]);
     }
 
-    public function destroy(Topic $topic)
+    public function destroy(Topic $topic): void
     {
         $topic->delete();
     }

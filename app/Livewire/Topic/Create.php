@@ -33,13 +33,9 @@ class Create extends Component
         $this->editMode = true;
     }
 
-    public function createNew()
+    public function createOrUpdateTopic()
     {
-        if ($this->editMode) {
-            $this->updateTopic();
-        } else {
-            $this->storeTopic();
-        }
+        $this->editMode ? $this->updateTopic() : $this->storeTopic();
     }
 
     public function deleteTopic(Topic $topic)
@@ -57,45 +53,35 @@ class Create extends Component
     protected function updateTopic()
     {
         $validated = $this->validateForUpdate();
-
         $this->topicService->update($this->topic, $validated);
 
         $this->reset();
-
         $this->dispatch('topic-created');
-
         $this->alertService->alert($this, config('messages.topic.update'), 'success');
     }
 
     protected function storeTopic()
     {
         $validated = $this->validateForStore();
-
         $this->topicService->create($validated);
 
         $this->reset();
-
         $this->dispatch('topic-created');
-
         $this->alertService->alert($this, config('messages.topic.create'), 'success');
     }
 
-    protected function validateForUpdate()
+    protected function validateForUpdate(): array
     {
-        $validated = $this->validate([
+        return $this->validate([
             'name' => ['required', 'string', 'max:255', 'unique:topics,name,' . $this->topic->id],
         ]);
-
-        return $validated;
     }
 
-    protected function validateForStore()
+    protected function validateForStore(): array
     {
-        $validated = $this->validate([
+        return $this->validate([
             'name' => ['required', 'string', 'max:255', 'unique:topics,name'],
         ]);
-
-        return $validated;
     }
 
     #[On('topic-created')]
@@ -106,6 +92,6 @@ class Create extends Component
         return view('livewire.topic.create', [
             'topics' => $topics
         ])
-        ->title('Admin');
+            ->title('Admin');
     }
 }

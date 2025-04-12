@@ -8,10 +8,10 @@ use App\Services\AlertService;
 use App\Services\MediaService;
 use App\Services\SectionService;
 use Illuminate\Support\Facades\DB;
+use Livewire\Component;
 use Livewire\WithFileUploads;
-use LivewireUI\Modal\ModalComponent;
 
-class Create extends ModalComponent
+class Create extends Component
 {
     use WithFileUploads;
 
@@ -32,9 +32,9 @@ class Create extends ModalComponent
         $this->sectionService = $sectionService;
     }
 
-    public static function modalMaxWidth(): string
+    public function mount()
     {
-        return '5xl';
+        $this->body = '';
     }
 
     public function addSection()
@@ -51,27 +51,23 @@ class Create extends ModalComponent
             DB::commit();
 
             $this->alertService->alert($this, config('messages.section.create'), 'success');
-
-            $this->reset();
-            $this->dispatch('close');
             $this->dispatch('section-reload');
+            return $this->redirectRoute('sections.index', $this->post->id, navigate: true);
         } catch (\Exception $e) {
             DB::rollBack();
-
+            dd($e);
             $this->alertService->alert($this, config('messages.common.error'), 'error');
         }
     }
 
     protected function validateInputs()
     {
-        $validated = $this->validate([
+        return $this->validate([
             'media' => ['nullable', 'array'],
-            'media.*' => ['file', 'mimes:png,jpg,jpeg,webp,mp4', 'max:512000'],
-            'heading' => ['nullable', 'string', 'max:225'],
+            'media.*' => ['file', 'mimes:webp,mp4', 'max:512000'],
+            'heading' => ['nullable', 'string', 'max:255'],
             'body' => ['required', 'string'],
         ]);
-
-        return $validated;
     }
 
     public function render()
