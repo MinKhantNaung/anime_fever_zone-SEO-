@@ -4,7 +4,10 @@ namespace App\Services;
 
 final class AlertService
 {
-    public function alert($viewModel, $title, $iconType)
+    /**
+     * $viewModel is the Livewire component instance
+     */
+    public function alert($viewModel, string $title, string $iconType): void
     {
         $viewModel->dispatch('swal', [
             'title' => $title,   // title
@@ -13,7 +16,10 @@ final class AlertService
         ]);
     }
 
-    public function alertForSubscribe($viewModel, $title, $iconType)
+    /**
+     * $viewModel is the Livewire component instance
+     */
+    public function alertForSubscribe($viewModel, string $title, string $iconType): void
     {
         $viewModel->dispatch('subscribed', [
             'title' => $title,
