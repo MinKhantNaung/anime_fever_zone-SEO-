@@ -6,12 +6,7 @@ use App\Models\Topic;
 
 final class TopicService
 {
-    protected $topic;
-
-    public function __construct(Topic $topic)
-    {
-        $this->topic = $topic;
-    }
+    public function __construct(private Topic $topic) {}
 
     public function create(array $attributes): void
     {
