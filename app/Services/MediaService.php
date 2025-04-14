@@ -3,37 +3,33 @@
 namespace App\Services;
 
 use App\Models\Media;
+use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 final class MediaService
 {
-    protected $media;
-    protected $fileService;
+    public function __construct(
+        protected Media $media,
+        protected FileService $fileService
+    ) {}
 
-    public function __construct(Media $media, FileService $fileService)
-    {
-        $this->media = $media;
-        $this->fileService = $fileService;
-    }
-
-    public function create($mainModelClass, $mainModel, $mediaUrl, $mime)
+    public function create(string $relatedModelClass, Model $relatedModel, string $mediaUrl, string $mimeType): void
     {
         $this->media->create([
-            'mediable_id' => $mainModel->id,    // eg: $post->id
-            'mediable_type' => $mainModelClass, // eg: Post::class
-            'url' => $mediaUrl,                 // eg: file url
-            'mime' => $mime                     // eg: 'image'
+            'mediable_id' => $relatedModel->id,     // eg: $post->id
+            'mediable_type' => $relatedModelClass,  // eg: Post::class
+            'url' => $mediaUrl,                     // eg: file url
+            'mime' => $mimeType                     // eg: 'image'
         ]);
     }
 
-    public function storeMultipleMedias($mainModelClass, $mainModel, array $medias)
+    public function storeMultipleMedias(string $relatedModelClass, Model $relatedModel, array $uploadedFiles): void
     {
-        foreach ($medias as $media) {
-            // get mime type
-            $mime = $this->fileService->getMime($media);
+        foreach ($uploadedFiles as $uploadedFile) {
+            $mime = $this->fileService->getMime($uploadedFile);
+            $url = $this->fileService->storeFile($uploadedFile);
 
-            $url = $this->fileService->storeFile($media);
-
-            $this->create($mainModelClass, $mainModel, $url, $mime);
+            $this->create($relatedModelClass, $relatedModel, $url, $mime);
         }
     }
 
@@ -43,9 +39,12 @@ final class MediaService
         $media->delete();
     }
 
-    public function destroyMultipleMedias($prevMedia)
+    /**
+     * @param Media[] $mediaItems
+     */
+    public function destroyMultipleMedias(Collection|array $mediaItems): void
     {
-        foreach ($prevMedia as $media) {
+        foreach ($mediaItems as $media) {
             $this->destroy($media);
         }
     }
