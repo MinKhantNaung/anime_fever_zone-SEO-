@@ -93,6 +93,7 @@ class Post extends Model
                     ->where('id', '!=', $postId)
                     ->where('updated_at', '>=', Carbon::now()->subMonth())
                     ->where('is_publish', true)
+                    ->with('media')
                     ->inRandomOrder()
                     ->take(5)
                     ->get();

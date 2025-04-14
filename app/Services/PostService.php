@@ -6,56 +6,50 @@ use App\Models\Post;
 
 final class PostService
 {
-    protected $post;
-    protected $mediaService;
-    protected $sectionService;
+    public function __construct(
+        private Post $post,
+        private MediaService $mediaService,
+        private SectionService $sectionService
+    ) {}
 
-    public function __construct(Post $post, MediaService $mediaService, SectionService $sectionService)
+    public function create(array $attributes): Post
     {
-        $this->post = $post;
-        $this->mediaService = $mediaService;
-        $this->sectionService = $sectionService;
-    }
-
-    public function create($validated)
-    {
-        $post = $this->post->create([
-            'topic_id' => $validated['topic_id'],
-            'heading' => $validated['heading'],
-            'body' => $validated['body'],
-            'is_publish' => $validated['is_publish']
+        return $this->post->create([
+            'topic_id' => $attributes['topic_id'],
+            'heading' => $attributes['heading'],
+            'body' => $attributes['body'],
+            'is_publish' => $attributes['is_publish']
         ]);
-
-        return $post;
     }
 
-    public function update($post, $validated)
+    public function update(Post $post, array $attributes): void
     {
         $post->update([
-            'topic_id' => $validated['topic_id'],
-            'heading' => $validated['heading'],
-            'body' => $validated['body'],
-            'is_publish' => $validated['is_publish']
+            'topic_id' => $attributes['topic_id'],
+            'heading' => $attributes['heading'],
+            'body' => $attributes['body'],
+            'is_publish' => $attributes['is_publish']
         ]);
     }
 
-    public function attachTags($postModel, $selectedTags)
+    public function attachTags(Post $post, array $selectedTags = []): void
     {
-        if ($selectedTags != null) {
-            $postModel->tags()->attach($selectedTags);
+        if (!empty($selectedTags)) {
+            $post->tags()->attach($selectedTags);
         }
     }
 
-    public function toggleIsFeature(Post $post)
+    public function toggleIsFeature(Post $post): void
     {
         $post->update([
             'is_feature' => !$post->is_feature
         ]);
     }
 
-    public function destroy(Post $post)
+    public function destroy(Post $post): void
     {
         $post->load(['media', 'sections.media', 'tags']);
+
         // delete related media
         $media = $post->media;
         if ($media) {
@@ -63,14 +57,11 @@ final class PostService
         }
 
         // delete its sections
-        $sections = $post->sections;
-
-        foreach ($sections as $section) {
-            // delete section
+        foreach ($post->sections as $section) {
             $this->sectionService->destroy($section);
         }
 
-        // Remove relationships between post and associated tags
+        // Detach associated tags
         $post->tags()->detach();
 
         $post->delete();

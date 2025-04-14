@@ -10,7 +10,7 @@ use Illuminate\Validation\Rule;
 use App\Services\SubscriberService;
 use function Illuminate\Support\defer;
 
-class PostShow extends Component
+final class PostShow extends Component
 {
     public $slug;
     public $post;
@@ -24,20 +24,23 @@ class PostShow extends Component
     protected $alertService;
     protected $subscriberService;
 
-    public function boot(Post $postModel, SiteSetting $siteSetting, AlertService $alertService, SubscriberService $subscriberService)
-    {
+    public function boot(
+        Post $postModel,
+        SiteSetting $siteSetting,
+        AlertService $alertService,
+        SubscriberService $subscriberService
+    ) {
         $this->postModel = $postModel;
         $this->siteSetting = $siteSetting;
         $this->alertService = $alertService;
         $this->subscriberService = $subscriberService;
+
+        $this->post = $this->postModel->findPostWithSlug($this->slug);
+        $this->featuredPosts = $this->postModel->featuredPostsForPostPage($this->post->id);
     }
 
     public function mount()
     {
-        $this->post = $this->postModel->findPostWithSlug($this->slug);
-
-        $this->featuredPosts = $this->postModel->featuredPostsForPostPage($this->post->id);
-
         $this->emailVerifyStatus = $this->siteSetting->first()->email_verify_status;
     }
 
@@ -49,7 +52,7 @@ class PostShow extends Component
 
         $this->subscriberService->store($validated, $token);
 
-        defer(fn () => $this->subscriberService->sendMail($validated, $token))->always();
+        defer(fn() => $this->subscriberService->sendMail($validated, $token))->always();
 
         $this->email = '';
         $this->alertService->alertForSubscribe($this, config('messages.email.subscriber_check'), 'success');
@@ -57,13 +60,11 @@ class PostShow extends Component
 
     protected function validateForSubscribe()
     {
-        $validated = $this->validate([
+        return $this->validate([
             'email' => ['required', 'string', 'email', Rule::unique('subscribers')->where(function ($query) {
                 return $query->where('status', 'Active');
             })]
         ]);
-
-        return $validated;
     }
 
     public function render()

@@ -6,32 +6,25 @@ use App\Models\Tag;
 
 final class TagService
 {
-    protected $tag;
+    public function __construct(private Tag $tag) {}
 
-    public function __construct(Tag $tag)
+    public function create(array $attributes): Tag
     {
-        $this->tag = $tag;
-    }
-
-    public function create($validated)
-    {
-        $tag = $this->tag->create([
-            'name' => $validated['name'],
-            'body' => $validated['body']
+        return $this->tag->create([
+            'name' => $attributes['name'],
+            'body' => $attributes['body']
         ]);
-
-        return $tag;
     }
 
-    public function update(Tag $tag, $validated)
+    public function update(Tag $tag, array $attributes): void
     {
         $tag->update([
-            'name' => $validated['name'],
-            'body' => $validated['body']
+            'name' => $attributes['name'],
+            'body' => $attributes['body']
         ]);
     }
 
-    public function destroy(Tag $tag)
+    public function destroy(Tag $tag): void
     {
         $tag->posts()->detach();
         $tag->delete();

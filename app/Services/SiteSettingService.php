@@ -2,11 +2,13 @@
 
 namespace App\Services;
 
+use App\Models\SiteSetting;
+
 final class SiteSettingService
 {
-    public function update($model, bool $checked)
+    public function update(SiteSetting $siteSetting, bool $checked): void
     {
-        $model->update([
+        $siteSetting->update([
             'email_verify_status' => $checked
         ]);
     }
