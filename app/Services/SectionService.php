@@ -7,35 +7,29 @@ use App\Models\Section;
 
 final class SectionService
 {
-    protected $section;
-    protected $mediaService;
+    public function __construct(
+        private Section $section,
+        private MediaService $mediaService
+    ) {}
 
-    public function __construct(Section $section, MediaService $mediaService)
+    public function create(Post $post, array $attributes): Section
     {
-        $this->section = $section;
-        $this->mediaService = $mediaService;
-    }
-
-    public function create(Post $post, $validated)
-    {
-        $section = $this->section->create([
+        return $this->section->create([
             'post_id' => $post->id,
-            'heading' => $validated['heading'],
-            'body' => $validated['body']
+            'heading' => $attributes['heading'],
+            'body' => $attributes['body']
         ]);
-
-        return $section;
     }
 
-    public function update(Section $section, $validated)
+    public function update(Section $section, array $attributes): void
     {
         $section->update([
-            'heading' => $validated['heading'],
-            'body' => $validated['body']
+            'heading' => $attributes['heading'],
+            'body' => $attributes['body']
         ]);
     }
 
-    public function destroy(Section $section)
+    public function destroy(Section $section): void
     {
         $medias = $section->media;
         $this->mediaService->destroyMultipleMedias($medias);

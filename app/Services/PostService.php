@@ -14,14 +14,12 @@ final class PostService
 
     public function create(array $attributes): Post
     {
-        $post = $this->post->create([
+        return $this->post->create([
             'topic_id' => $attributes['topic_id'],
             'heading' => $attributes['heading'],
             'body' => $attributes['body'],
             'is_publish' => $attributes['is_publish']
         ]);
-
-        return $post;
     }
 
     public function update(Post $post, array $attributes): void
