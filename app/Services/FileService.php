@@ -2,38 +2,38 @@
 
 namespace App\Services;
 
+use App\Models\Media;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
 final class FileService
 {
-    public function deleteFile($fileModel)
+    public function deleteFile(Media $media): Media
     {
-        $prev_url = $fileModel->url;
+        $prevUrl = $media->url;
 
-        $prev_path = parse_url($prev_url, PHP_URL_PATH); // Extracts the path part of the URL
+        $prevPath = parse_url($prevUrl, PHP_URL_PATH); // Extracts the path part of the URL
 
         // Remove the '/storage' prefix from the path
-        $pathWithoutStorage = str_replace('/storage', '', $prev_path);
+        $pathWithoutStorage = str_replace('/storage', '', $prevPath);
 
         Storage::delete('public/' . $pathWithoutStorage);
 
-        return $fileModel;
+        return $media;
     }
 
-    public function storeFile($fileModel)
+    public function storeFile(UploadedFile $uploadedFile): string
     {
-        $file_name = uniqid() . '_' . $fileModel->hashName();
-
-        $path = $fileModel->storeAs('media', $file_name, 'public');
+        $path = Storage::putFile('public/media', $uploadedFile);
 
         $url = url(Storage::url($path));
 
         return $url;
     }
 
-    public function getMime($media): string
+    public function getMime(UploadedFile $uploadedFile): string
     {
-        if (str()->contains($media->getMimeType(), 'video')) {
+        if (str()->contains($uploadedFile->getMimeType(), 'video')) {
             return 'video';
         } else {
             return 'image';
