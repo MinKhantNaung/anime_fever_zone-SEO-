@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    .anime-content a {
+        @apply text-[#9926f0] hover:text-[#d122e3] transition-colors duration-150;
+    }
+}

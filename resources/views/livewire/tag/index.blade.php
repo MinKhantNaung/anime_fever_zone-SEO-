@@ -18,9 +18,9 @@
                     {{ $tag->name }}
                 </h1>
 
-                <p class="col-span-12 text-lg font-medium">
+                <div class="col-span-12 text-lg anime-content">
                     {!! $tag->body !!}
-                </p>
+                </div>
 
                 <div class="col-span-12 text-center">
                     <form wire:submit.prevent="deleteTag({{ $tag->id }})">
