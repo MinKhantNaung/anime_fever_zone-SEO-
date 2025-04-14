@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 final class MediaService
 {
     public function __construct(
-        protected Media $media,
-        protected FileService $fileService
+        private Media $media,
+        private FileService $fileService
     ) {}
 
     public function create(string $relatedModelClass, Model $relatedModel, string $mediaUrl, string $mimeType): void
