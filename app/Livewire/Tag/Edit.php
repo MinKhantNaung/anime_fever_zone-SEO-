@@ -26,8 +26,12 @@ class Edit extends Component
     protected $alertService;
     protected $fileService;
 
-    public function boot(TagService $tagService, MediaService $mediaService, AlertService $alertService, FileService $fileService)
-    {
+    public function boot(
+        TagService $tagService,
+        MediaService $mediaService,
+        AlertService $alertService,
+        FileService $fileService
+    ) {
         $this->tagService = $tagService;
         $this->mediaService = $mediaService;
         $this->alertService = $alertService;
@@ -42,31 +46,28 @@ class Edit extends Component
 
     public function updateTag()
     {
-        // validate
         $validated = $this->validateRequests();
 
-        DB::beginTransaction();
         try {
-            $this->tagService->update($this->tag, $validated);
+            DB::transaction(function () use ($validated) {
+                $this->tagService->update($this->tag, $validated);
 
-            if ($this->media) {
-                // delete previous media
-                $media = $this->tag->media;
+                if ($this->media) {
+                    // delete previous media
+                    $media = $this->tag->media;
 
-                $this->mediaService->destroy($media);
+                    $this->mediaService->destroy($media);
 
-                // add updated media
-                $url = $this->fileService->storeFile($this->media);
-                $this->mediaService->create(Tag::class, $this->tag, $url, 'image');
-            }
-
-            DB::commit();
+                    // add updated media
+                    $url = $this->fileService->storeFile($this->media);
+                    $this->mediaService->create(Tag::class, $this->tag, $url, 'image');
+                }
+            });
 
             $this->alertService->alert($this, config('messages.tag.update'), 'success');
 
             return $this->redirectRoute('tags.index', navigate: true);
         } catch (\Throwable $e) {
-            DB::rollback();
             $this->alertService->alert($this, config('messages.common.error'), 'error');
         }
     }

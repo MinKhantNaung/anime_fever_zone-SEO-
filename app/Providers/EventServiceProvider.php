@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Tag;
+use App\Models\Topic;
+use App\Observers\TagObserver;
+use App\Observers\TopicObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -35,4 +39,9 @@ class EventServiceProvider extends ServiceProvider
     {
         return false;
     }
+
+    protected $observers = [
+        Topic::class => [TopicObserver::class],
+        Tag::class => [TagObserver::class],
+    ];
 }

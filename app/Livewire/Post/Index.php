@@ -23,8 +23,11 @@ class Index extends Component
     protected $alertService;
     protected $postService;
 
-    public function boot(Post $post, AlertService $alertService, PostService $postService)
-    {
+    public function boot(
+        Post $post,
+        AlertService $alertService,
+        PostService $postService
+    ) {
         $this->post = $post;
         $this->alertService = $alertService;
         $this->postService = $postService;
@@ -32,22 +35,20 @@ class Index extends Component
 
     public function deletePost(Post $post)
     {
-        DB::beginTransaction();
         try {
-            $this->postService->destroy($post);
-            DB::commit();
+            DB::transaction(function () use ($post) {
+                $this->postService->destroy($post);
+            });
 
             $this->dispatch('post-event');
             $this->alertService->alert($this, config('messages.post.destroy'), 'success');
-        } catch (\Exception $e) {
-            DB::rollBack();
+        } catch (\Throwable $e) {
             $this->alertService->alert($this, config('messages.common.error'), 'error');
         }
     }
 
     public function sendMailToSubscribers(Post $post)
     {
-        // Send email
         $subject = 'Your Daily Dose of [Anime Fever Zone]: New Post Alert!';
         $new_post_link = url($post->slug . '/post');
         $body = "<p style='font-weight: bolder; font-size: 25px;'>$post->heading</p>";
@@ -74,7 +75,7 @@ class Index extends Component
 
     public function toggleFeature(Post $post)
     {
-        defer(fn () => $this->postService->toggleIsFeature($post));
+        defer(fn() => $this->postService->toggleIsFeature($post));
 
         $this->dispatch('post-event');
         $this->alertService->alert($this, config('messages.common.success'), 'success');

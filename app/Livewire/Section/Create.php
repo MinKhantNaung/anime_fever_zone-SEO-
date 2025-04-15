@@ -25,8 +25,11 @@ class Create extends Component
     protected $mediaService;
     protected $sectionService;
 
-    public function boot(AlertService $alertService, MediaService $mediaService, SectionService $sectionService)
-    {
+    public function boot(
+        AlertService $alertService,
+        MediaService $mediaService,
+        SectionService $sectionService
+    ) {
         $this->alertService = $alertService;
         $this->mediaService = $mediaService;
         $this->sectionService = $sectionService;
@@ -41,21 +44,17 @@ class Create extends Component
     {
         $validated = $this->validateInputs();
 
-        DB::beginTransaction();
-
         try {
-            $section = $this->sectionService->create($this->post, $validated);
+            DB::transaction(function () use ($validated) {
+                $section = $this->sectionService->create($this->post, $validated);
 
-            $this->mediaService->storeMultipleMedias(Section::class, $section, $this->media);
-
-            DB::commit();
+                $this->mediaService->storeMultipleMedias(Section::class, $section, $this->media);
+            });
 
             $this->alertService->alert($this, config('messages.section.create'), 'success');
             $this->dispatch('section-reload');
             return $this->redirectRoute('sections.index', $this->post->id, navigate: true);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            dd($e);
+        } catch (\Throwable $e) {
             $this->alertService->alert($this, config('messages.common.error'), 'error');
         }
     }

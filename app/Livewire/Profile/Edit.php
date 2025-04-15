@@ -10,8 +10,9 @@ use App\Services\FileService;
 use Livewire\WithFileUploads;
 use App\Services\AlertService;
 use App\Services\MediaService;
-use App\Services\SiteSettingService;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
+use App\Services\SiteSettingService;
 
 class Edit extends Component
 {
@@ -28,8 +29,13 @@ class Edit extends Component
     protected $mediaService;
     protected $siteSettingService;
 
-    public function boot(SiteSetting $siteSetting, AlertService $alertService, FileService $fileService, MediaService $mediaService, SiteSettingService $siteSettingService)
-    {
+    public function boot(
+        SiteSetting $siteSetting,
+        AlertService $alertService,
+        FileService $fileService,
+        MediaService $mediaService,
+        SiteSettingService $siteSettingService
+    ) {
         $this->siteSetting = $siteSetting;
         $this->alertService = $alertService;
         $this->fileService = $fileService;
@@ -58,9 +64,10 @@ class Edit extends Component
     {
         $validated = $this->validateRequests();
 
-        $this->updateProfile($validated);
-
-        $this->updateMedia($validated['media']);
+        DB::transaction(function () use ($validated) {
+            $this->updateProfile($validated);
+            $this->updateMedia($this->media);
+        });
 
         $this->reset();
         $this->dispatch('profile-reload');

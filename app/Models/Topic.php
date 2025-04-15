@@ -38,7 +38,15 @@ class Topic extends Model
     public function getAllByName()
     {
         return $this->query()
-                    ->select('id', 'name', 'slug')
-                    ->get();
+            ->select('id', 'name', 'slug')
+            ->get();
+    }
+
+    public function getIdNamePairs()
+    {
+        return $this->query()
+            ->select('id', 'name')
+            ->pluck('name', 'id')
+            ->toArray();
     }
 }

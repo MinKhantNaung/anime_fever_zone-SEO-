@@ -17,24 +17,24 @@ class Index extends Component
     protected $alertService;
     protected $sectionService;
 
-    public function boot(AlertService $alertService, SectionService $sectionService)
-    {
+    public function boot(
+        AlertService $alertService,
+        SectionService $sectionService
+    ) {
         $this->alertService = $alertService;
         $this->sectionService = $sectionService;
     }
 
     public function removeSection(Section $section)
     {
-        DB::beginTransaction();
-
         try {
-            $this->sectionService->destroy($section);
+            DB::transaction(function () use ($section) {
+                $this->sectionService->destroy($section);
+            });
 
-            DB::commit();
             $this->dispatch('section-reload');
             $this->alertService->alert($this, config('messages.section.destroy'), 'success');
-        } catch (\Exception $e) {
-            DB::rollBack();
+        } catch (\Throwable $e) {
             $this->alertService->alert($this, config('messages.common.error'), 'error');
         }
     }
