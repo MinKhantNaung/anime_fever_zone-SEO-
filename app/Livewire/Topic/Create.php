@@ -19,8 +19,11 @@ class Create extends Component
     protected $alertService;
     protected $topicService;
 
-    public function boot(Topic $topicModel, AlertService $alertService, TopicService $topicService)
-    {
+    public function boot(
+        Topic $topicModel,
+        AlertService $alertService,
+        TopicService $topicService
+    ) {
         $this->topicModel = $topicModel;
         $this->alertService = $alertService;
         $this->topicService = $topicService;
