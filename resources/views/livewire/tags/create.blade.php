@@ -37,29 +37,22 @@ new class extends Component {
 
     public function createTag()
     {
-        // validate
         $validated = $this->validateRequests();
 
-        DB::beginTransaction();
-
         try {
-            $tag = $this->tagService->create($validated);
+            DB::transaction(function () use ($validated) {
+                $tag = $this->tagService->create($validated);
 
-            // add media
-            $url = $this->fileService->storeFile($this->media);
-            $this->mediaService->create(Tag::class, $tag, $url, 'image');
-
-            DB::commit();
+                $url = $this->fileService->storeFile($this->media);
+                $this->mediaService->create(Tag::class, $tag, $url, 'image');
+            });
 
             $this->alertService->alert($this, config('messages.tag.create'), 'success');
-
             $this->reset();
             $this->dispatch('tag-reload');
 
             return $this->redirectRoute('tags.index', navigate: true);
         } catch (\Exception $e) {
-            DB::rollback();
-
             $this->alertService->alert($this, config('messages.common.error'), 'error');
         }
     }

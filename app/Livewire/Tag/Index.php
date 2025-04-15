@@ -20,8 +20,12 @@ class Index extends Component
     protected $mediaService;
     protected $tagService;
 
-    public function boot(Tag $tag, AlertService $alertService, MediaService $mediaService, TagService $tagService)
-    {
+    public function boot(
+        Tag $tag,
+        AlertService $alertService,
+        MediaService $mediaService,
+        TagService $tagService
+    ) {
         $this->tag = $tag;
         $this->alertService = $alertService;
         $this->mediaService = $mediaService;
@@ -30,23 +34,18 @@ class Index extends Component
 
     public function deleteTag(Tag $tag)
     {
-        DB::beginTransaction();
-
         try {
-            $media = $tag->media;
+            DB::transaction(function () use ($tag) {
+                if ($tag->media) {
+                    $this->mediaService->destroy($tag->media);
+                }
 
-            if ($media) {
-                $this->mediaService->destroy($media);
-            }
+                $this->tagService->destroy($tag);
+            });
 
-            $this->tagService->destroy($tag);
-
-            DB::commit();
             $this->alertService->alert($this, config('messages.tag.destroy'), 'success');
             $this->dispatch('tag-reload');
-        } catch (\Exception $e) {
-            DB::rollBack();
-
+        } catch (\Throwable $e) {
             $this->alertService->alert($this, config('messages.common.error'), 'error');
         }
     }
@@ -59,6 +58,6 @@ class Index extends Component
         return view('livewire.tag.index', [
             'tags' => $tags
         ])
-        ->title('Admin');
+            ->title('Admin');
     }
 }
