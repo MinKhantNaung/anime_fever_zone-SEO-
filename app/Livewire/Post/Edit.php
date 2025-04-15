@@ -32,8 +32,14 @@ class Edit extends ModalComponent
     protected $mediaService;
     protected $postService;
 
-    public function boot(Tag $tag, Topic $topic, AlertService $alertService, FileService $fileService, MediaService $mediaService, PostService $postService)
-    {
+    public function boot(
+        Tag $tag,
+        Topic $topic,
+        AlertService $alertService,
+        FileService $fileService,
+        MediaService $mediaService,
+        PostService $postService
+    ) {
         $this->tag = $tag;
         $this->topic = $topic;
         $this->alertService = $alertService;
@@ -58,39 +64,33 @@ class Edit extends ModalComponent
 
     public function updatePost()
     {
-        // validate
         $validated = $this->validateInputs();
 
-        DB::beginTransaction();
-
         try {
-            $this->postService->update($this->post, $validated);
+            DB::transaction(function () use ($validated) {
+                $this->postService->update($this->post, $validated);
 
-            // attach tags
-            $this->post->tags()->detach();
-            $this->postService->attachTags($this->post, $this->selectedTags);
+                $this->post->tags()->detach();
+                $this->postService->attachTags($this->post, $this->selectedTags);
 
-            if ($validated['media']) {
-                $this->updateMedia($validated['media']);
-            }
-
-            DB::commit();
+                if ($validated['media']) {
+                    $this->updateMedia($validated['media']);
+                }
+            });
 
             $this->reset();
             $this->dispatch('close');
             $this->dispatch('post-event');
 
             $this->alertService->alert($this, config('messages.post.update'), 'success');
-        } catch (\Exception $e) {
-            DB::rollBack();
-
+        } catch (\Throwable $e) {
             $this->alertService->alert($this, config('messages.common.error'), 'error');
         }
     }
 
     protected function validateInputs()
     {
-        $validated = $this->validate([
+        return $this->validate([
             'media' => ['nullable', 'file', 'mimes:png,jpg,jpeg,webp', 'max:5120'],
             'topic_id' => ['required', 'integer', 'exists:topics,id'],
             'heading' => ['required', 'string', 'max:255', 'unique:posts,heading,' . $this->post->id],
@@ -99,8 +99,6 @@ class Edit extends ModalComponent
             'selectedTags' => ['nullable', 'array'],
             'selectedTags.*' => ['integer', 'exists:tags,id']
         ]);
-
-        return $validated;
     }
 
     protected function updateMedia($newMedia)
