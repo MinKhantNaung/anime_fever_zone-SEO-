@@ -45,23 +45,24 @@ class Tag extends Model
     public function findWithSlug($slug)
     {
         return $this->query()
-                    ->where('slug', $slug)
-                    ->with('media')
-                    ->first();
+            ->where('slug', $slug)
+            ->with('media')
+            ->first();
     }
 
     public function getAllPerTwo()
     {
         return $this->query()
-                    ->orderBy('id', 'desc')
-                    ->with('media')
-                    ->paginate(2);
+            ->orderBy('id', 'desc')
+            ->with('media')
+            ->paginate(2);
     }
 
-    public function getAllByName()
+    public function getIdNamePairs()
     {
         return $this->query()
-                    ->select('id', 'name')
-                    ->get();
+            ->select('id', 'name')
+            ->pluck('name', 'id')
+            ->toArray();
     }
 }

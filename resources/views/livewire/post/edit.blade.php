@@ -61,8 +61,8 @@
             <div>
                 <select wire:model="topic_id" class="select select-primary w-full">
                     <option selected>Pick topic</option>
-                    @foreach ($topics as $topic)
-                        <option value="{{ $topic->id }}">{{ $topic->name }}</option>
+                    @foreach ($topics as $id => $name)
+                        <option value="{{ $id }}">{{ $name }}</option>
                     @endforeach
                 </select>
                 @error('topic_id')
@@ -73,8 +73,8 @@
             <div class="mt-3">
                 <select wire:model="selectedTags" class="select select-primary w-full" multiple>
                     <option disabled selected>Select tags (Optional)</option>
-                    @foreach ($tags as $tag)
-                        <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                    @foreach ($tags as $id => $name)
+                        <option value="{{ $id }}">{{ $name }}</option>
                     @endforeach
                 </select>
             </div>

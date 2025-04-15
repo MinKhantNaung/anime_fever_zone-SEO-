@@ -2,16 +2,17 @@
 
 namespace App\Livewire\Post;
 
-use App\Models\Post;
 use App\Models\Tag;
+use App\Models\Post;
 use App\Models\Topic;
-use App\Services\AlertService;
 use App\Services\FileService;
-use App\Services\MediaService;
 use App\Services\PostService;
 use Livewire\WithFileUploads;
+use App\Services\AlertService;
+use App\Services\MediaService;
 use Illuminate\Support\Facades\DB;
 use LivewireUI\Modal\ModalComponent;
+use Illuminate\Support\Facades\Cache;
 
 class Create extends ModalComponent
 {
@@ -67,7 +68,7 @@ class Create extends ModalComponent
                 $this->postService->attachTags($post, $this->selectedTags);
 
                 $url = $this->fileService->storeFile($this->media);
-                
+
                 $this->mediaService->create(Post::class, $post, $url, 'image');
             });
 
@@ -101,8 +102,13 @@ class Create extends ModalComponent
 
     public function render()
     {
-        $topics = $this->topic->getAllByName();
-        $tags = $this->tag->getAllByName();
+        $topics = Cache::flexible('post.topics', [5, 10], function () {
+            return $this->topic->getIdNamePairs();
+        });
+
+        $tags = Cache::flexible('post.tags', [5, 10], function () {
+            return $this->tag->getIdNamePairs();
+        });
 
         return view('livewire.post.create', [
             'topics' => $topics,
