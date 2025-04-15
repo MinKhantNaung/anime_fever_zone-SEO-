@@ -24,8 +24,11 @@ class Edit extends Component
     protected $mediaService;
     protected $sectionService;
 
-    public function boot(AlertService $alertService, MediaService $mediaService, SectionService $sectionService)
-    {
+    public function boot(
+        AlertService $alertService,
+        MediaService $mediaService,
+        SectionService $sectionService
+    ) {
         $this->alertService = $alertService;
         $this->mediaService = $mediaService;
         $this->sectionService = $sectionService;
@@ -41,40 +44,33 @@ class Edit extends Component
     {
         $validated = $this->validateInputs();
 
-        DB::beginTransaction();
-
         try {
-            $this->sectionService->update($this->section, $validated);
+            DB::transaction(function () use ($validated) {
+                $this->sectionService->update($this->section, $validated);
 
-            if (count($this->media) > 0) {
-                $prevMedia = $this->section->media;
-
-                $this->mediaService->destroyMultipleMedias($prevMedia);
-
-                $this->mediaService->storeMultipleMedias(Section::class, $this->section, $this->media);
-            }
-
-            DB::commit();
+                if (count($this->media) > 0) {
+                    $prevMedia = $this->section->media;
+                    $this->mediaService->destroyMultipleMedias($prevMedia);
+                    $this->mediaService->storeMultipleMedias(Section::class, $this->section, $this->media);
+                }
+            });
 
             $this->alertService->alert($this, config('messages.section.update'), 'success');
 
             return $this->redirectRoute('sections.index', ['post' => $this->section->post_id], navigate: true);
-        } catch (\Exception $e) {
-            DB::rollBack();
+        } catch (\Throwable $e) {
             $this->alertService->alert($this, config('messages.common.error'), 'error');
         }
     }
 
     protected function validateInputs()
     {
-        $validated = $this->validate([
+        return $this->validate([
             'media' => ['nullable', 'array'],
             'media.*' => ['file', 'mimes:png,jpg,jpeg,webp,mp4', 'max:512000'],
             'heading' => ['nullable', 'string', 'max:225'],
             'body' => ['required', 'string'],
         ]);
-
-        return $validated;
     }
 
     public function render()
