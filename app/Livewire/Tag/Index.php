@@ -53,7 +53,7 @@ class Index extends Component
     #[On('tag-reload')]
     public function render()
     {
-        $tags = $this->tag->getAllPerTwo();
+        $tags = $this->tag->getTwoPerPage();
 
         return view('livewire.tag.index', [
             'tags' => $tags

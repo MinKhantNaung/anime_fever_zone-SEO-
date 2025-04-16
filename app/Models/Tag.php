@@ -50,7 +50,7 @@ class Tag extends Model
             ->first();
     }
 
-    public function getAllPerTwo()
+    public function getTwoPerPage()
     {
         return $this->query()
             ->orderBy('id', 'desc')
