@@ -3,16 +3,14 @@
 namespace App\Livewire\Post;
 
 use App\Models\Post;
-use App\Mail\PostMail;
 use Livewire\Component;
-use App\Models\Subscriber;
 use Livewire\Attributes\On;
 use Livewire\WithPagination;
-use App\Services\AlertService;
 use App\Services\PostService;
-use App\Services\SubscriberService;
+use App\Services\AlertService;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
+use App\Services\SubscriberService;
+use Livewire\Attributes\Computed;
 
 use function Illuminate\Support\defer;
 
@@ -65,13 +63,15 @@ class Index extends Component
         $this->alertService->alert($this, config('messages.common.success'), 'success');
     }
 
+    #[Computed]
+    public function posts()
+    {
+        return $this->post->getFivePerPage();
+    }
+
     #[On('post-event')]
     public function render()
     {
-        $posts = $this->post->getAllPerFive();
-
-        return view('livewire.post.index', [
-            'posts' => $posts
-        ])->title('Admin');
+        return view('livewire.post.index')->title('Admin');
     }
 }

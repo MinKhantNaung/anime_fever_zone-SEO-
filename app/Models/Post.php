@@ -99,7 +99,7 @@ class Post extends Model
             ->get();
     }
 
-    public function getAllPerFive()
+    public function getFivePerPage()
     {
         return $this->query()
             ->orderBy('id', 'desc')

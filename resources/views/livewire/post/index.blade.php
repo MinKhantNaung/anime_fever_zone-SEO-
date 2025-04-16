@@ -4,9 +4,9 @@
         Create
         New</button>
 
-    @if ($posts->count() > 0)
+    @if ($this->posts->count() > 0)
         <div class="w-full mt-3">
-            {{ $posts->links(data: ['scrollTo' => false]) }}
+            {{ $this->posts->links(data: ['scrollTo' => false]) }}
         </div>
 
         <table class="table">
@@ -27,12 +27,12 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($posts as $index => $post)
+                @foreach ($this->posts as $index => $post)
                     <tr>
                         <td>
                             <input wire:change="toggleFeature({{ $post->id }})" type="checkbox" class="checkbox checkbox-primary" {{ $post->is_feature ? 'checked' : '' }} />
                         </td>
-                        <td>{{ $index + $posts->firstItem() }}</td>
+                        <td>{{ $index + $this->posts->firstItem() }}</td>
                         <td class="w-[200px]">
                             <img src="{{ $post->media->url }}" alt="Image representing {{ $post->heading }}" class="w-full">
                         </td>
