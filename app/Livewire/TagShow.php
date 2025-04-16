@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Carbon\Carbon;
 use App\Models\Tag;
 use App\Models\Post;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -32,12 +33,14 @@ class TagShow extends Component
         $this->featuredPosts = $this->post->getFeaturedPosts();
     }
 
+    #[Computed]
+    public function posts()
+    {
+        return $this->post->getPostsOfTag($this->slug);
+    }
+
     public function render()
     {
-        $posts = $this->post->getPostsOfTag($this->slug);
-
-        return view('livewire.tag-show', [
-            'posts' => $posts
-        ])->title(ucfirst($this->slug) . ' | Anime Fever Zone');
+        return view('livewire.tag-show')->title(ucfirst($this->slug) . ' | Anime Fever Zone');
     }
 }

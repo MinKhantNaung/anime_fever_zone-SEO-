@@ -24,7 +24,7 @@ the latest trends and discussions across a wide range of topics." />
             <span class="text-2xl">Latest</span>
         </div>
 
-        @foreach ($posts as $index => $post)
+        @foreach ($this->posts as $index => $post)
             <div class="grid grid-cols-12 gap-1 bg-white shadow my-4">
                 <div class="col-span-12 lg:col-span-5">
                     <a wire:navigate href="{{ route('post', $post->slug) }}">
@@ -57,12 +57,12 @@ the latest trends and discussions across a wide range of topics." />
             </div>
         @endforeach
 
-        @if ($posts->count() < 1)
+        @if ($this->posts->count() < 1)
             <p class="mt-20 text-4xl">Currently, there are no posts available.</p>
         @endif
 
         <div class="w-full">
-            {{ $posts->links() }}
+            {{ $this->posts->links() }}
         </div>
 
     </section>

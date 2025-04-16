@@ -38,7 +38,7 @@
             <span class="text-2xl">Latest</span>
         </div>
 
-        @foreach ($posts as $post)
+        @foreach ($this->posts as $post)
             <div class="grid grid-cols-12 gap-1 bg-white shadow my-4">
                 <div class="col-span-12 lg:col-span-5">
                     <a wire:navigate href="{{ route('post', $post->slug) }}">
@@ -71,12 +71,12 @@
             </div>
         @endforeach
 
-        @if ($posts->count() < 1)
+        @if ($this->posts->count() < 1)
             <p class="mt-20 text-4xl">Currently, there are no posts available.</p>
         @endif
 
         <div class="w-full">
-            {{ $posts->links() }}
+            {{ $this->posts->links() }}
         </div>
 
     </section>
@@ -93,7 +93,7 @@
       "@context": "https://schema.org",
       "@type": "BlogPosting",
       "headline": "{{ ucfirst($slug) . ' | Anime Fever Zone' }}",
-      "image": "{{ $tag->media->url }}",
+      "image": "{{ asset('favicon.ico') }}",
       "description": "Explore exciting content on {{ $slug }} and more at Anime Fever Zone. Join our community and stay informed about
       the latest trends and discussions across a wide range of topics.",
       "author": {
