@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Carbon\Carbon;
 use App\Models\Post;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\Attributes\Title;
@@ -19,20 +20,18 @@ class Home extends Component
     public function boot(Post $post)
     {
         $this->post = $post;
+        $this->featuredPosts = $this->post->getFeaturedPosts();
     }
 
-    public function mount()
+    #[Computed()]
+    public function posts()
     {
-        $this->featuredPosts = $this->post->getFeaturedPosts();
+        return $this->post->getPublishedPosts();
     }
 
     #[Title('Anime Fever Zone')]
     public function render()
     {
-        $posts = $this->post->getPublishedPosts();
-
-        return view('livewire.home', [
-            'posts' => $posts
-        ]);
+        return view('livewire.home');
     }
 }
