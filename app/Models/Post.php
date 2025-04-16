@@ -66,74 +66,74 @@ class Post extends Model
     public function scopePublished($query)
     {
         return $query->where('is_publish', true)
-                    ->orderBy('updated_at', 'desc');
+            ->orderBy('updated_at', 'desc');
     }
 
     public function findPostWithSlug($postSlug)
     {
         return $this->query()
-                    ->where('slug', $postSlug)
-                    ->with('media', 'topic', 'tags', 'sections')
-                    ->first();
+            ->where('slug', $postSlug)
+            ->with('media', 'topic', 'tags', 'sections')
+            ->first();
     }
 
     public function getFeaturedPosts()
     {
         return $this->query()
-                    ->published()
-                    ->where('is_feature', true)
-                    ->with('media')
-                    ->take(5)
-                    ->get();
+            ->published()
+            ->where('is_feature', true)
+            ->with('media')
+            ->take(5)
+            ->get();
     }
 
     public function featuredPostsForPostPage($postId)
     {
         return $this->query()
-                    ->where('id', '!=', $postId)
-                    ->where('updated_at', '>=', Carbon::now()->subMonth())
-                    ->where('is_publish', true)
-                    ->with('media')
-                    ->inRandomOrder()
-                    ->take(5)
-                    ->get();
+            ->where('id', '!=', $postId)
+            ->where('updated_at', '>=', Carbon::now()->subMonth())
+            ->where('is_publish', true)
+            ->with('media')
+            ->inRandomOrder()
+            ->take(5)
+            ->get();
     }
 
     public function getAllPerFive()
     {
         return $this->query()
-                    ->orderBy('id', 'desc')
-                    ->with('media', 'topic', 'tags', 'sections')
-                    ->paginate(5);
+            ->orderBy('id', 'desc')
+            ->with('media', 'topic', 'tags', 'sections')
+            ->paginate(5);
     }
 
     public function getPublishedPosts()
     {
         return $this->query()
-                    ->published()
-                    ->with('media', 'topic', 'tags')
-                    ->paginate(12);
+            ->published()
+            ->with('media', 'topic', 'tags')
+            ->paginate(12);
     }
 
     public function getPostsOfTag($tagSlug)
     {
         return $this->query()
-                    ->whereHas('tags', function ($q) use ($tagSlug) {
-                        $q->where('slug', $tagSlug);
-                    })
-                    ->published()
-                    ->with('media', 'topic', 'tags')
-                    ->paginate(12);
+            ->whereHas('tags', function ($q) use ($tagSlug) {
+                $q->where('slug', $tagSlug);
+            })
+            ->published()
+            ->with('media', 'topic', 'tags')
+            ->paginate(12);
     }
 
     public function getPostsOfTopic($topicSlug)
     {
         return $this->query()
-                    ->whereHas('topic', function ($q) use ($topicSlug) {
-                        $q->where('slug', $topicSlug);
-                    })
-                    ->published()
-                    ->with('media', 'topic', 'tags')
-                    ->paginate(12);
+            ->whereHas('topic', function ($q) use ($topicSlug) {
+                $q->where('slug', $topicSlug);
+            })
+            ->published()
+            ->with('media', 'topic', 'tags')
+            ->paginate(12);
     }
 }
