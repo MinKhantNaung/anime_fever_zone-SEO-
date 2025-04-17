@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
-class Edit extends Component
+final class Edit extends Component
 {
     use WithFileUploads;
 

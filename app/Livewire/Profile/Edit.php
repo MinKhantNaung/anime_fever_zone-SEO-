@@ -14,7 +14,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use App\Services\SiteSettingService;
 
-class Edit extends Component
+final class Edit extends Component
 {
     use WithFileUploads;
 

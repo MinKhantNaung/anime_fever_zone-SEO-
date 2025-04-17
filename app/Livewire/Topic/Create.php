@@ -8,7 +8,7 @@ use App\Services\TopicService;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
-class Create extends Component
+final class Create extends Component
 {
     public $name;
 

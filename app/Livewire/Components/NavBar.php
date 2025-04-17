@@ -6,7 +6,7 @@ use Livewire\Component;
 use Livewire\Attributes\On;
 use App\Livewire\Actions\Logout;
 
-class NavBar extends Component
+final class NavBar extends Component
 {
     public function logout(Logout $logout): void
     {

@@ -7,7 +7,7 @@ use Livewire\Component;
 use Livewire\Attributes\On;
 use Livewire\WithPagination;
 
-class Comments extends Component
+final class Comments extends Component
 {
     use WithPagination;
 

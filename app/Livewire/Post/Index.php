@@ -14,7 +14,7 @@ use Livewire\Attributes\Computed;
 
 use function Illuminate\Support\defer;
 
-class Index extends Component
+final class Index extends Component
 {
     use WithPagination;
 

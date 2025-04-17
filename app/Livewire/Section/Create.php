@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
-class Create extends Component
+final class Create extends Component
 {
     use WithFileUploads;
 

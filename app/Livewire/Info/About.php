@@ -4,7 +4,7 @@ namespace App\Livewire\Info;
 
 use Livewire\Component;
 
-class About extends Component
+final class About extends Component
 {
     public function render()
     {

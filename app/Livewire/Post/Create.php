@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 use LivewireUI\Modal\ModalComponent;
 use Illuminate\Support\Facades\Cache;
 
-class Create extends ModalComponent
+final class Create extends ModalComponent
 {
     use WithFileUploads;
 

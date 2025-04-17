@@ -9,7 +9,7 @@ use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class TagShow extends Component
+final class TagShow extends Component
 {
     use WithPagination;
 
