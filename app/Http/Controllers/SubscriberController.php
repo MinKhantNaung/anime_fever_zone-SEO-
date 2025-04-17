@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Subscriber;
 
-class SubscriberController extends Controller
+final class SubscriberController extends Controller
 {
     /**
      * Handle the incoming request.

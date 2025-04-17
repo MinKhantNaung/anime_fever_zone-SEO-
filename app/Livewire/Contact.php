@@ -4,7 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 
-class Contact extends Component
+final class Contact extends Component
 {
     public function render()
     {

@@ -5,7 +5,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use Livewire\Attributes\Modelable;
 
-class TrixEditor extends Component
+final class TrixEditor extends Component
 {
     #[Modelable]
     public $content;

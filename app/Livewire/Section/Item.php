@@ -5,7 +5,7 @@ namespace App\Livewire\Section;
 use App\Models\Section;
 use Livewire\Component;
 
-class Item extends Component
+final class Item extends Component
 {
     public Section $section;
 

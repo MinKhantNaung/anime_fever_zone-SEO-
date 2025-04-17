@@ -9,7 +9,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\Attributes\Title;
 
-class Home extends Component
+final class Home extends Component
 {
     use WithPagination;
 

@@ -6,7 +6,7 @@ use App\Models\Topic;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
-class TopicNav extends Component
+final class TopicNav extends Component
 {
     public $topics;
 

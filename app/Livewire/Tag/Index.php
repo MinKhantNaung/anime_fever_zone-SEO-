@@ -11,7 +11,7 @@ use App\Services\MediaService;
 use App\Services\TagService;
 use Illuminate\Support\Facades\DB;
 
-class Index extends Component
+final class Index extends Component
 {
     use WithPagination;
 

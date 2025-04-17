@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
-class Index extends Component
+final class Index extends Component
 {
     public Post $post;
 

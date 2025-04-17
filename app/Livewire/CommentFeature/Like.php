@@ -6,7 +6,7 @@ use App\Models\Comment;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 
-class Like extends Component
+final class Like extends Component
 {
     public $comment;
     public $count;

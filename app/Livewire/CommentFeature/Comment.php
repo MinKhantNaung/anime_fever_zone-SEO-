@@ -9,7 +9,7 @@ use Livewire\Attributes\On;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
-class Comment extends Component
+final class Comment extends Component
 {
     use AuthorizesRequests;
 
