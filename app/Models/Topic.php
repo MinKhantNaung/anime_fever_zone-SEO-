@@ -35,6 +35,11 @@ final class Topic extends Model
     }
 
     /** Database Logic */
+    public function scopeSlug($query, $slug)
+    {
+        return $query->where('slug', $slug);
+    }
+
     public function getAllByName()
     {
         return $this->query()

@@ -65,14 +65,33 @@ final class Post extends Model
     /** Database Logic */
     public function scopePublished($query)
     {
-        return $query->where('is_publish', true)
-            ->orderBy('updated_at', 'desc');
+        return $query->where('is_publish', true);
+    }
+
+    public function scopeSlug($query, $slug)
+    {
+        return $query->where('slug', $slug);
+    }
+
+    public function scopeIsFeature($query)
+    {
+        return $query->where('is_feature', true);
+    }
+
+    public function scopeNotThisPost($query, $postId)
+    {
+        return $query->where('id', '!=', $postId);
+    }
+
+    public function scopeInLastMonth($query)
+    {
+        return $query->where('updated_at', '>=', Carbon::now()->subMonth());
     }
 
     public function findPostWithSlug($postSlug)
     {
         return $this->query()
-            ->where('slug', $postSlug)
+            ->slug($postSlug)
             ->with('media', 'topic', 'tags', 'sections')
             ->first();
     }
@@ -81,8 +100,9 @@ final class Post extends Model
     {
         return $this->query()
             ->published()
-            ->where('is_feature', true)
+            ->isFeature()
             ->with('media')
+            ->orderBy('updated_at', 'desc')
             ->take(5)
             ->get();
     }
@@ -90,9 +110,9 @@ final class Post extends Model
     public function featuredPostsForPostPage($postId)
     {
         return $this->query()
-            ->where('id', '!=', $postId)
-            ->where('updated_at', '>=', Carbon::now()->subMonth())
-            ->where('is_publish', true)
+            ->notThisPost($postId)
+            ->inLastMonth()
+            ->published()
             ->with('media')
             ->inRandomOrder()
             ->take(5)
@@ -119,7 +139,7 @@ final class Post extends Model
     {
         return $this->query()
             ->whereHas('tags', function ($q) use ($tagSlug) {
-                $q->where('slug', $tagSlug);
+                $q->slug($tagSlug);
             })
             ->published()
             ->with('media', 'topic', 'tags')
@@ -130,7 +150,7 @@ final class Post extends Model
     {
         return $this->query()
             ->whereHas('topic', function ($q) use ($topicSlug) {
-                $q->where('slug', $topicSlug);
+                $q->slug($topicSlug);
             })
             ->published()
             ->with('media', 'topic', 'tags')
