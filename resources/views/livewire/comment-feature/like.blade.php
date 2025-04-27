@@ -3,7 +3,7 @@
         class="inline-flex space-x-2 {{ $comment->isLiked()
             ? 'text-green-400
             hover:text-green-500'
-            : 'text-gray-400 hover:text-gray-500' }} focus:outline-none focus:ring-0">
+            : 'text-gray-400 hover:text-gray-500' }} focus:outline-hidden focus:ring-0">
         <svg class="h-5 w-5" x-description="solid/thumb-up" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
             fill="currentColor" aria-hidden="true">
             <path

@@ -1,4 +1,4 @@
-<nav class="w-full py-4 shadow bg-gradient-to-r from-[#9926f0] to-[#d122e3]">
+<nav class="w-full py-4 shadow-sm bg-linear-to-r from-[#9926f0] to-[#d122e3]">
     <div class="w-full container mx-auto flex flex-nowrap items-center justify-between">
 
         <nav>

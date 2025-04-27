@@ -5,7 +5,7 @@
         <h1>Topic</h1>
 
         <form wire:submit.prevent="createOrUpdateTopic()">
-            <label class="input input-bordered flex items-center gap-2">
+            <label class="input flex items-center gap-2">
                 <x-icons.info-icon />
                 <input wire:model="name" type="text" class="grow" placeholder="Topic name" />
             </label>

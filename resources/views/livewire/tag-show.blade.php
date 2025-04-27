@@ -39,7 +39,7 @@
         </div>
 
         @foreach ($this->posts as $post)
-            <div class="grid grid-cols-12 gap-1 bg-white shadow my-4">
+            <div class="grid grid-cols-12 gap-1 bg-white shadow-sm my-4">
                 <div class="col-span-12 lg:col-span-5">
                     <a wire:navigate href="{{ route('post', $post->slug) }}">
                         <img src="{{ $post->media->url }}" class="w-full object-cover">

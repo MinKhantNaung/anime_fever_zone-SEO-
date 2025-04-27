@@ -38,7 +38,7 @@
             <div class="col-span-12">
                 <label class="text-xl">Name</label>
                 <input wire:model.live="name" type="text" placeholder="Type name"
-                    class="input input-bordered input-primary w-full" />
+                    class="input input-primary w-full" />
                 @error('name')
                     <x-input-error messages="{{ $message }}" />
                 @enderror
@@ -47,7 +47,7 @@
             <div class="col-span-12 mt-3">
                 <label class="text-xl">Email</label>
                 <input wire:model.live="email" type="email" placeholder="Type email"
-                    class="input input-bordered input-primary w-full" />
+                    class="input input-primary w-full" />
                 @error('email')
                     <x-input-error messages="{{ $message }}" />
                 @enderror
