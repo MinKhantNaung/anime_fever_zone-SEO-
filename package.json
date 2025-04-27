@@ -11,7 +11,7 @@
         "@tailwindcss/postcss": "^4.1.4",
         "alpinejs": "^3.4.2",
         "axios": "^1.8.1",
-        "daisyui": "^4.10.1",
+        "daisyui": "^5.0.28",
         "laravel-vite-plugin": "^1.0.0",
         "postcss": "^8.4.31",
         "tailwindcss": "^4.1.4",

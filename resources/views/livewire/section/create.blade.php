@@ -61,7 +61,7 @@
             <aside class="col-span-12 mx-auto items-center w-full">
                 <div class="mt-5">
                     <input wire:model="heading" type="text" placeholder="Type heading (optional)"
-                        class="input input-bordered input-primary w-full mt-3" />
+                        class="input input-primary w-full mt-3" />
                     @error('heading')
                         <x-input-error messages="{{ $message }}" />
                     @enderror

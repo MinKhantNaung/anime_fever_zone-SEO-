@@ -81,7 +81,7 @@
 
             <div class="mt-3">
                 <input wire:model="heading" type="text" placeholder="Type heading"
-                    class="input input-bordered border-primary w-full" />
+                    class="input border-primary w-full" />
                 @error('heading')
                     <x-input-error messages="{{ $message }}" />
                 @enderror
