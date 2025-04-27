@@ -127,7 +127,7 @@ new class extends Component {
                         <div class="label">
                             <span class="label-text text-lg text-[#9926f0]">Tag name</span>
                         </div>
-                        <input wire:model="name" type="text" class="grow focus:border-[#9926f0] rounded-sm"
+                        <input wire:model="name" type="text" class="grow focus:border-[#9926f0] rounded-xs"
                             placeholder="Enter tag name" />
                     </label>
                     @error('name')

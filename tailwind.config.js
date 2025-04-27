@@ -48,5 +48,5 @@ export default {
         },
     },
 
-    plugins: [forms, require("daisyui"), require('tailwind-scrollbar-hide')],
+    plugins: [forms, require('tailwind-scrollbar-hide')],
 };

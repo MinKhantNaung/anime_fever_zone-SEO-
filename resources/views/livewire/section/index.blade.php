@@ -44,10 +44,10 @@
                 <h1 class="text-xl italic font-extrabold mb-2">Related Topics</h1>
                 <div>
                     <span
-                        class="font-bold text-xs uppercase bg-gray-300 hover:bg-gray-200 rounded p-2">{{ $post->topic->name }}</span>
+                        class="font-bold text-xs uppercase bg-gray-300 hover:bg-gray-200 rounded-sm p-2">{{ $post->topic->name }}</span>
                     @foreach ($post->tags as $tag)
                         <span
-                            class="font-bold text-xs uppercase bg-gray-300 hover:bg-gray-200 rounded p-2">{{ $tag->name }}</span>
+                            class="font-bold text-xs uppercase bg-gray-300 hover:bg-gray-200 rounded-sm p-2">{{ $tag->name }}</span>
                     @endforeach
                 </div>
             </div>
