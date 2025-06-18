@@ -40,7 +40,7 @@ final class Comment extends Component
 
     public function mount()
     {
-        $this->comment->load('user.media', 'children.user', 'children.children');
+        $this->comment->load('user.media', 'children');
     }
 
     public function updatedIsEditing($isEditing): void
