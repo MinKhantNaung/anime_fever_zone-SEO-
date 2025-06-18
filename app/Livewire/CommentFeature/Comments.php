@@ -41,6 +41,11 @@ final class Comments extends Component
             ->latest()
             ->paginate(config('commentify.pagination_count', 10));
 
+        if ($comments->isEmpty() && $comments->currentPage() > 1) {
+            $this->setPage($comments->lastPage());
+            return $this->render();
+        }
+
         return view('livewire.comment-feature.comments', [
             'comments' => $comments
         ]);
