@@ -17,6 +17,7 @@ final class Comment extends Component
 
     public $users = [];
 
+    public bool $isDeleted = false;
     public $isReplying = false;
     public $hasReplies = false;
 
@@ -36,6 +37,11 @@ final class Comment extends Component
         'replyState.body' => 'Reply',
         'editState.body' => 'Reply'
     ];
+
+    public function mount()
+    {
+        $this->comment->load('user.media', 'children.user', 'children.children');
+    }
 
     public function updatedIsEditing($isEditing): void
     {
@@ -65,6 +71,7 @@ final class Comment extends Component
         $this->comment->delete();
         $this->showOptions = false;
 
+        $this->isDeleted = true;
         $this->dispatch('refreshComments')->to(Comments::class);
     }
 
