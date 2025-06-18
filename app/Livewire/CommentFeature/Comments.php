@@ -5,11 +5,12 @@ namespace App\Livewire\CommentFeature;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\Attributes\On;
+use Livewire\WithoutUrlPagination;
 use Livewire\WithPagination;
 
 final class Comments extends Component
 {
-    use WithPagination;
+    use WithPagination, WithoutUrlPagination;
 
     public $model;
 
@@ -40,6 +41,11 @@ final class Comments extends Component
             ->parent()
             ->latest()
             ->paginate(config('commentify.pagination_count', 10));
+
+        if ($comments->isEmpty() && $comments->currentPage() > 1) {
+            $this->setPage($comments->lastPage());
+            return $this->render();
+        }
 
         return view('livewire.comment-feature.comments', [
             'comments' => $comments

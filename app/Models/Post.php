@@ -132,6 +132,7 @@ final class Post extends Model
         return $this->query()
             ->published()
             ->with('media', 'topic', 'tags')
+            ->orderBy('updated_at', 'desc')
             ->paginate(12);
     }
 
@@ -143,6 +144,7 @@ final class Post extends Model
             })
             ->published()
             ->with('media', 'topic', 'tags')
+            ->orderBy('updated_at', 'desc')
             ->paginate(12);
     }
 
@@ -154,6 +156,7 @@ final class Post extends Model
             })
             ->published()
             ->with('media', 'topic', 'tags')
+            ->orderBy('updated_at', 'desc')
             ->paginate(12);
     }
 }
