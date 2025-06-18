@@ -5,11 +5,12 @@ namespace App\Livewire\CommentFeature;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\Attributes\On;
+use Livewire\WithoutUrlPagination;
 use Livewire\WithPagination;
 
 final class Comments extends Component
 {
-    use WithPagination;
+    use WithPagination, WithoutUrlPagination;
 
     public $model;
 
