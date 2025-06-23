@@ -122,27 +122,21 @@ new class extends Component {
             </aside>
 
             <aside class="col-span-12 m-auto items-center w-full">
-                <div>
-                    <label class="form-control w-full">
-                        <div class="label">
-                            <span class="label-text text-lg text-[#9926f0]">Tag name</span>
-                        </div>
-                        <input wire:model="name" type="text" class="grow focus:border-[#9926f0] rounded-xs"
-                            placeholder="Enter tag name" />
-                    </label>
-                    @error('name')
+                <label class="label-text text-lg text-[#9926f0]">Tag name</label>
+                <input wire:model="name" type="text"
+                    class="input w-full focus:outline-0 focus:border-[#9926f0] rounded-xs mt-2"
+                    placeholder="Enter tag name" />
+                @error('name')
+                    <x-input-error messages="{{ $message }}" />
+                @enderror
+
+                <div class="label mt-5 mb-2">
+                    <span class="label-text text-lg text-[#9926f0]">Body (Description)</span>
+                </div>
+                <livewire:trix-editor wire:model='body'>
+                    @error('body')
                         <x-input-error messages="{{ $message }}" />
                     @enderror
-
-
-                    <div class="label mt-5">
-                        <span class="label-text text-lg text-[#9926f0]">Body (Description)</span>
-                    </div>
-                    <livewire:trix-editor wire:model='body'>
-                        @error('body')
-                            <x-input-error messages="{{ $message }}" />
-                        @enderror
-                </div>
             </aside>
 
             <div class="col-span-12 text-center my-4">
