@@ -1,4 +1,4 @@
-<div class="bg-white lg:h-[500px] flex flex-col border gap-y-4 px-5">
+<div class="relative bg-white lg:h-[500px] flex flex-col border gap-y-4 px-5">
 
     <header class="w-full py-2 border-b">
         <div class="flex justify-between">
@@ -94,7 +94,7 @@
                 @enderror
             </div>
 
-            <div class="form-control">
+            <div class="form-control mt-3">
                 <label class="label cursor-pointer">
                     <span class="label-text">Publish</span>
                     <input wire:model="is_publish" type="checkbox" class="checkbox checkbox-primary" />
