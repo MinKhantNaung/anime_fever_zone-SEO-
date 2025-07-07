@@ -86,7 +86,7 @@
             </tbody>
         </table>
     @else
-        <div role="alert" class="alert bg-secondary text-white">
+        <div role="alert" class="w-full mt-5 alert bg-secondary text-white">
             <span>No posts found !!</span>
         </div>
     @endif
