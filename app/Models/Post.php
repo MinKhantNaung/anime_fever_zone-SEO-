@@ -133,7 +133,7 @@ final class Post extends Model
             ->published()
             ->with('media', 'topic', 'tags')
             ->orderBy('updated_at', 'desc')
-            ->paginate(12);
+            ->simplePaginate(12);
     }
 
     public function getPostsOfTag($tagSlug)
@@ -145,7 +145,7 @@ final class Post extends Model
             ->published()
             ->with('media', 'topic', 'tags')
             ->orderBy('updated_at', 'desc')
-            ->paginate(12);
+            ->simplePaginate(12);
     }
 
     public function getPostsOfTopic($topicSlug)
@@ -157,6 +157,6 @@ final class Post extends Model
             ->published()
             ->with('media', 'topic', 'tags')
             ->orderBy('updated_at', 'desc')
-            ->paginate(12);
+            ->simplePaginate(12);
     }
 }
